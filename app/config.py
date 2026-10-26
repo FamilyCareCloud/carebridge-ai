@@ -24,6 +24,14 @@ class Settings(BaseSettings):
     carebridge_model: str = ""
     carebridge_model_api_key: SecretStr = SecretStr("")
     carebridge_timeout_seconds: float = Field(default=30, gt=0, le=120)
+    carebridge_backend: Literal["http", "local"] = "http"
+    carebridge_local_model: str = "unsloth/Qwen3-8B-unsloth-bnb-4bit"
+    carebridge_local_files_only: bool = True
+    carebridge_local_max_input_tokens: int = Field(default=8192, ge=512, le=16384)
+    carebridge_local_max_new_tokens: int = Field(default=2048, ge=128, le=8192)
+    carebridge_queue_timeout_seconds: float = Field(default=2, gt=0, le=30)
+    carebridge_semantic_check_enabled: bool = False
+    carebridge_preload: bool = False
 
 
 settings = Settings()

@@ -9,9 +9,11 @@ from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
 
 from app.audio import AudioRejected
+from app.carebridge.local import LocalTranslationProvider
 from app.carebridge.provider import InvalidModelOutput, ModelUnavailable, TranslationProvider
-from app.carebridge.safety import InputRejected, assess
+from app.carebridge.safety import InputRejected, assess, check_input
 from app.carebridge.schemas import Draft, DraftRequest, Language, QAResult
+from app.carebridge.semantic import SemanticReview, review_semantics
 from app.carebridge.service import DraftService
 from app.config import Settings, settings
 from app.stt import Transcriber
@@ -22,12 +24,19 @@ AUDIO_LANGUAGES = {"ko", "en", "vi", "id", "th", "tl", "zh", "ja", "ne", "uz", "
 
 def create_app(config: Settings = settings, *, transcriber=None, provider=None) -> FastAPI:
     engine = (transcriber or Transcriber(config)) if config.stt_enabled else None
-    service = DraftService(provider or TranslationProvider(config))
+    translator = provider or (
+        LocalTranslationProvider(config)
+        if config.carebridge_backend == "local"
+        else TranslationProvider(config)
+    )
+    service = DraftService(translator)
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         if engine is not None:
             await run_in_threadpool(engine.load)
+        if config.carebridge_preload and isinstance(translator, LocalTranslationProvider):
+            await run_in_threadpool(translator.load)
         yield
 
     app = FastAPI(
@@ -114,6 +123,9 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
             "device": engine.device if engine else "disabled",
             "stt_enabled": config.stt_enabled,
             "carebridge_schema": "carebridge.v1",
+            "translation_backend": config.carebridge_backend,
+            "translation_loaded": getattr(translator, "loaded", False),
+            "semantic_check_enabled": config.carebridge_semantic_check_enabled,
         }
 
     @app.post("/transcribe", dependencies=protected)
@@ -123,7 +135,34 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
 
     @app.post("/carebridge/drafts", response_model=Draft, dependencies=protected)
     async def draft(request: DraftRequest):
-        return await service.create(request)
+        return await checked_draft(await service.create(request))
+
+    async def checked_draft(value: Draft) -> Draft:
+        if config.carebridge_semantic_check_enabled:
+            review = await semantic_review(value)
+            value.qa, value.status = review.qa, review.status
+        return value
+
+    async def semantic_review(value: Draft) -> SemanticReview:
+        if not isinstance(translator, LocalTranslationProvider):
+            raise ModelUnavailable("의미 검사는 로컬 GPU 모델 설정이 필요합니다.")
+        return await review_semantics(value, translator)
+
+    @app.post("/carebridge/transcriptions", dependencies=protected)
+    async def carebridge_transcription(
+        file: Annotated[UploadFile, File()],
+        data_use: Annotated[Literal["synthetic_deidentified"], Form()],
+        source_language: Annotated[Language, Form()] = "auto",
+    ):
+        code = source_language.split("-")[0]
+        if source_language != "auto" and code not in AUDIO_LANGUAGES:
+            await file.close()
+            raise HTTPException(status_code=422, detail="이 음성 입력 언어는 지원하지 않습니다.")
+        value = await transcribe_bytes(await read_audio(file), None if code == "auto" else code)
+        if len(value) > 4000:
+            raise InputRejected("MEMO_TOO_LONG", "전사 결과는 4,000자 이내여야 합니다.")
+        check_input(value)
+        return {"text": value, "requires_transcript_review": True}
 
     @app.post("/carebridge/drafts/audio", response_model=Draft, dependencies=protected)
     async def audio_draft(
@@ -138,13 +177,22 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
         text = await transcribe_bytes(await read_audio(file), None if code == "auto" else code)
         if len(text) > 4000:
             raise InputRejected("MEMO_TOO_LONG", "전사 결과는 4,000자 이내여야 합니다.")
-        return await service.create(
-            DraftRequest(memo=text, source_language=source_language, data_use=data_use), audio=True
+        return await checked_draft(
+            await service.create(
+                DraftRequest(memo=text, source_language=source_language, data_use=data_use),
+                audio=True,
+            )
         )
 
     @app.post("/carebridge/qa", response_model=QAResult, dependencies=protected)
     async def qa(draft: Draft):
+        if config.carebridge_semantic_check_enabled:
+            return (await semantic_review(draft)).qa
         return assess(draft)
+
+    @app.post("/carebridge/qa/semantic", response_model=SemanticReview, dependencies=protected)
+    async def semantic_qa(draft: Draft):
+        return await semantic_review(draft)
 
     return app
 

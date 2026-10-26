@@ -87,6 +87,33 @@ def check_input(text: str) -> list[SourceSegment]:
     return segments
 
 
+# Deliberately narrow lexical tripwires in the initial evaluation languages.
+# These catch obvious dropped/introduced markers; they are not entailment or
+# a complete grammar. Paraphrases can require human review (false positives).
+NEGATION = re.compile(
+    r"\b(?:not|no|never|without|cannot|can['’]t|didn['’]t|doesn['’]t|wasn['’]t|"
+    r"weren['’]t|hasn['’]t|haven['’]t|isn['’]t|aren['’]t|"
+    r"không|chưa|chẳng|tidak|belum|bukan|tanpa)\b",
+    re.I,
+)
+KOREAN_NEGATION = re.compile(r"않|없|아니|못(?:했|하|해|먹|마|걸|자)|(?:^|\s)안\s")
+UNCERTAINTY = re.compile(
+    r"\b(?:may|might|perhaps|possibly|maybe|seems?|uncertain|unsure|"
+    r"có\s+thể|có\s+lẽ|hình\s+như|mungkin|sepertinya|tampaknya)\b",
+    re.I,
+)
+KOREAN_UNCERTAINTY = re.compile(
+    r"같(?:습|아|다|은)|아마|추정|듯|수(?:도)?\s*있|불명|확인.{0,8}필요"
+)
+
+
+def lexical_signals(text: str) -> tuple[bool, bool]:
+    return (
+        bool(NEGATION.search(text) or KOREAN_NEGATION.search(text)),
+        bool(UNCERTAINTY.search(text) or KOREAN_UNCERTAINTY.search(text)),
+    )
+
+
 def assess(draft: Draft) -> QAResult:
     """Recompute QA from content, ignoring caller-supplied QA and status."""
     checks: list[QACheck] = []
@@ -145,6 +172,16 @@ def assess(draft: Draft) -> QAResult:
             for t in translated
         ),
         "번역의 숫자가 원문과 다릅니다. 시각·수량을 담당자가 대조해 주세요.",
+    )
+    check(
+        "NEGATION_SIGNAL_PRESERVED",
+        all(lexical_signals(t.evidence.quote)[0] == lexical_signals(t.text)[0] for t in translated),
+        "원문과 번역의 부정 표현 신호가 다릅니다. 의미가 반대로 바뀌었는지 대조해 주세요.",
+    )
+    check(
+        "UNCERTAINTY_SIGNAL_PRESERVED",
+        all(lexical_signals(t.evidence.quote)[1] == lexical_signals(t.text)[1] for t in translated),
+        "원문과 번역의 추측·불확실성 신호가 다릅니다. 단정 여부를 대조해 주세요.",
     )
     check(
         "FOLLOW_UP_GROUNDING",
