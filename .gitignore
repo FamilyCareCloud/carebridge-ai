@@ -14,3 +14,6 @@ venv/
 
 # 모델 가중치 (용량이 커서 git에는 올리지 않음. models/whisper-senior-lora/ 를 로컬에 직접 배치)
 models/
+
+# 재생성 가능한 합성 평가 음성
+evaluation/*.wav

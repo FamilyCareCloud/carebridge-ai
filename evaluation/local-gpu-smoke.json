@@ -1,0 +1,1001 @@
+{
+  "run_at": "2026-10-26T14:52:37.436599+00:00",
+  "device": "NVIDIA GeForce RTX 5070 Ti",
+  "model": "unsloth/Qwen3-8B-unsloth-bnb-4bit",
+  "tests": [
+    {
+      "language": "en",
+      "http_status": 200,
+      "passed": true,
+      "seconds": 2.925,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "5c3dcaaa-aae8-488d-8f84-b5115a02286d",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "en",
+          "text": "Did not drink water this morning.\nMay have slept after lunch.",
+          "sha256": "41aae18e4ffe63e233a2c0ace0d5170004dffbae54c11eb760c65b2690243799"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "오늘 아침에 물을 마시지 않았습니다.\n점심 후에 잠을 자았을 수도 있습니다.",
+          "segments": [
+            {
+              "text": "오늘 아침에 물을 마시지 않았습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 33,
+                "quote": "Did not drink water this morning."
+              }
+            },
+            {
+              "text": "점심 후에 잠을 자았을 수도 있습니다.",
+              "evidence": {
+                "segment_id": "s002",
+                "start": 34,
+                "end": 61,
+                "quote": "May have slept after lunch."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "hydration",
+            "text": "오늘 아침에 물을 마시지 않았습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Did not drink water this morning."
+            }
+          },
+          {
+            "id": "o002",
+            "category": "sleep",
+            "text": "점심 후에 잠을 자았을 수도 있습니다.",
+            "evidence": {
+              "segment_id": "s002",
+              "start": 34,
+              "end": 61,
+              "quote": "May have slept after lunch."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s002",
+              "start": 34,
+              "end": 61,
+              "quote": "May have slept after lunch."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "language": "vi",
+      "http_status": 200,
+      "passed": true,
+      "seconds": 1.438,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "a8cc872d-083d-46c8-9000-5849fdd28b3a",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "vi",
+          "text": "Đã ăn nửa bữa sáng.",
+          "sha256": "aad64b6d7d37d9bce882d16a87e6632b159757752444de12898c2576c29fecfc"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "아침 식사 반량을 섭취했습니다.",
+          "segments": [
+            {
+              "text": "아침 식사 반량을 섭취했습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 19,
+                "quote": "Đã ăn nửa bữa sáng."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "meal",
+            "text": "아침 식사 반량을 섭취했습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 19,
+              "quote": "Đã ăn nửa bữa sáng."
+            }
+          }
+        ],
+        "additional_checks": [],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "language": "id",
+      "http_status": 200,
+      "passed": true,
+      "seconds": 1.386,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "10454b07-12eb-4999-84e6-0e0a3aa851a3",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Makan setengah sarapan.",
+          "sha256": "ce0deef8d3bea739f45d98f0beb261b99696a7139d5f57e62f203a6480108caf"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "아침 식사 반량으로 먹었다.",
+          "segments": [
+            {
+              "text": "아침 식사 반량으로 먹었다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 23,
+                "quote": "Makan setengah sarapan."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "meal",
+            "text": "아침 식사 반량으로 먹었다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 23,
+              "quote": "Makan setengah sarapan."
+            }
+          }
+        ],
+        "additional_checks": [],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "audit": "faithful",
+      "http_status": 200,
+      "passed": true,
+      "seconds": 4.278,
+      "response": {
+        "status": "review_required",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Did not drink water this morning."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              }
+            ]
+          },
+          {
+            "evidence": {
+              "segment_id": "s002",
+              "start": 34,
+              "end": 61,
+              "quote": "May have slept after lunch."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "audit": "negation_reversed",
+      "http_status": 200,
+      "passed": true,
+      "seconds": 0.001,
+      "response": {
+        "status": "hold",
+        "model_checked": false,
+        "segments": [],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": false
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "severity": "hold",
+              "message": "원문과 번역의 부정 표현 신호가 다릅니다. 의미가 반대로 바뀌었는지 대조해 주세요."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "audit": "uncertainty_removed",
+      "http_status": 200,
+      "passed": true,
+      "seconds": 0.001,
+      "response": {
+        "status": "hold",
+        "model_checked": false,
+        "segments": [],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": false
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "severity": "hold",
+              "message": "원문과 번역의 추측·불확실성 신호가 다릅니다. 단정 여부를 대조해 주세요."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "audit": "unsupported_fact",
+      "http_status": 200,
+      "passed": true,
+      "seconds": 4.287,
+      "response": {
+        "status": "hold",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Did not drink water this morning."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              }
+            ]
+          },
+          {
+            "evidence": {
+              "segment_id": "s002",
+              "start": 34,
+              "end": 61,
+              "quote": "May have slept after lunch."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "severity": "hold",
+              "message": "추측·불확실성이 단정으로 바뀌었는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "severity": "hold",
+              "message": "부정 표현이 원문과 같은지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "audio": "synthetic_english",
+      "passed": true,
+      "http_status": 200,
+      "seconds": 3.452,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "b37c9e94-0142-4453-b4e4-06c542955098",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "audio",
+          "language": "en",
+          "text": "did not drink water this morning. May have slept after lunch.",
+          "sha256": "ea80531599c3123f9582d28e3e168c284256f3f16b4894c27472900efbff5127"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "오늘 아침에 물을 마시지 않았습니다. 점심 후에 잠을 자았을 수도 있습니다.",
+          "segments": [
+            {
+              "text": "오늘 아침에 물을 마시지 않았습니다. 점심 후에 잠을 자았을 수도 있습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 61,
+                "quote": "did not drink water this morning. May have slept after lunch."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "other",
+            "text": "오늘 아침에 물을 마시지 않았습니다. 점심 후에 잠을 자았을 수도 있습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 61,
+              "quote": "did not drink water this morning. May have slept after lunch."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 61,
+              "quote": "did not drink water this morning. May have slept after lunch."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "TRANSCRIPT_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "원문은 자동 전사 결과입니다. 전사 내용도 작성자가 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    }
+  ],
+  "scope": "synthetic smoke, not accuracy or clinical validation",
+  "load_seconds": 9.394,
+  "health": {
+    "status": "ok",
+    "device": "cuda",
+    "stt_enabled": true,
+    "carebridge_schema": "carebridge.v1",
+    "translation_backend": "local",
+    "translation_loaded": true,
+    "semantic_check_enabled": false
+  },
+  "peak_cuda_mib": 8291.9,
+  "all_passed": true,
+  "runtime_versions": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.16.1",
+    "bitsandbytes": "0.50.2"
+  }
+}

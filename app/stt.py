@@ -1,8 +1,10 @@
 import logging
+from contextlib import nullcontext
 from threading import Lock
 
 from app.audio import SAMPLE_RATE, AudioRejected, decode_audio
 from app.config import Settings, settings
+from app.inference import GPU_INFERENCE_LOCK
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +20,7 @@ class Transcriber:
         self._lock = Lock()
 
     def load(self) -> None:
-        with self._lock:
+        with self._lock, GPU_INFERENCE_LOCK:
             self._load()
 
     def _load(self) -> None:
@@ -46,7 +48,7 @@ class Transcriber:
         audio = decode_audio(audio_bytes, self.settings.max_audio_seconds)
 
         # GPU inference is serialized, and callers run it outside the event loop.
-        with self._lock:
+        with self._lock, GPU_INFERENCE_LOCK:
             self._load()
             import torch
 
@@ -55,7 +57,11 @@ class Transcriber:
                 sampling_rate=SAMPLE_RATE,
                 return_tensors="pt",
             ).input_features.to(self._device)
-            with torch.inference_mode():
+            # The senior LoRA was trained on Korean commands, not multilingual
+            # free-form observation notes. Auto/non-Korean input uses base Whisper.
+            senior = language is not None and language.lower().split("-")[0] in {"ko", "korean"}
+            adapter = nullcontext() if senior else self._model.disable_adapter()
+            with adapter, torch.inference_mode():
                 generated_ids = self._model.generate(
                     inputs, language=language, task=self.settings.task
                 )
