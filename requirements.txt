@@ -1,9 +1,5 @@
-fastapi>=0.115
-uvicorn[standard]>=0.30
-python-multipart>=0.0.9
+-r requirements-core.txt
+-r requirements-audio.txt
 torch>=2.6
 transformers>=4.46
 peft>=0.13
-librosa>=0.10
-soundfile>=0.12
-pydantic-settings>=2.5

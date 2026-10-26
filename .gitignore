@@ -9,6 +9,8 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+.pytest_cache/
+.ruff_cache/
 
 # 모델 가중치 (용량이 커서 git에는 올리지 않음. models/whisper-senior-lora/ 를 로컬에 직접 배치)
 models/
