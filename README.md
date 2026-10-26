@@ -1,15 +1,25 @@
 # fcc-ai - Family Care Cloud AI 서버
 
-노인 명령어 음성 인식(STT) GPU 마이크로서비스
+고령자 음성 인식(STT)과 CareBridge 다국어 관찰메모 검토 전 초안 서비스
 
 ## 프로젝트 개요
 
 Family Care Cloud는 가족이 함께 돌봄 기록을 남기고 다음 보호자에게 전달하는 서비스입니다.
-이 저장소는 그중 **GPU가 필요한 AI 기능만** 담당합니다. 현재는 고령자 음성 명령을 텍스트로 바꾸는 음성 인식(STT)이 구현되어 있으며,
-`fcc-backend`가 이 서버의 `/transcribe` API를 호출해 음성 질의 기능(`/groups/{g}/assistant/voice`)에 사용합니다.
+이 저장소는 고령자 음성 명령을 텍스트로 바꾸는 음성 인식(STT)과,
+케어브릿지 명세서의 **교육용 가상·비식별 메모 → 한국어 초안 → 근거 QA**를 담당합니다.
+`fcc-backend`가 기존 `/transcribe` API를 음성 질의(`/groups/{g}/assistant/voice`)에 사용합니다.
+신규 CareBridge API는 별도 연동이 필요합니다.
 
-- 프론트/백엔드는 별도 저장소에서 운영되며, 이 서버는 GPU가 있는 로컬 환경에서 단독으로 실행합니다.
-- Care Handoff 요약 등 LLM 기반 기능은 GPU가 필수가 아니므로 이 저장소 범위에서 제외했습니다 (백엔드에서 별도 LLM API로 처리).
+- 프론트/백엔드는 별도 저장소입니다. STT는 Whisper·LoRA 파일이 있는 GPU/CPU 환경에서 실행합니다.
+- CareBridge 텍스트 기능은 `requirements-core.txt`와 `FCC_AI_STT_ENABLED=false`만으로 실행할 수 있습니다.
+- 한국어는 원문을 그대로 보존하고, 다국어·혼합언어는 설정한 OpenAI-compatible 번역 모델을 호출합니다.
+- 모든 CareBridge 응답은 **검토 전 초안·공식기록 아님**이며 `external_share_allowed=false`입니다.
+  승인·수정·보류 결정과 승인 후 가족 미리보기는 백엔드/프론트에서 별도로 구현해야 합니다.
+- 기존 Care Handoff 요약은 계속 백엔드에서 처리합니다.
+
+**CareBridge 시작하기:** [API 계약·실행 방법·요구사항 대응·검증 한계](docs/CAREBRIDGE.md).
+원문·번역문·관찰·추가확인을 분리하고, 구간별 원문 인용·위치와 QA 결과를 반환합니다.
+이 기능은 실제 수급자 데이터 또는 의료 판단을 위한 기능이 아닙니다.
 
 ## 팀 정보
 
@@ -40,7 +50,14 @@ fcc-ai/
 ├── app/
 │   ├── main.py                    # FastAPI 진입점 (/health, /transcribe, API 키 검증)
 │   ├── config.py                  # 환경 설정 (FCC_AI_* 환경 변수)
-│   └── stt.py                     # Whisper + LoRA 로딩 및 추론 (GPU/CPU 자동 선택)
+│   ├── stt.py                     # Whisper + LoRA 로딩 및 추론 (GPU/CPU 자동 선택)
+│   ├── audio.py                   # 길이·무음 검증 및 16kHz mono 변환
+│   └── carebridge/                # 초안 계약, 번역 모델, 원문 근거 및 QA
+│
+├── docs/CAREBRIDGE.md             # CareBridge API·백엔드 연동 계약
+├── tests/                        # 모델 없이 실행하는 회귀 테스트
+├── requirements-core.txt         # GPU 의존성이 없는 텍스트 API
+├── requirements-dev.txt          # 테스트/정적 검사
 │
 └── models/                        # gitignore 처리 - 로컬에 직접 배치
     └── whisper-senior-lora/       # 파인튜닝된 LoRA 어댑터
@@ -55,9 +72,10 @@ fcc-ai/
 
 | 파일 | 역할 |
 |---|---|
-| `app/main.py` | FastAPI 앱 생성, 시작 시 모델 로드(lifespan), `/health`·`/transcribe` 라우트, `X-API-Key` 검증(`hmac.compare_digest`) |
+| `app/main.py` | 앱 팩토리, 선택적 STT 초기화, `/health`·`/transcribe`·CareBridge 라우트, 공통 API 키 검증 |
 | `app/config.py` | `pydantic-settings` 기반 설정. `FCC_AI_` 접두사 환경 변수와 `.env`를 읽음 |
-| `app/stt.py` | `Transcriber` 클래스. 모델 로드, 오디오 디코딩, 추론. 모듈 전역 싱글턴(`transcriber`)으로 사용 |
+| `app/stt.py` | 앱별 `Transcriber` 모델 로드와 직렬 추론. 오디오 검증은 `app/audio.py` |
+| `app/carebridge/` | 한국어 원문 보존/모델 번역, 구조화 초안, 원문 인용 및 QA |
 | `requirements.txt` | 실행에 필요한 패키지 (torch는 GPU 세대에 맞게 별도 설치 권장) |
 | `.env.example` | 환경 변수 템플릿. 복사해서 `.env`로 사용 (`.env`는 gitignore) |
 | `models/` | 모델 가중치. 용량 문제로 git에 올리지 않고 담당자가 직접 전달 |
@@ -103,11 +121,12 @@ flowchart LR
 
 | 단계 | 내용 |
 |---|---|
-| 서버 시작 | lifespan에서 프로세서·베이스 모델·LoRA 어댑터를 한 번만 로드하고 `eval()` 모드로 유지 (요청마다 재로딩하지 않음) |
+| 서버 시작 | STT 활성 시 lifespan에서 모델을 한 번만 로드. 텍스트 전용 모드는 모델을 로드하지 않음 |
 | 디바이스 선택 | `FCC_AI_DEVICE=cuda`여도 CUDA를 쓸 수 없으면 자동으로 CPU 사용 |
 | 오디오 디코딩 | 업로드된 바이트를 `librosa.load(sr=16000, mono=True)`로 읽어 형식·샘플레이트에 관계없이 통일 |
-| 디코딩 옵션 | `language=korean`, `task=transcribe` 고정 (번역·언어 감지로 인한 오인식 방지) |
-| 추론 | `torch.no_grad()`로 `generate()` 후 특수 토큰을 제거하고 앞뒤 공백 정리 |
+| 디코딩 옵션 | 기존 `/transcribe`는 설정된 한국어 사용. CareBridge 음성 경로는 명시 언어 또는 자동 감지 |
+| 추론 | 작업 스레드에서 직렬 실행. `torch.inference_mode()`로 생성, 빈 전사·무음·손상 파일 거절 |
+| 입력 제한 | 기본 4MiB/30초. Whisper 문맥을 넘는 음성은 자동 절단하지 않고 413 반환 |
 
 ## AI 서비스 API
 
@@ -115,6 +134,9 @@ flowchart LR
 |---|---|---|---|
 | `GET /health` | 서버 및 device(cuda/cpu) 상태 확인 | 불필요 | 구현 완료 |
 | `POST /transcribe` | 오디오 파일 → 한국어 텍스트 | `X-API-Key` (설정 시) | 구현 완료 |
+| `POST /carebridge/drafts` | 비식별 메모 → 한국어 번역·관찰·추가확인·원문 근거·QA | 동일 | 구현 완료 |
+| `POST /carebridge/drafts/audio` | 짧은 음성 → 전사 → 같은 검토 전 초안 | 동일 | 구현 완료 |
+| `POST /carebridge/qa` | 수정된 초안의 근거·금지표현·공유 차단 재검사 | 동일 | 구현 완료 |
 
 ### POST /transcribe
 
@@ -137,14 +159,18 @@ curl -X POST http://localhost:8000/transcribe \
 | 200 | 성공 |
 | 400 | 빈 파일 |
 | 401 | `X-API-Key` 불일치 (`FCC_AI_API_KEY`가 설정된 경우) |
+| 413 | 오디오 크기·길이 초과 |
+| 422 | 손상된 오디오, 무음, 빈 인식 결과 |
 | 500 | 음성 인식 실패 |
+| 503 | STT 비활성 |
 
-지원 형식: wav, flac, ogg, webm 등 (librosa가 읽을 수 있는 형식). 그 외 content-type은 경고만 남기고 처리합니다.
+지원 형식은 설치된 오디오 디코더가 읽을 수 있는 형식(wav, flac, ogg 등)입니다.
+webm 등은 환경에 따라 추가 디코더가 필요합니다. content-type 대신 실제 디코딩 결과를 검증합니다.
 
 ### GET /health
 
 ```json
-{ "status": "ok", "device": "cuda" }
+{ "status": "ok", "device": "cuda", "stt_enabled": true, "carebridge_schema": "carebridge.v1" }
 ```
 
 ---
@@ -257,11 +283,17 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 | `FCC_AI_DEVICE` | `cuda` | `cuda` 또는 `cpu` (GPU 없으면 자동 CPU) |
 | `FCC_AI_LANGUAGE` / `FCC_AI_TASK` | `korean` / `transcribe` | Whisper 디코딩 옵션 |
 | `FCC_AI_HOST` / `FCC_AI_PORT` | `0.0.0.0` / `8000` | 서버 주소 |
-| `FCC_AI_API_KEY` | (비어 있음) | 설정 시 `/transcribe`에 `X-API-Key` 헤더 필수 |
+| `FCC_AI_API_KEY` | (비어 있음) | 설정 시 모든 POST API에 `X-API-Key` 필수 |
+| `FCC_AI_STT_ENABLED` | `true` | `false`이면 GPU 의존성 없이 텍스트 API만 실행 |
+| `FCC_AI_MAX_AUDIO_BYTES` / `FCC_AI_MAX_AUDIO_SECONDS` | `4194304` / `30` | 오디오 크기·길이 상한 |
+| `FCC_AI_CAREBRIDGE_MODEL_URL` / `FCC_AI_CAREBRIDGE_MODEL` | (비어 있음) | 다국어 번역용 chat completions URL·모델명 |
+| `FCC_AI_CAREBRIDGE_MODEL_API_KEY` | (비어 있음) | 번역 모델 Bearer 키 |
+| `FCC_AI_CAREBRIDGE_TIMEOUT_SECONDS` | `30` | 번역 모델 요청 타임아웃 |
 
 ## 배포된 백엔드(AWS Lambda)와 연결하기
 
-이 서버는 GPU가 필요해 로컬에서만 실행합니다. AWS의 fcc-backend가 호출하려면 공인 HTTPS 주소로 터널링해야 합니다.
+로컬에서 실행하는 STT 서버를 AWS의 fcc-backend가 호출하려면 공인 HTTPS 주소로 터널링해야 합니다.
+CareBridge 텍스트 기능은 GPU 없이 별도 서버에서도 실행할 수 있습니다.
 **`FCC_AI_API_KEY`를 반드시 설정**하세요 — 그렇지 않으면 터널 주소를 아는 누구나 이 GPU를 호출할 수 있습니다.
 
 ```bash

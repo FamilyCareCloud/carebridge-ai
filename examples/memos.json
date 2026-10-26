@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ko-meal",
+    "request": {"memo": "아침 식사를 절반 드셨습니다.", "source_language": "ko", "data_use": "synthetic_deidentified"},
+    "expected_status": "review_required"
+  },
+  {
+    "id": "ko-uncertain",
+    "request": {"memo": "물을 조금 마신 것 같습니다.\n낮잠 시간은 확인이 필요합니다.", "source_language": "ko", "data_use": "synthetic_deidentified"},
+    "expected_status": "review_required"
+  },
+  {
+    "id": "ko-medical-hold",
+    "request": {"memo": "응급상황으로 판단합니다.", "source_language": "ko", "data_use": "synthetic_deidentified"},
+    "expected_status": "hold"
+  },
+  {
+    "id": "vi-meal",
+    "request": {"memo": "Đã ăn nửa bữa sáng.", "source_language": "vi", "data_use": "synthetic_deidentified"},
+    "expected_status": "review_required"
+  },
+  {
+    "id": "en-meal",
+    "request": {"memo": "Ate half the breakfast.", "source_language": "en", "data_use": "synthetic_deidentified"},
+    "expected_status": "review_required"
+  },
+  {
+    "id": "id-meal",
+    "request": {"memo": "Makan setengah sarapan.", "source_language": "id", "data_use": "synthetic_deidentified"},
+    "expected_status": "review_required"
+  }
+]
