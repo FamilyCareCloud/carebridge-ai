@@ -129,8 +129,10 @@ RTX 5070 Ti 16GB에서 Whisper+Qwen 최대 할당 VRAM 약 8.1GiB.
 HTTP 계약·인용·공유 금지·사례별 상태를 확인하는 값이고 번역 정확도 점수가 아니다.
 기획서의 60/180/90건 수치는 이 실행 결과로 재사용하지 않는다.
 
-## 남은 서비스 연동 경계
+## 전체 서비스 연동
 
-최신 프론트/백엔드에는 CareBridge 검토 도메인이 아직 없다.
-담당자 승인·수정·보류 저장, 원문·버전 보호, 승인 버전만 가족에게 수동 미리보기 하는
-권한/저장/화면 흐름은 별도 연동 작업이다. 이 GPU 구현은 그 승인을 대신하지 않는다.
+fcc-backend의 CareBridge 서비스와 프론트 케어브릿지 메뉴가 작성자·검토자·가족 권한,
+불변 원문/버전, 승인·수정·보류와 승인된 가족 미리보기를 구현한다.
+[백엔드의 전체 실행·배포 계약](https://github.com/FamilyCareCloud/fcc-backend/blob/feature/carebridge-workflow/docs/CAREBRIDGE.md)을 참고한다.
+세 저장소를 같은 부모 폴더에 둔 뒤 백엔드 scripts/start-carebridge-local.ps1로 함께 실행할 수 있다.
+공개 터널·AWS 배포 연결은 별도로 승인·설정해야 하며, 로컬 실행이 클라우드 배포를 의미하지 않는다.

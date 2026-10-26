@@ -11,7 +11,7 @@ from starlette.concurrency import run_in_threadpool
 from app.audio import AudioRejected
 from app.carebridge.local import LocalTranslationProvider
 from app.carebridge.provider import InvalidModelOutput, ModelUnavailable, TranslationProvider
-from app.carebridge.safety import InputRejected, assess
+from app.carebridge.safety import InputRejected, assess, check_input
 from app.carebridge.schemas import Draft, DraftRequest, Language, QAResult
 from app.carebridge.semantic import SemanticReview, review_semantics
 from app.carebridge.service import DraftService
@@ -147,6 +147,22 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
         if not isinstance(translator, LocalTranslationProvider):
             raise ModelUnavailable("의미 검사는 로컬 GPU 모델 설정이 필요합니다.")
         return await review_semantics(value, translator)
+
+    @app.post("/carebridge/transcriptions", dependencies=protected)
+    async def carebridge_transcription(
+        file: Annotated[UploadFile, File()],
+        data_use: Annotated[Literal["synthetic_deidentified"], Form()],
+        source_language: Annotated[Language, Form()] = "auto",
+    ):
+        code = source_language.split("-")[0]
+        if source_language != "auto" and code not in AUDIO_LANGUAGES:
+            await file.close()
+            raise HTTPException(status_code=422, detail="이 음성 입력 언어는 지원하지 않습니다.")
+        value = await transcribe_bytes(await read_audio(file), None if code == "auto" else code)
+        if len(value) > 4000:
+            raise InputRejected("MEMO_TOO_LONG", "전사 결과는 4,000자 이내여야 합니다.")
+        check_input(value)
+        return {"text": value, "requires_transcript_review": True}
 
     @app.post("/carebridge/drafts/audio", response_model=Draft, dependencies=protected)
     async def audio_draft(

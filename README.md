@@ -14,7 +14,7 @@ Family Care Cloud는 가족이 함께 돌봄 기록을 남기고 다음 보호�
 - CareBridge 텍스트 기능은 `requirements-core.txt`와 `FCC_AI_STT_ENABLED=false`만으로 실행할 수 있습니다.
 - 한국어는 원문을 그대로 보존하고, 다국어·혼합언어는 설정한 OpenAI-compatible 번역 모델을 호출합니다.
 - 모든 CareBridge 응답은 **검토 전 초안·공식기록 아님**이며 `external_share_allowed=false`입니다.
-  승인·수정·보류 결정과 승인 후 가족 미리보기는 백엔드/프론트에서 별도로 구현해야 합니다.
+  승인·수정·보류 결정과 승인된 가족 미리보기는 fcc-backend의 CareBridge 서비스와 프론트 케어브릿지 메뉴에서 처리합니다.
 - 기존 Care Handoff 요약은 계속 백엔드에서 처리합니다.
 
 **GPU 확장:** [로컬 Qwen3 4bit 번역·의미 재검사·다국어 STT·실행/검증](docs/LOCAL_GPU.md).
@@ -138,6 +138,7 @@ flowchart LR
 | `GET /health` | 서버 및 device(cuda/cpu) 상태 확인 | 불필요 | 구현 완료 |
 | `POST /transcribe` | 오디오 파일 → 한국어 텍스트 | `X-API-Key` (설정 시) | 구현 완료 |
 | `POST /carebridge/drafts` | 비식별 메모 → 한국어 번역·관찰·추가확인·원문 근거·QA | 동일 | 구현 완료 |
+| `POST /carebridge/transcriptions` | 음성 → 작성자가 확인·수정할 전사문(초안 생성 전) | 동일 | 구현 완료 |
 | `POST /carebridge/drafts/audio` | 짧은 음성 → 전사 → 같은 검토 전 초안 | 동일 | 구현 완료 |
 | `POST /carebridge/qa` | 수정된 초안의 근거·금지표현·공유 차단 재검사 | 동일 | 구현 완료 |
 

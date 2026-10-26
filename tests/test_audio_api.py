@@ -166,3 +166,42 @@ def test_text_only_health_and_stt_unavailable(client, headers):
         client.post("/transcribe", headers=headers, files={"file": ("a.wav", b"audio")}).status_code
         == 503
     )
+
+
+def test_carebridge_transcription_is_editable_text_without_a_draft(config, headers):
+    engine = FakeTranscriber("Did not drink water.")
+    with make(config, engine) as client:
+        response = client.post(
+            "/carebridge/transcriptions",
+            headers=headers,
+            files={"file": ("note.wav", b"audio", "audio/wav")},
+            data={"data_use": "synthetic_deidentified", "source_language": "en"},
+        )
+    assert response.status_code == 200
+    assert response.json() == {
+        "text": "Did not drink water.",
+        "requires_transcript_review": True,
+    }
+    assert engine.calls[0][1] == "en"
+
+
+def test_carebridge_transcription_auth_and_identifier_rejection(config, headers):
+    engine = FakeTranscriber("Name: Jane Doe")
+    with make(config, engine) as client:
+        assert (
+            client.post(
+                "/carebridge/transcriptions",
+                files={"file": ("note.wav", b"audio")},
+                data={"data_use": "synthetic_deidentified"},
+            ).status_code
+            == 401
+        )
+        response = client.post(
+            "/carebridge/transcriptions",
+            headers=headers,
+            files={"file": ("note.wav", b"audio")},
+            data={"data_use": "synthetic_deidentified"},
+        )
+        assert response.status_code == 422
+        assert "Jane" not in response.text
+    assert len(engine.calls) == 1
