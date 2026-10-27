@@ -1,0 +1,2 @@
+# Preserve exact frozen evaluation bytes so recorded SHA-256 hashes survive checkout.
+evaluation/translation-*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
