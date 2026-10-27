@@ -136,3 +136,11 @@ fcc-backend의 CareBridge 서비스와 프론트 케어브릿지 메뉴가 작�
 [백엔드의 전체 실행·배포 계약](https://github.com/FamilyCareCloud/fcc-backend/blob/feature/carebridge-workflow/docs/CAREBRIDGE.md)을 참고한다.
 세 저장소를 같은 부모 폴더에 둔 뒤 백엔드 scripts/start-carebridge-local.ps1로 함께 실행할 수 있다.
 공개 터널·AWS 배포 연결은 별도로 승인·설정해야 하며, 로컬 실행이 클라우드 배포를 의미하지 않는다.
+
+## 번역 품질 검증 결과 (2026-10-27)
+
+[고정 합성 문장 평가](TRANSLATION_EVALUATION.md)에서 번역 36건과 QA 대조군 36건을 검사했다.
+번역은 34건이 응답했고 2건은 실패했다. 기준문 대비 AI 검토에서 의미 오류·모호한 한국어와
+사실 누락을 발견했으며, 의도적 오역 27건 중 3건은 보류되지 않았다.
+이는 원어민 검증이나 일반 번역 정확도가 아니며, 사람의 원문 대조가 필요하다.
+기존 8건 smoke 결과를 번역 품질 합격으로 해석해서는 안 된다.

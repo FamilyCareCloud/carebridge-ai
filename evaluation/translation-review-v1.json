@@ -1,0 +1,541 @@
+{
+  "schema": "carebridge.translation-reference-review.v1",
+  "reviewer": "Codex assistant reference-based AI review; NOT a native-speaking human review",
+  "scope": "Small synthetic set; no general accuracy estimate; serving model self-review is not the reference score.",
+  "baseline_sha256": "8d2c8c3e5ba4d3a7b36dc9324c5557f35b0e7a248eb72b6d3b0ebba2caae7b67",
+  "corpus_sha256": "8ea9a245fcff8c88c9ecc26333410f9c2b579ca7597267534da6094d1ec0cff1",
+  "language_summary": {
+    "en": {
+      "cases": 12,
+      "grades": {
+        "clean": 11,
+        "minor": 1
+      },
+      "meaning_preserved": 12,
+      "false_hold": 3,
+      "quality_issue_not_held": 0
+    },
+    "vi": {
+      "cases": 12,
+      "grades": {
+        "clean": 7,
+        "minor": 3,
+        "major": 1,
+        "unavailable": 1
+      },
+      "meaning_preserved": 10,
+      "false_hold": 0,
+      "quality_issue_not_held": 1
+    },
+    "id": {
+      "cases": 12,
+      "grades": {
+        "clean": 6,
+        "major": 4,
+        "unavailable": 1,
+        "minor": 1
+      },
+      "meaning_preserved": 7,
+      "false_hold": 3,
+      "quality_issue_not_held": 3
+    }
+  },
+  "summary": {
+    "cases": 36,
+    "grades": {
+      "clean": 24,
+      "minor": 5,
+      "major": 5,
+      "unavailable": 2
+    },
+    "meaning_preserved": 29,
+    "false_hold_on_generated_translations": 6,
+    "quality_issue_not_held": 4
+  },
+  "injected_error_summary": {
+    "negation_dropped": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    },
+    "uncertainty_dropped": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    },
+    "quantity_changed": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    },
+    "unit_changed": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    },
+    "time_changed": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    },
+    "added_fact": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    },
+    "omitted_fact": {
+      "cases": 3,
+      "held": 0,
+      "missed": 3
+    },
+    "report_to_fact": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    },
+    "negation_scope": {
+      "cases": 3,
+      "held": 3,
+      "missed": 0
+    }
+  },
+  "post_baseline_targeted_repeat": [
+    {
+      "id": "vi-ambiguity",
+      "same_translation_status_or_failure": true
+    },
+    {
+      "id": "vi-chronology",
+      "same_translation_status_or_failure": true
+    },
+    {
+      "id": "id-uncertainty",
+      "same_translation_status_or_failure": true
+    },
+    {
+      "id": "id-medication",
+      "same_translation_status_or_failure": true
+    },
+    {
+      "id": "id-assistance",
+      "same_translation_status_or_failure": true
+    },
+    {
+      "id": "id-contrast",
+      "same_translation_status_or_failure": true
+    }
+  ],
+  "reviews": [
+    {
+      "id": "en-meal",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "아침 식사의 반을 먹었습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-negation",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘 아침에 물을 마시지 않았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-uncertainty",
+      "language": "en",
+      "grade": "minor",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "추측과 점심 후라는 시간은 보존했으나 '수면이 있었을 수 있습니다'는 어색하다.",
+      "translation": "점심 후 수면이 있었을 수 있습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": [
+        "수면을 other로 분류함"
+      ]
+    },
+    {
+      "id": "en-quantity",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘 아침에 150 mL의 물을 마셨습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-time",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "14시 30분에 휴식을 시작했습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-medication",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "20:00에 아직 약을 복용하지 않았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-assistance",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "도움을 받아 화장실로 걸어갔다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-reported_speech",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘은 통증이 없었다고 말했다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-ambiguity",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "피곤해 보였지만, 이유는 알려지지 않았습니다.",
+      "service_status": "hold",
+      "gate_alignment": "false_hold",
+      "ancillary_findings": [
+        "피곤함을 other로 분류함"
+      ]
+    },
+    {
+      "id": "en-contrast",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "물은 마셨지만 국은 먹지 않았다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-multiline",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "점심 반만 먹었습니다.\n오늘 외부로 나가지 않았습니다.",
+      "service_status": "hold",
+      "gate_alignment": "false_hold",
+      "ancillary_findings": []
+    },
+    {
+      "id": "en-chronology",
+      "language": "en",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "점심 후 30분간 잤고 오후 3시에 깨어났습니다.",
+      "service_status": "hold",
+      "gate_alignment": "false_hold",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-meal",
+      "language": "vi",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "아침 식사의 반을 먹었습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-negation",
+      "language": "vi",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘 아침 물을 마시지 않았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-uncertainty",
+      "language": "vi",
+      "grade": "minor",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "추측은 보존했다. '정오 식사'는 점심의 어색한 표현으로, 기준문의 '점심'을 쓰는 편이 명확하다.",
+      "translation": "정오 식사 후 잠들었을 수도 있습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": [
+        "수면을 other로 분류함"
+      ]
+    },
+    {
+      "id": "vi-quantity",
+      "language": "vi",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘 아침에 150 mL의 물을 마셨습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-time",
+      "language": "vi",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "14:30부터 휴식을 시작했습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-medication",
+      "language": "vi",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "20:00에 아직 약을 먹지 않았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-assistance",
+      "language": "vi",
+      "grade": "minor",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "도움을 받아 화장실로 걷는 의미는 보존했다. '위생실'은 일반적인 한국어 '화장실'보다 부자연스럽다.",
+      "translation": "위생실로 걷는 데 도움을 받았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-reported_speech",
+      "language": "vi",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘은 통증이 없었다고 말했다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": [
+        "통증 발언을 other로 분류함"
+      ]
+    },
+    {
+      "id": "vi-ambiguity",
+      "language": "vi",
+      "grade": "major",
+      "meaning_preserved_in_reference_review": false,
+      "rationale": "mệt(피곤함)을 '어색해'로 바꿔 관찰 상태가 달라졌다. 모델 재검사도 보류하지 않았다.",
+      "translation": "어색해 보인다. 이유가 분명하지 않다.",
+      "service_status": "review_required",
+      "gate_alignment": "quality_issue_not_held",
+      "ancillary_findings": [
+        "other로 분류함"
+      ]
+    },
+    {
+      "id": "vi-contrast",
+      "language": "vi",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "물은 마셨지만 수프는 먹지 않았다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-multiline",
+      "language": "vi",
+      "grade": "minor",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "두 구간의 점심 절반 섭취와 외출하지 않음은 보존했다. '반 정도'가 기준문의 절반보다 덜 정확한 표현이다.",
+      "translation": "점심 반 정도 먹었습니다.\n오늘은 외부로 나가지 않았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "vi-chronology",
+      "language": "vi",
+      "grade": "unavailable",
+      "meaning_preserved_in_reference_review": false,
+      "rationale": "HTTP 502: 모든 원문 구간에 한국어 번역이 필요합니다. 유효한 번역을 얻지 못해 의미 보존으로 세지 않는다.",
+      "translation": null,
+      "service_status": null,
+      "gate_alignment": "unavailable",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-meal",
+      "language": "id",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "아침 식사의 반만 먹었습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-negation",
+      "language": "id",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘 아침 물을 마시지 않았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-uncertainty",
+      "language": "id",
+      "grade": "major",
+      "meaning_preserved_in_reference_review": false,
+      "rationale": "'점심을 먹은 후 아마도 잠을 자 perhaps.'는 미완성이고 영어가 남았다. sudah의 과거 완료된 수면 가능성을 온전히 전달하지 못했다.",
+      "translation": "점심을 먹은 후 아마도 잠을 자 perhaps.",
+      "service_status": "hold",
+      "gate_alignment": "quality_issue_held",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-quantity",
+      "language": "id",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘 아침에 150 mL의 물을 마셨습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-time",
+      "language": "id",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "14:30부터 쉬기 시작했습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "review_required",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-medication",
+      "language": "id",
+      "grade": "unavailable",
+      "meaning_preserved_in_reference_review": false,
+      "rationale": "HTTP 502: 모든 원문 구간에 한국어 번역이 필요합니다. 유효한 번역을 얻지 못해 의미 보존으로 세지 않는다.",
+      "translation": null,
+      "service_status": null,
+      "gate_alignment": "unavailable",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-assistance",
+      "language": "id",
+      "grade": "major",
+      "meaning_preserved_in_reference_review": false,
+      "rationale": "보행 사실을 누락하고 '화장실로 가기 위해 도움을 받았다'는 목적 표현으로 바꿨다.",
+      "translation": "화장실로 가기 위해 도움을 받았습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "quality_issue_not_held",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-reported_speech",
+      "language": "id",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "오늘은 통증이 없다고 말했습니다.",
+      "service_status": "hold",
+      "gate_alignment": "false_hold",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-ambiguity",
+      "language": "id",
+      "grade": "major",
+      "meaning_preserved_in_reference_review": false,
+      "rationale": "'피로 보입니다'는 '피곤해 보입니다'를 온전하게 전달하지 못하는 모호한 한국어이다. 피곤함을 보존했다고 확정하지 않는 보수적 판정이다.",
+      "translation": "피로 보입니다. 이유는 알려져 있지 않습니다.",
+      "service_status": "review_required",
+      "gate_alignment": "quality_issue_not_held",
+      "ancillary_findings": [
+        "other로 분류함"
+      ]
+    },
+    {
+      "id": "id-contrast",
+      "language": "id",
+      "grade": "major",
+      "meaning_preserved_in_reference_review": false,
+      "rationale": "수프(sup)를 '식사'로 일반화해 수프를 먹지 않았다는 관찰을 식사를 하지 않았다는 관찰로 바꿨다.",
+      "translation": "물은 마시지만 식사하지 않음.",
+      "service_status": "review_required",
+      "gate_alignment": "quality_issue_not_held",
+      "ancillary_findings": []
+    },
+    {
+      "id": "id-multiline",
+      "language": "id",
+      "grade": "minor",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "점심 절반 섭취와 오늘 외출하지 않음은 읽히지만 '반량으로 먹음'과 한자 '外出'이 부자연스럽다.",
+      "translation": "점심 식사 반량으로 먹음\n오늘은外出하지 않음",
+      "service_status": "hold",
+      "gate_alignment": "false_hold",
+      "ancillary_findings": [
+        "두 번째 외출 구간을 other로 분류함",
+        "원문이 불확실하지 않은데 추가 확인 항목 1개를 생성함"
+      ]
+    },
+    {
+      "id": "id-chronology",
+      "language": "id",
+      "grade": "clean",
+      "meaning_preserved_in_reference_review": true,
+      "rationale": "사전에 적은 필수 의미를 보존하며 한국어로 이해할 수 있다.",
+      "translation": "점심 후 30분 동안 수면을 취한 후 오후 3시에 깨어났습니다.",
+      "service_status": "hold",
+      "gate_alignment": "false_hold",
+      "ancillary_findings": []
+    }
+  ]
+}

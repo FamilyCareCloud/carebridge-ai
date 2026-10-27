@@ -1,0 +1,589 @@
+{
+  "scope": "Post-baseline targeted repeat of observed failures; not an unbiased second benchmark.",
+  "run_at": "2026-10-27T02:43:33.811943+00:00",
+  "corpus_sha256": "8ea9a245fcff8c88c9ecc26333410f9c2b579ca7597267534da6094d1ec0cff1",
+  "translations": [
+    {
+      "id": "vi-ambiguity",
+      "http_status": 200,
+      "seconds": 4.236,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "e760e992-b925-4055-9a75-9cc88c1f3bb9",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "vi",
+          "text": "Có vẻ mệt. Không rõ lý do.",
+          "sha256": "9af101cd231867458f0fedad5571c189923d309242916bd0610828bf3cfc9867"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "어색해 보인다. 이유가 분명하지 않다.",
+          "segments": [
+            {
+              "text": "어색해 보인다. 이유가 분명하지 않다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 26,
+                "quote": "Có vẻ mệt. Không rõ lý do."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "other",
+            "text": "어색해 보인다. 이유가 분명하지 않다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 26,
+              "quote": "Có vẻ mệt. Không rõ lý do."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 26,
+              "quote": "Có vẻ mệt. Không rõ lý do."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "id": "vi-chronology",
+      "http_status": 502,
+      "seconds": 1.777,
+      "response": {
+        "code": "INVALID_MODEL_OUTPUT",
+        "detail": "모든 원문 구간에 한국어 번역이 필요합니다."
+      }
+    },
+    {
+      "id": "id-uncertainty",
+      "http_status": 200,
+      "seconds": 4.123,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "1f6c294b-24ff-4ec6-aee8-ad181236d931",
+        "status": "hold",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Mungkin sudah tidur setelah makan siang.",
+          "sha256": "5eca2fb639d178b0b6bdaad16ea0d3a9169c39d440a4b302e563336d7f7048c8"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "점심을 먹은 후 아마도 잠을 자 perhaps.",
+          "segments": [
+            {
+              "text": "점심을 먹은 후 아마도 잠을 자 perhaps.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 40,
+                "quote": "Mungkin sudah tidur setelah makan siang."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "sleep",
+            "text": "점심을 먹은 후 아마도 잠을 자 perhaps.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 40,
+              "quote": "Mungkin sudah tidur setelah makan siang."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 40,
+              "quote": "Mungkin sudah tidur setelah makan siang."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "severity": "hold",
+              "message": "부정 표현이 원문과 같은지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "id": "id-medication",
+      "http_status": 502,
+      "seconds": 1.549,
+      "response": {
+        "code": "INVALID_MODEL_OUTPUT",
+        "detail": "모든 원문 구간에 한국어 번역이 필요합니다."
+      }
+    },
+    {
+      "id": "id-assistance",
+      "http_status": 200,
+      "seconds": 4.083,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "30c9a65b-41c5-4126-ae65-af50ac7e476c",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Berjalan ke kamar mandi dengan bantuan.",
+          "sha256": "10dd78c55e650a1d4cdacf869e02b075a7d3b29194f12a09acbe6d72944b73ed"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "화장실로 가기 위해 도움을 받았습니다.",
+          "segments": [
+            {
+              "text": "화장실로 가기 위해 도움을 받았습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 39,
+                "quote": "Berjalan ke kamar mandi dengan bantuan."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "mobility",
+            "text": "화장실로 가기 위해 도움을 받았습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 39,
+              "quote": "Berjalan ke kamar mandi dengan bantuan."
+            }
+          }
+        ],
+        "additional_checks": [],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "id": "id-contrast",
+      "http_status": 200,
+      "seconds": 3.966,
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "cdea370e-edaa-40a1-9dbd-f4bd828c6dde",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Minum air tetapi tidak makan sup.",
+          "sha256": "fced7b1e9c80eb11e395b407074b3162a0a1f5749c275be79ee13ce6bb66ace9"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "물은 마시지만 식사하지 않음.",
+          "segments": [
+            {
+              "text": "물은 마시지만 식사하지 않음.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 33,
+                "quote": "Minum air tetapi tidak makan sup."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "meal",
+            "text": "물은 마시지만 식사하지 않음.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Minum air tetapi tidak makan sup."
+            }
+          }
+        ],
+        "additional_checks": [],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    }
+  ]
+}
