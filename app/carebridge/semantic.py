@@ -22,6 +22,9 @@ must come from the source. no_omitted_facts=false if assistance, walking/action,
 the specific object, timing, completion or a speaker's attribution is missing.
 "Walked with help" -> "walked" loses assistance even if nothing was added.
 "Said there was no pain" is a reported statement, not an independently verified fact.
+Direct quotation and indirect reported speech can preserve the same statement.
+Quotation marks alone are not uncertainty; keep the speaker attribution and the
+negation/content inside the quote. Do not require quotation marks in the translation.
 Equivalent explicit times such as 15:00 and 오후 3시 are not changed facts.
 Do not mark negation/uncertainty false merely because a factual sentence contains
 neither signal; compare each segment independently without borrowing other pairs.

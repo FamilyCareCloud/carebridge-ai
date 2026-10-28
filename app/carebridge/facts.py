@@ -57,9 +57,13 @@ def assistance_preserved(source: str, translation: str) -> bool:
 FACT_MARKERS = [
     (
         re.compile(r"\b(?:walk(?:ed|ing)?|berjalan)\b|đi\s+bộ", re.I),
-        re.compile(r"걷|걸[어었으음]|보행|도보"),
+        re.compile(r"걷|걸[어었으은을음]|보행|도보"),
     ),
     (re.compile(r"\b(?:soup|súp|sup)\b", re.I), re.compile(r"수프|스프|국(?:을|은|이|물|\s|$)")),
+    (
+        re.compile(r"\b(?:go|went|going)\s+outside\b|\bkeluar\s+rumah\b|ra\s+ngoài", re.I),
+        re.compile(r"밖|외출|외부"),
+    ),
     (
         re.compile(r"\b(?:said|reported|stated|mengatakan|berkata)\b|nói\s+rằng", re.I),
         re.compile(r"말했|말하|말합|말씀|진술|호소|언급|전했|(?:다고|라고|다며)\s*(?:했|하|함|합)"),
@@ -73,6 +77,12 @@ DURATION_SOURCE = [
 DURATION_KO = re.compile(
     r"(\d+(?:\.\d+)?)\s*(분|시간)(?:\s*(?:동안|간)|\s*(?:을|를)?\s*(?:잤|자고|잠을|주무|쉬었|휴식|걸었|걷))"
 )
+DELAY_SOURCE = [
+    re.compile(r"\b(?:fell|fall)\s+asleep\s+(\d+(?:\.\d+)?)\s+(minutes?|hours?)\s+after\b", re.I),
+    re.compile(r"ngủ\s+thiếp\s+đi\s+(\d+(?:\.\d+)?)\s*(phút|giờ)\s+sau\b", re.I),
+    re.compile(r"\btertidur\s+(\d+(?:\.\d+)?)\s*(menit|jam)\s+setelah\b", re.I),
+]
+DELAY_KO = re.compile(r"(\d+(?:\.\d+)?)\s*(분|시간)\s*(?:후|뒤|(?:이\s*)?지나|(?:이\s*)?지난)")
 DURATION_UNITS = {
     "minute": "min",
     "minutes": "min",
@@ -91,7 +101,9 @@ def explicit_facts_preserved(source: str, translation: str) -> bool:
     return all(not src.search(source) or target.search(translation) for src, target in FACT_MARKERS)
 
 
-def durations_preserved(source: str, translation: str) -> bool:
+def time_relations_preserved(source: str, translation: str) -> bool:
+    """Preserve explicit durations AND supported onset delays, without guessing other phrases."""
+
     def extract(text: str, patterns: list) -> Counter:
         return Counter(
             (m[1], DURATION_UNITS[m[2].lower()])
@@ -99,6 +111,12 @@ def durations_preserved(source: str, translation: str) -> bool:
             for m in pattern.finditer(text)
         )
 
-    expected = extract(source, [*DURATION_SOURCE, DURATION_KO])
-    actual = extract(translation, [DURATION_KO])
-    return all(actual[key] >= count for key, count in expected.items())
+    for source_patterns, target_pattern in [
+        ([*DURATION_SOURCE, DURATION_KO], DURATION_KO),
+        ([*DELAY_SOURCE, DELAY_KO], DELAY_KO),
+    ]:
+        expected = extract(source, source_patterns)
+        actual = extract(translation, [target_pattern])
+        if any(actual[key] < count for key, count in expected.items()):
+            return False
+    return True

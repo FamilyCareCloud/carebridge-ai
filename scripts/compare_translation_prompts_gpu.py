@@ -24,6 +24,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--baseline-ref", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--candidate-only", action="store_true")
     parser.add_argument(
         "--corpus", type=Path, default=ROOT / "evaluation/translation-corpus-v1.json"
     )
@@ -71,9 +72,12 @@ def main():
         "model_snapshot": provider._model.config._commit_hash,
         "scope": "Synthetic development comparison, not independent/native-speaker validation.",
         "prompts": {"baseline": baseline, "candidate": SYSTEM_PROMPT},
+        "candidate_only": args.candidate_only,
         "results": [],
     }
     for name, prompt in report["prompts"].items():
+        if args.candidate_only and name == "baseline":
+            continue
         for case in fixture["translation_cases"]:
             started = time.perf_counter()
             entry = {"prompt": name, "id": case["id"]}
