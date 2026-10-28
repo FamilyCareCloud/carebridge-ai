@@ -290,7 +290,11 @@ def test_stt_multilingual_disables_korean_adapter_but_legacy_keeps_it(monkeypatc
     monkeypatch.setitem(sys.modules, "torch", SimpleNamespace(inference_mode=nullcontext))
     monkeypatch.setattr("app.stt.decode_audio", lambda *_args: [0.1])
     engine = Transcriber(Settings(_env_file=None))
-    engine._model = SimpleNamespace(disable_adapter=Adapter, generate=generate)
+    engine._model = SimpleNamespace(
+        disable_adapter=Adapter,
+        generate=generate,
+        generation_config=SimpleNamespace(eos_token_id=1),
+    )
     engine._processor = SimpleNamespace(
         feature_extractor=lambda *a, **k: SimpleNamespace(input_features=Features()),
         tokenizer=SimpleNamespace(batch_decode=lambda *a, **k: ["관찰 내용"]),

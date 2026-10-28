@@ -1,5 +1,8 @@
 # carebridge-ai - CareBridge AI 서버
 
+새 기능명세의 원문 개정·사람 편집 QA 계약: [SPEC_WORKFLOW_V1.md](docs/SPEC_WORKFLOW_V1.md).
+`/carebridge/generations`와 `/carebridge/edits/qa`를 추가하며 기존 Draft API는 유지합니다.
+
 고령자 음성 인식(STT)과 CareBridge 다국어 관찰메모 검토 전 초안 서비스
 
 ## 프로젝트 개요

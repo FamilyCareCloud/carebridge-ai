@@ -4,6 +4,7 @@ import hashlib
 import re
 
 from app.carebridge.facts import assistance_preserved, numeric_facts
+from app.carebridge.language import korean_output
 from app.carebridge.schemas import (
     CHECK_QUESTION,
     Draft,
@@ -155,7 +156,7 @@ def assess(draft: Draft) -> QAResult:
     check(
         "TRANSLATION_CONSISTENCY",
         draft.translation.text == "\n".join(s.text for s in translated)
-        and all(s.text.strip() and re.search(r"[가-힣]", s.text) for s in translated),
+        and all(korean_output(s.text) for s in translated),
         "한국어 번역이 비어 있거나 구간별 번역과 전체 번역이 다릅니다.",
     )
     check(

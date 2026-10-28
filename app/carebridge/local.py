@@ -7,7 +7,12 @@ import time
 from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 
-from app.carebridge.provider import SYSTEM_PROMPT, InvalidModelOutput, ModelUnavailable
+from app.carebridge.provider import (
+    SYSTEM_PROMPT,
+    InferenceTimeout,
+    InvalidModelOutput,
+    ModelUnavailable,
+)
 from app.carebridge.schemas import ModelDraft, SourceSegment
 from app.config import Settings
 from app.inference import GPU_INFERENCE_LOCK
@@ -111,11 +116,11 @@ class LocalTranslationProvider:
             generated = output[0, size:]
             eos = self._model.generation_config.eos_token_id
             eos_ids = eos if isinstance(eos, list) else [eos]
-            if (
-                not len(generated)
-                or int(generated[-1]) not in eos_ids
-                or time.monotonic() - started > config.carebridge_timeout_seconds
-            ):
+            if time.monotonic() - started > config.carebridge_timeout_seconds:
+                raise InferenceTimeout(
+                    "로컬 모델 응답 시간이 초과되었습니다. 원문을 유지하고 다시 시도해 주세요."
+                )
+            if not len(generated) or int(generated[-1]) not in eos_ids:
                 raise InvalidModelOutput(
                     "로컬 모델 응답이 제한 시간·출력 길이 안에 끝나지 않았습니다."
                 )

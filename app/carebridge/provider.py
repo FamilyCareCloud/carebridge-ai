@@ -34,6 +34,10 @@ class InvalidModelOutput(RuntimeError):
     pass
 
 
+class InferenceTimeout(InvalidModelOutput):
+    pass
+
+
 class TranslationProvider:
     def __init__(self, settings: Settings, transport: httpx.AsyncBaseTransport | None = None):
         self.settings = settings
@@ -108,6 +112,10 @@ class TranslationProvider:
                 raise InvalidModelOutput("번역 모델이 완전한 초안을 반환하지 않았습니다.")
             content = choice["message"]["content"]
             result = ModelDraft.model_validate_json(content)
+        except httpx.TimeoutException as exc:
+            raise InferenceTimeout(
+                "번역 모델 응답 시간이 초과되었습니다. 원문을 유지하고 다시 시도해 주세요."
+            ) from exc
         except (httpx.HTTPError, httpx.InvalidURL) as exc:
             raise ModelUnavailable("번역 모델에 연결할 수 없습니다.") from exc
         except (KeyError, IndexError, TypeError, ValueError, ValidationError) as exc:

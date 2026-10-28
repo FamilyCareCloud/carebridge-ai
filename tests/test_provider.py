@@ -91,7 +91,7 @@ def test_provider_failure_is_503_without_exposing_response(config, headers, stat
     assert "provider-secret" not in response.text
 
 
-def test_timeout_is_503_and_not_retried(config, headers):
+def test_timeout_is_504_and_not_retried(config, headers):
     calls = []
 
     def handler(req):
@@ -99,7 +99,8 @@ def test_timeout_is_503_and_not_retried(config, headers):
         raise httpx.ReadTimeout("upstream-secret")
 
     response = call(config, headers, handler)
-    assert response.status_code == 503
+    assert response.status_code == 504
+    assert response.json()["code"] == "INFERENCE_TIMEOUT"
     assert "upstream-secret" not in response.text
     assert len(calls) == 1
 
