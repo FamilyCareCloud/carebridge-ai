@@ -18,6 +18,7 @@ GOOD = {
     "negation_preserved": True,
     "uncertainty_preserved": True,
     "no_added_facts": True,
+    "no_omitted_facts": True,
     "no_medical_judgment": True,
 }
 
@@ -55,6 +56,7 @@ def local_client(config, raw, monkeypatch, **options):
         "negation_preserved",
         "uncertainty_preserved",
         "no_added_facts",
+        "no_omitted_facts",
         "no_medical_judgment",
     ],
 )
@@ -94,6 +96,7 @@ def test_semantic_pass_never_approves_or_erases_human_review(config, headers, mo
         json.dumps({"segments": [{**GOOD, "segment_id": "wrong"}]}),
         json.dumps({"segments": [GOOD, GOOD]}),
         json.dumps({"segments": [{**GOOD, "negation_preserved": "true"}]}),
+        json.dumps({"segments": [{k: v for k, v in GOOD.items() if k != "no_omitted_facts"}]}),
         json.dumps({"segments": [GOOD], "status": "approved"}),
     ],
 )

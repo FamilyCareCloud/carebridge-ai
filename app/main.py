@@ -123,6 +123,7 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
             "device": engine.device if engine else "disabled",
             "stt_enabled": config.stt_enabled,
             "carebridge_schema": "carebridge.v1",
+            "carebridge_qa_revision": "carebridge.qa.v2",
             "translation_backend": config.carebridge_backend,
             "translation_loaded": getattr(translator, "loaded", False),
             "semantic_check_enabled": config.carebridge_semantic_check_enabled,
