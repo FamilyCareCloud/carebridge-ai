@@ -1,5 +1,7 @@
 # 기능명세 AI 구현의 실제 GPU 검증
 
+후속 번역 지침 개선과 54개 확장 사례의 결과는 [TRANSLATION_IMPROVEMENT_V3.md](TRANSLATION_IMPROVEMENT_V3.md)에 기록했다. 아래는 이전 실행의 결과이며 원시 기록을 유지한다.
+
 2026-10-29 KST 실행. 최종 평가 코드 `16c95b48e5ff5211b5265a7a1b761ba973d2f83f`.
 사용자 명세의 AI 계약 구현은 [SPEC_WORKFLOW_V1.md](SPEC_WORKFLOW_V1.md)에 정리했다.
 

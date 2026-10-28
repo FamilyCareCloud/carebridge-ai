@@ -3,3 +3,4 @@ evaluation/translation-*.json -text whitespace=trailing-space,space-before-tab,c
 evaluation/spec-gpu-*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 evaluation/backend-contract-spec-*.json -text
 evaluation/spec-reference-*.json -text
+evaluation/prompt-comparison-*.json -text

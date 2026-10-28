@@ -108,3 +108,5 @@ python scripts/evaluate_spec_gpu.py --output evaluation/spec-gpu-새실행.json 
 ```
 
 고정 36건 생성/36건 QA, 원문 재생성·사람 편집·충돌·사실 누락/추가/발언 출처·동등 시각·실제 시간초과/절단·선택적 합성 영어 STT를 기록한다. 출력 파일 덮어쓰기를 거절한다. 프롬프트/코드/사례/음성/가중치 버전과 실제 실패를 보관한다. 모델 자기 검사·HTTP 성공은 번역 정확도 점수가 아니다.
+
+`--corpus evaluation/translation-corpus-v2.json`으로 실행하면 기존 사례를 포함한 54건 생성/60건 QA를 검사한다. 후속 개선에서는 수면 전 간격이 지속시간으로 바뀌는 오류와 명시된 외출의 누락도 검사한다. 직접/간접 인용의 형식 차이와 한국어 '걸은' 활용형의 오탐을 보완했다. 최신 결과와 남은 한계는 [TRANSLATION_IMPROVEMENT_V3.md](TRANSLATION_IMPROVEMENT_V3.md)를 참고한다.
