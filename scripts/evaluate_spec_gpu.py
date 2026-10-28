@@ -81,6 +81,10 @@ def main() -> int:
         "code_sha256": code_files,
         "runner_sha256": sha(Path(__file__).read_bytes()),
         "corpus_sha256": sha(corpus_raw),
+        "fixture_counts": {
+            "translations": len(fixture["translation_cases"]),
+            "qa": len(fixture["qa_cases"]),
+        },
         "scope": "Synthetic offline TestClient + real CUDA weights. No backend storage, native-speaker or field validation.",
         "gpu": torch.cuda.get_device_name(0),
         "runtime_versions": {
@@ -392,7 +396,7 @@ def main() -> int:
         0
         if (
             report["workflow_passed"] == report["workflow_total"]
-            and report["summary"]["translation_http_200"] == 36
+            and report["summary"]["translation_http_200"] == len(fixture["translation_cases"])
             and report["summary"]["qa_request_failures"] == 0
             and report["summary"]["injected_errors_missed"] == 0
             and report["summary"]["faithful_controls_false_hold"] == 0

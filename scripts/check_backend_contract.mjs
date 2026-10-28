@@ -6,20 +6,24 @@ import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 
-const [reportPath, backendPath, outputPath] = process.argv.slice(2);
+const [reportPath, backendPath, outputPath, corpusPath] = process.argv.slice(2);
 if (!reportPath || !backendPath || !outputPath) {
-  throw new Error('Usage: node scripts/check_backend_contract.mjs REPORT BACKEND_REPO NEW_OUTPUT');
+  throw new Error('Usage: node scripts/check_backend_contract.mjs REPORT BACKEND_REPO NEW_OUTPUT [CORPUS]');
 }
 const raw = await readFile(reportPath);
 const report = JSON.parse(raw);
 if (!report.finished_at) throw new Error('Evaluation is incomplete');
-const corpus = JSON.parse(await readFile(new URL('../evaluation/translation-corpus-v1.json', import.meta.url), 'utf8'));
+const corpusRaw = await readFile(corpusPath ?? new URL('../evaluation/translation-corpus-v1.json', import.meta.url));
+const corpusHash = createHash('sha256').update(corpusRaw).digest('hex');
+if (report.corpus_sha256 !== corpusHash) throw new Error('Corpus does not match the evaluated fixture');
+const corpus = JSON.parse(corpusRaw.toString('utf8'));
 const contractPath = resolve(backendPath, 'src/carebridge-contract.js');
 const { validateDraft, validateReview, evidenceSegments } = await import(pathToFileURL(contractPath));
 const result = {
   schema: 'carebridge.backend-compatibility.v1',
   evaluated_at: new Date().toISOString(),
   evaluation_sha256: createHash('sha256').update(raw).digest('hex'),
+  corpus_sha256: corpusHash,
   backend_revision: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: backendPath, encoding: 'utf8' }).trim(),
   backend_contract_sha256: createHash('sha256').update(await readFile(contractPath)).digest('hex'),
   drafts: [], reviews: [], failures: [], skipped_failed_requests: [],
@@ -31,12 +35,14 @@ const check = (type, id, callback) => {
 for (const entry of report.translations) {
   if (entry.http_status !== 200) { result.skipped_failed_requests.push(entry.id); continue; }
   const source = corpus.translation_cases.find(c => c.id === entry.id)?.source;
+  if (source === undefined) throw new Error(`Unknown translation case: ${entry.id}`);
   check('drafts', entry.id, () => validateDraft(entry.response, source));
 }
 for (const entry of report.qa_cases) {
   if (entry.http_status !== 200) { result.skipped_failed_requests.push(entry.id); continue; }
   const fixture = corpus.qa_cases.find(c => c.id === entry.id);
   const source = corpus.translation_cases.find(c => c.id === fixture?.base_id)?.source;
+  if (source === undefined) throw new Error(`Unknown QA case: ${entry.id}`);
   const expected = { translation: { segments: evidenceSegments(source).map(evidence => ({ evidence })) } };
   check('reviews', entry.id, () => validateReview(entry.response, expected));
 }

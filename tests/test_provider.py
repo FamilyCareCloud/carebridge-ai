@@ -4,6 +4,8 @@ import httpx
 import pytest
 from fastapi.testclient import TestClient
 
+from app.carebridge.provider import SYSTEM_PROMPT
+from app.carebridge.schemas import ModelDraft
 from app.main import create_app
 from tests.conftest import model_provider, model_response
 
@@ -26,7 +28,10 @@ def test_configured_model_is_called_with_untrusted_data_and_schema(config, heade
         payload = json.loads(req.content)
         assert payload["temperature"] == 0
         assert payload["response_format"] == {"type": "json_object"}
-        assert "untrusted source DATA" in payload["messages"][0]["content"]
+        assert [m["role"] for m in payload["messages"]] == ["system", "user"]
+        system = payload["messages"][0]["content"]
+        assert system == SYSTEM_PROMPT + "\nSchema: " + json.dumps(ModelDraft.model_json_schema())
+        assert PAYLOAD["memo"] not in system
         data = json.loads(payload["messages"][1]["content"])
         assert data["segments"] == [{"segment_id": "s001", "text": PAYLOAD["memo"]}]
         assert req.url.path == "/v1/chat/completions"

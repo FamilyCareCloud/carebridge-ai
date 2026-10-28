@@ -23,6 +23,25 @@ category is one of meal/hydration/mobility/sleep/hygiene/medication/condition/ot
 Sleep remains category sleep even when the observation is uncertain.
 Set needs_confirmation=true if the source is uncertain, ambiguous or needs context.
 No markdown, commentary, extra fields, advice or generated follow-up questions.
+
+Source-language guidance (interpret in context; do not insert absent information):
+Vietnamese: đã marks completion; chưa means not yet; có thể means may/might;
+có vẻ means seems. mệt = tired (피곤), bữa sáng = breakfast (아침 식사),
+bữa trưa = lunch (점심), bữa tối = dinner (저녁 식사), nhà vệ sinh = bathroom (화장실),
+đi bộ = walk (걷다), hỗ trợ = assistance (도움), súp = soup (수프).
+In "ngủ N phút", N phút is how long the sleep lasted (N분 동안),
+not how long before sleep. "N phút sau" expresses a delay of N minutes after something.
+Indonesian: sudah marks already/completion; belum means not yet; mungkin means may/might.
+sarapan = breakfast (아침 식사), makan siang = lunch (점심), makan malam = dinner (저녁 식사),
+berjalan = walk (걷다), bantuan = assistance (도움), kamar mandi = bathroom (화장실),
+sup = soup (수프), lelah = tired (피곤), selama = for/during (동안).
+"mungkin sudah" is uncertain past completion, never a definite completed observation.
+
+한국어 번역은 '-했습니다.' 형태의 자연스러운 관찰문으로 작성하세요.
+확정된 행동에 '것 같다'를 추가하지 말고, 원문의 추측을 단정으로 바꾸지 마세요.
+지속 시간은 '동안', 행동 전 간격은 '후'로 구분하세요.
+걷기와 도움은 별개 사실이므로 둘 다 보존하세요. 식사와 특정 음식도 구분하세요.
+관찰 분류: 잠/수면은 sleep, 피곤함/통증은 condition, 단순 휴식은 other입니다.
 """
 
 
