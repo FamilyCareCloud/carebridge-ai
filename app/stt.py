@@ -72,13 +72,18 @@ class Transcriber:
             adapter = nullcontext() if senior else self._model.disable_adapter()
             started = time.monotonic()
             with adapter, torch.inference_mode():
-                generated_ids = self._model.generate(
+                generated = self._model.generate(
                     inputs,
                     language=language,
                     task=self.settings.task,
                     max_time=self.settings.stt_timeout_seconds,
                     max_new_tokens=self.settings.stt_max_new_tokens,
+                    # Whisper's default tensor result strips EOS. Short-form raw
+                    # output retains it so a normal result isn't called truncated.
+                    return_dict_in_generate=True,
+                    return_timestamps=False,
                 )
+            generated_ids = generated.sequences
             if time.monotonic() - started > self.settings.stt_timeout_seconds:
                 raise AudioRejected(
                     "STT_TIMEOUT", "음성 인식 시간이 초과되었습니다. 다시 시도해 주세요.", 504

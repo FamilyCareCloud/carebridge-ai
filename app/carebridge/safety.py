@@ -3,7 +3,7 @@
 import hashlib
 import re
 
-from app.carebridge.facts import assistance_preserved, numeric_facts
+from app.carebridge.facts import assistance_preserved, durations_preserved, numeric_facts
 from app.carebridge.language import korean_output
 from app.carebridge.schemas import (
     CHECK_QUESTION,
@@ -170,7 +170,11 @@ def assess(draft: Draft) -> QAResult:
     )
     check(
         "NUMERIC_FACTS_PRESERVED",
-        all(numeric_facts(t.text) == numeric_facts(t.evidence.quote) for t in translated),
+        all(
+            numeric_facts(t.text) == numeric_facts(t.evidence.quote)
+            and durations_preserved(t.evidence.quote, t.text)
+            for t in translated
+        ),
         "번역의 숫자가 원문과 다릅니다. 시각·수량을 담당자가 대조해 주세요.",
     )
     check(

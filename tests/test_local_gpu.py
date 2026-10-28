@@ -285,7 +285,9 @@ def test_stt_multilingual_disables_korean_adapter_but_legacy_keeps_it(monkeypatc
 
     def generate(*args, **kwargs):
         inferred.append(kwargs["language"])
-        return [[1]]
+        assert kwargs["return_dict_in_generate"] is True
+        assert kwargs["return_timestamps"] is False
+        return SimpleNamespace(sequences=[[1]])
 
     monkeypatch.setitem(sys.modules, "torch", SimpleNamespace(inference_mode=nullcontext))
     monkeypatch.setattr("app.stt.decode_audio", lambda *_args: [0.1])

@@ -6,6 +6,7 @@ from typing import Literal
 from pydantic import Field, ValidationError
 from starlette.concurrency import run_in_threadpool
 
+from app.carebridge.facts import explicit_facts_preserved
 from app.carebridge.local import LocalTranslationProvider
 from app.carebridge.provider import InvalidModelOutput
 from app.carebridge.safety import assess, check_input
@@ -108,6 +109,8 @@ async def review_semantics(draft: Draft, provider: LocalTranslationProvider) -> 
         raise InvalidModelOutput("의미 검사 결과에 원문 구간 누락·중복·변경이 있습니다.")
     segments = []
     for item, translated in zip(candidate.segments, draft.translation.segments, strict=True):
+        if not explicit_facts_preserved(translated.evidence.quote, translated.text):
+            item.no_omitted_facts = False
         checks = []
         for field, (code, message) in CHECKS.items():
             passed = getattr(item, field)

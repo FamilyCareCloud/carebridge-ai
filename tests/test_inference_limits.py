@@ -48,7 +48,7 @@ def test_incomplete_stt_never_returns_partial_transcript(config, monkeypatch, ti
     ticks = iter([0, config.stt_timeout_seconds + 1 if timeout else 1])
     monkeypatch.setattr("app.stt.time.monotonic", lambda: next(ticks))
     engine._model = SimpleNamespace(
-        generate=lambda *a, **k: [[1, 2]],
+        generate=lambda *a, **k: SimpleNamespace(sequences=[[1, 2]]),
         generation_config=SimpleNamespace(eos_token_id=99),
     )
     engine._processor = SimpleNamespace(
