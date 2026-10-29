@@ -51,15 +51,17 @@ def test_unknown_or_compound_claims_are_not_rewritten(source, target):
     assert render_segment(source, "vi", segment(target)).translation == target
 
 
-def test_transport_contrast_preserves_the_model_place_and_support():
+def test_transport_contrast_preserves_place_ambiguity_and_support():
     source = "Tidak berjalan ke taman; pergi ke sana dengan kursi roda dan bantuan."
     result = render_segment(
         source, "id", segment("공원에 가는 도중 걸어 가지 않았으며 휠체어와 도움을 받아 갔습니다.")
     )
     assert (
         result.translation
-        == "공원까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다."
+        == "정원 또는 공원까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다."
     )
+    assert result.needs_confirmation is True
+    assert render_segment(source, "id", result) == result
     assert (
         render_segment(
             source.replace("taman", "kamar"), "id", segment(result.translation)
