@@ -32,13 +32,13 @@ const check = (type, id, callback) => {
   try { callback(); result[type].push(id); }
   catch (error) { result.failures.push({ type, id, code: error.code ?? error.name }); }
 };
-for (const entry of report.translations) {
+for (const entry of report.translations ?? []) {
   if (entry.http_status !== 200) { result.skipped_failed_requests.push(entry.id); continue; }
   const source = corpus.translation_cases.find(c => c.id === entry.id)?.source;
   if (source === undefined) throw new Error(`Unknown translation case: ${entry.id}`);
   check('drafts', entry.id, () => validateDraft(entry.response, source));
 }
-for (const entry of report.qa_cases) {
+for (const entry of report.qa_cases ?? []) {
   if (entry.http_status !== 200) { result.skipped_failed_requests.push(entry.id); continue; }
   const fixture = corpus.qa_cases.find(c => c.id === entry.id);
   const source = corpus.translation_cases.find(c => c.id === fixture?.base_id)?.source;
@@ -46,11 +46,22 @@ for (const entry of report.qa_cases) {
   const expected = { translation: { segments: evidenceSegments(source).map(evidence => ({ evidence })) } };
   check('reviews', entry.id, () => validateReview(entry.response, expected));
 }
-for (const entry of report.workflow_cases) {
+for (const entry of report.workflow_cases ?? []) {
   if (entry.http_status !== 200 || !entry.response.draft) continue;
   const value = entry.response;
   check('drafts', entry.id, () => validateDraft(value.draft, value.draft.source.text));
   if (value.review) check('reviews', entry.id, () => validateReview(value.review, value.draft));
+}
+if (report.schema === 'carebridge.targeted-audit-evaluation.v1') {
+  for (const entry of report.results) {
+    if (entry.http_status !== 200) { result.skipped_failed_requests.push(entry.id); continue; }
+    const source = entry.draft?.source?.text;
+    if (!corpus.translation_cases.some(c => c.source === source)) throw new Error(`Unknown recheck source: ${entry.id}`);
+    // Only generated drafts are service outputs. QA request fixtures intentionally
+    // contain unchecked/mutated content and are not publishable backend drafts.
+    if (entry.kind === 'generated') check('drafts', entry.id, () => validateDraft(entry.draft, source));
+    check('reviews', entry.id, () => validateReview(entry.response, entry.draft));
+  }
 }
 if (!result.drafts.length || !result.reviews.length) throw new Error('No responses checked');
 result.all_checked_responses_compatible = result.failures.length === 0;

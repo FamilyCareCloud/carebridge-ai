@@ -50,6 +50,8 @@ draft_sha256은 검증된 Draft를 `json.dumps(..., ensure_ascii=False, sort_key
 
 pipeline은 QA 계약, 설정 backend/model, 번역/의미 프롬프트 SHA-256이다. 한국어 보존 경로에서도 설정 모델명이 포함될 수 있으며 실제 생성 경로는 draft.mode를 본다. 실행 코드·가중치 스냅샷·GPU 패키지 버전은 평가 보고서에 기록한다.
 
+번역 지문에는 원문 단서 규칙·용어·템플릿·개수 한도 및 언어/의미에 따른 지침 선택 정의도 포함한다. 요청별 최종 프롬프트 자체의 해시는 아니며 실제 단서는 보존된 원문과 고정 코드로 재구성한다. 원문/생성본 해시와 응답 스키마는 유지한다. [확장 평가 오류 개선](TRANSLATION_CONTEXT_V1.md)에 방법과 검증 근거를 기록한다.
+
 ## POST /carebridge/edits/qa
 
 필수 필드:
