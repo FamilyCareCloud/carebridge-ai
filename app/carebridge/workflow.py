@@ -6,7 +6,7 @@ from uuid import uuid4
 
 from pydantic import Field, StringConstraints
 
-from app.carebridge.provider import SYSTEM_PROMPT
+from app.carebridge.provider import translation_prompt_material
 from app.carebridge.safety import assess, check_input, digest
 from app.carebridge.schemas import (
     Category,
@@ -54,7 +54,7 @@ def pipeline_info(config: Settings) -> Pipeline:
             if config.carebridge_backend == "local"
             else config.carebridge_model
         ),
-        translation_prompt_sha256=digest(SYSTEM_PROMPT),
+        translation_prompt_sha256=digest(translation_prompt_material()),
         semantic_prompt_sha256=digest(AUDIT_PROMPT),
     )
 

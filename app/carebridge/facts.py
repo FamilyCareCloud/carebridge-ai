@@ -18,6 +18,22 @@ ASSISTANCE = re.compile(
     re.I,
 )
 ZONE = re.compile(r"(?<![A-Za-z])(?:UTC|GMT|KST)(?:[+-]\d{1,2}(?::[0-5]\d)?)?(?![A-Za-z])", re.I)
+AFTER_WALKING = re.compile(r"\bafter\s+walking\b|sau\s+khi\s+đi\s+bộ|\bsetelah\s+berjalan\b", re.I)
+REPORTED_SPEECH = re.compile(r"\b(?:said|reported|stated|mengatakan|berkata)\b|nói\s+rằng", re.I)
+SIMPLE_NEGATION = re.compile(r"\b(?:not|didn't|don't|doesn't|tidak|không)\b", re.I)
+LIFETIME_NEGATION = re.compile(
+    r"\b(?:never|ever|experience|experienced)\b|(?:chưa|không)\s+bao\s+giờ|"
+    r"\b(?:tidak|belum)\s+pernah\b|\bpengalaman\b|kinh\s+nghiệm|경험|적(?:이|은)?\s*없",
+    re.I,
+)
+SOURCE_CONDITION = re.compile(
+    r"\b(?:if|whenever|usually|always|often|jika|kalau|setiap|biasanya|selalu)\b|nếu|mỗi\s+khi|thường",
+    re.I,
+)
+WALKING_CONDITION_KO = re.compile(
+    r"(?:걷다|걷고|걸어)\s*보면|(?:걷|걸을|보행할|산책할)\s*때(?:마다)?"
+)
+LIFETIME_NEGATION_KO = re.compile(r"(?:적|경험)(?:이|은)?\s*(?:전혀\s*)?없")
 
 
 def numeric_facts(text: str) -> tuple[Counter, Counter, Counter]:
@@ -99,6 +115,23 @@ DURATION_UNITS = {
 
 def explicit_facts_preserved(source: str, translation: str) -> bool:
     return all(not src.search(source) or target.search(translation) for src, target in FACT_MARKERS)
+
+
+def temporal_context_preserved(source: str, translation: str) -> bool:
+    # A narrow contradiction check; unrecognized paraphrases still require model/human review.
+    return not (
+        AFTER_WALKING.search(source)
+        and not SOURCE_CONDITION.search(source)
+        and WALKING_CONDITION_KO.search(translation)
+    )
+
+
+def negation_scope_preserved(source: str, translation: str) -> bool:
+    return not (
+        SIMPLE_NEGATION.search(source)
+        and not LIFETIME_NEGATION.search(source)
+        and LIFETIME_NEGATION_KO.search(translation)
+    )
 
 
 def time_relations_preserved(source: str, translation: str) -> bool:

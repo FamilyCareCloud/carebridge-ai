@@ -32,9 +32,14 @@ def main():
     if args.output.exists():
         parser.error("Choose a new output path; previous evidence must not be overwritten.")
 
+    from app.carebridge.guidance import guidance_definition, translation_payload
     from app.carebridge.language import korean_output
     from app.carebridge.local import LocalTranslationProvider
-    from app.carebridge.provider import SYSTEM_PROMPT
+    from app.carebridge.provider import (
+        SYSTEM_PROMPT,
+        translation_prompt_material,
+        translation_system_prompt,
+    )
     from app.carebridge.safety import check_input
     from app.carebridge.schemas import ModelDraft
     from app.config import Settings
@@ -73,6 +78,8 @@ def main():
         "scope": "Synthetic development comparison, not independent/native-speaker validation.",
         "prompts": {"baseline": baseline, "candidate": SYSTEM_PROMPT},
         "candidate_only": args.candidate_only,
+        "candidate_guidance": json.loads(guidance_definition()),
+        "candidate_prompt_material": translation_prompt_material(),
         "results": [],
     }
     for name, prompt in report["prompts"].items():
@@ -83,14 +90,21 @@ def main():
             entry = {"prompt": name, "id": case["id"]}
             try:
                 segments = check_input(case["source"])
-                raw = provider._complete(
-                    prompt + "\nSchema: " + json.dumps(ModelDraft.model_json_schema()),
-                    {
+                payload = (
+                    translation_payload(segments, case["language"])
+                    if name == "candidate"
+                    else {
                         "source_language": case["language"],
                         "segments": [
                             {"segment_id": s.segment_id, "text": s.quote} for s in segments
                         ],
-                    },
+                    }
+                )
+                entry["input"] = payload
+                system = translation_system_prompt(payload) if name == "candidate" else prompt
+                raw = provider._complete(
+                    system + "\nSchema: " + json.dumps(ModelDraft.model_json_schema()),
+                    payload,
                 )
                 entry["raw"] = raw
                 parsed = ModelDraft.model_validate_json(raw)

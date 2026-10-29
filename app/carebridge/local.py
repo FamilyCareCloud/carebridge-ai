@@ -7,11 +7,12 @@ import time
 from pydantic import ValidationError
 from starlette.concurrency import run_in_threadpool
 
+from app.carebridge.guidance import translation_payload
 from app.carebridge.provider import (
-    SYSTEM_PROMPT,
     InferenceTimeout,
     InvalidModelOutput,
     ModelUnavailable,
+    translation_system_prompt,
 )
 from app.carebridge.schemas import ModelDraft, SourceSegment
 from app.config import Settings
@@ -137,13 +138,13 @@ class LocalTranslationProvider:
             GPU_INFERENCE_LOCK.release()
 
     async def generate(self, segments: list[SourceSegment], source_language: str) -> ModelDraft:
+        payload = translation_payload(segments, source_language)
         raw = await run_in_threadpool(
             self._complete,
-            SYSTEM_PROMPT + "\nSchema: " + json.dumps(ModelDraft.model_json_schema()),
-            {
-                "source_language": source_language,
-                "segments": [{"segment_id": s.segment_id, "text": s.quote} for s in segments],
-            },
+            translation_system_prompt(payload)
+            + "\nSchema: "
+            + json.dumps(ModelDraft.model_json_schema()),
+            payload,
         )
         try:
             result = ModelDraft.model_validate_json(raw)

@@ -4,6 +4,7 @@ from urllib.parse import urlsplit
 import httpx
 from pydantic import ValidationError
 
+from app.carebridge.guidance import guidance_definition, translation_payload
 from app.carebridge.schemas import ModelDraft, SourceSegment
 from app.config import Settings
 
@@ -36,6 +37,32 @@ Sleep is sleep even if uncertain; simple resting is other; fatigue/pain are cond
 needs_confirmation: true when the SOURCE is uncertain, ambiguous or missing context; otherwise false.
 This flag does not change the translation. Output no commentary or follow-up questions.
 """
+HINT_INSTRUCTION = """The following per-segment meaning guides were derived from matched source phrases.
+Use the specified Korean wording to preserve these meanings in that segment's translation.
+Only the user's text is the original observation; retain its other facts and uncertainty too.
+Do not copy explanations or invent facts from these guides. Return only the requested schema.
+"""
+
+
+def translation_prompt_material() -> str:
+    return (
+        SYSTEM_PROMPT + HINT_INSTRUCTION + "\nSource guidance definition: " + guidance_definition()
+    )
+
+
+def translation_system_prompt(payload: dict) -> str:
+    guides = [
+        {
+            "segment_id": segment["segment_id"],
+            "meanings": [h["meaning"] for h in segment["source_hints"]],
+        }
+        for segment in payload["segments"]
+        if segment.get("source_hints")
+    ]
+    if guides:
+        # Only internally derived meanings/IDs, never arbitrary source prose, enter the system role.
+        return SYSTEM_PROMPT + "\n" + HINT_INSTRUCTION + json.dumps(guides, ensure_ascii=False)
+    return SYSTEM_PROMPT
 
 
 class ModelUnavailable(RuntimeError):
@@ -73,6 +100,7 @@ class TranslationProvider:
         key = config.carebridge_model_api_key.get_secret_value()
         if key:
             headers["Authorization"] = f"Bearer {key}"
+        source_payload = translation_payload(segments, source_language)
         payload = {
             "model": config.carebridge_model,
             "temperature": 0,
@@ -81,19 +109,14 @@ class TranslationProvider:
             "messages": [
                 {
                     "role": "system",
-                    "content": SYSTEM_PROMPT
+                    "content": translation_system_prompt(source_payload)
                     + "\nSchema: "
                     + json.dumps(ModelDraft.model_json_schema()),
                 },
                 {
                     "role": "user",
                     "content": json.dumps(
-                        {
-                            "source_language": source_language,
-                            "segments": [
-                                {"segment_id": s.segment_id, "text": s.quote} for s in segments
-                            ],
-                        },
+                        source_payload,
                         ensure_ascii=False,
                     ),
                 },

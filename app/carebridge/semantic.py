@@ -6,7 +6,11 @@ from typing import Literal
 from pydantic import Field, ValidationError
 from starlette.concurrency import run_in_threadpool
 
-from app.carebridge.facts import explicit_facts_preserved
+from app.carebridge.facts import (
+    explicit_facts_preserved,
+    negation_scope_preserved,
+    temporal_context_preserved,
+)
 from app.carebridge.local import LocalTranslationProvider
 from app.carebridge.provider import InvalidModelOutput
 from app.carebridge.safety import assess, check_input
@@ -25,6 +29,11 @@ the specific object, timing, completion or a speaker's attribution is missing.
 Direct quotation and indirect reported speech can preserve the same statement.
 Quotation marks alone are not uncertainty; keep the speaker attribution and the
 negation/content inside the quote. Do not require quotation marks in the translation.
+uncertainty_preserved concerns linguistic modality (may, seems, unsure), NOT whether
+the observation or reported statement has been independently verified as true.
+For example, "said: I did not eat" and "먹지 않았다고 말했습니다" both report a negated
+statement without adding uncertainty. A simple "did not" is NOT "has never done it".
+"After walking" is a sequence, NOT the habitual/conditional "걷다 보면".
 Equivalent explicit times such as 15:00 and 오후 3시 are not changed facts.
 Do not mark negation/uncertainty false merely because a factual sentence contains
 neither signal; compare each segment independently without borrowing other pairs.
@@ -114,6 +123,10 @@ async def review_semantics(draft: Draft, provider: LocalTranslationProvider) -> 
     for item, translated in zip(candidate.segments, draft.translation.segments, strict=True):
         if not explicit_facts_preserved(translated.evidence.quote, translated.text):
             item.no_omitted_facts = False
+        if not temporal_context_preserved(translated.evidence.quote, translated.text):
+            item.no_omitted_facts = item.no_added_facts = False
+        if not negation_scope_preserved(translated.evidence.quote, translated.text):
+            item.negation_preserved = False
         checks = []
         for field, (code, message) in CHECKS.items():
             passed = getattr(item, field)
