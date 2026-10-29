@@ -1,8 +1,10 @@
 import re
 from uuid import uuid4
 
+from app.carebridge.language import korean_output
 from app.carebridge.provider import InvalidModelOutput, TranslationProvider
-from app.carebridge.safety import assess, check_input, digest
+from app.carebridge.rendering import render_segment
+from app.carebridge.safety import assess, check_input, digest, lexical_signals
 from app.carebridge.schemas import (
     AdditionalCheck,
     Draft,
@@ -64,11 +66,19 @@ class DraftService:
             candidate = await self.provider.generate(segments, request.source_language)
         if [s.segment_id for s in candidate.segments] != [s.segment_id for s in segments]:
             raise InvalidModelOutput("초안의 원문 구간이 누락·중복·변경되었습니다.")
-        if any(
-            not s.translation.strip() or not re.search(r"[가-힣]", s.translation)
-            for s in candidate.segments
-        ):
-            raise InvalidModelOutput("모든 원문 구간에 한국어 번역이 필요합니다.")
+        if not local:
+            candidate = candidate.model_copy(
+                update={
+                    "segments": [
+                        render_segment(evidence.quote, request.source_language, segment)
+                        for segment, evidence in zip(candidate.segments, segments, strict=True)
+                    ]
+                }
+            )
+        if any(not korean_output(s.translation) for s in candidate.segments):
+            raise InvalidModelOutput(
+                "모든 원문 구간에 외국어 문장이 남지 않은 한국어 번역이 필요합니다."
+            )
         translations = []
         observations = []
         additional_checks = []
@@ -84,7 +94,7 @@ class DraftService:
                     evidence=evidence,
                 )
             )
-            if model_segment.needs_confirmation:
+            if model_segment.needs_confirmation or lexical_signals(evidence.quote)[1]:
                 additional_checks.append(
                     AdditionalCheck(id=f"c{len(additional_checks) + 1:03d}", evidence=evidence)
                 )

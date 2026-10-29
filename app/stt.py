@@ -1,4 +1,5 @@
 import logging
+import time
 from contextlib import nullcontext
 from threading import Lock
 
@@ -48,7 +49,15 @@ class Transcriber:
         audio = decode_audio(audio_bytes, self.settings.max_audio_seconds)
 
         # GPU inference is serialized, and callers run it outside the event loop.
-        with self._lock, GPU_INFERENCE_LOCK:
+        if not self._lock.acquire(timeout=self.settings.carebridge_queue_timeout_seconds):
+            raise AudioRejected("STT_BUSY", "음성 인식이 다른 요청을 처리 중입니다.", 503)
+        acquired_gpu = False
+        try:
+            acquired_gpu = GPU_INFERENCE_LOCK.acquire(
+                timeout=self.settings.carebridge_queue_timeout_seconds
+            )
+            if not acquired_gpu:
+                raise AudioRejected("STT_BUSY", "GPU가 다른 요청을 처리 중입니다.", 503)
             self._load()
             import torch
 
@@ -61,13 +70,35 @@ class Transcriber:
             # free-form observation notes. Auto/non-Korean input uses base Whisper.
             senior = language is not None and language.lower().split("-")[0] in {"ko", "korean"}
             adapter = nullcontext() if senior else self._model.disable_adapter()
+            started = time.monotonic()
             with adapter, torch.inference_mode():
-                generated_ids = self._model.generate(
-                    inputs, language=language, task=self.settings.task
+                generated = self._model.generate(
+                    inputs,
+                    language=language,
+                    task=self.settings.task,
+                    max_time=self.settings.stt_timeout_seconds,
+                    max_new_tokens=self.settings.stt_max_new_tokens,
+                    # Whisper's default tensor result strips EOS. Short-form raw
+                    # output retains it so a normal result isn't called truncated.
+                    return_dict_in_generate=True,
+                    return_timestamps=False,
                 )
+            generated_ids = generated.sequences
+            if time.monotonic() - started > self.settings.stt_timeout_seconds:
+                raise AudioRejected(
+                    "STT_TIMEOUT", "음성 인식 시간이 초과되었습니다. 다시 시도해 주세요.", 504
+                )
+            eos = self._model.generation_config.eos_token_id
+            eos_ids = eos if isinstance(eos, list) else [eos]
+            if not len(generated_ids[0]) or int(generated_ids[0][-1]) not in eos_ids:
+                raise AudioRejected("STT_INCOMPLETE", "음성 인식 결과가 완성되지 않았습니다.", 502)
             text = self._processor.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[
                 0
             ].strip()
+        finally:
+            if acquired_gpu:
+                GPU_INFERENCE_LOCK.release()
+            self._lock.release()
         if not text:
             raise AudioRejected("NO_SPEECH", "음성에서 말을 인식하지 못했습니다.")
         return text

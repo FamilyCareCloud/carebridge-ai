@@ -1,0 +1,8 @@
+# Preserve exact frozen evaluation bytes so recorded SHA-256 hashes survive checkout.
+evaluation/translation-*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+evaluation/spec-gpu-*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+evaluation/backend-contract-spec-*.json -text
+evaluation/spec-reference-*.json -text
+evaluation/prompt-comparison-*.json -text
+evaluation/context-probe-*.json -text
+evaluation/spec-context-*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

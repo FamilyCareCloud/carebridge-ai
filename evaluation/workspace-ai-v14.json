@@ -1,0 +1,259 @@
+{
+  "startedAt": "2026-10-29T12:33:51.790Z",
+  "scope": "Synthetic local HTTP/SSE and real GPU; actual compiled frontend adapter; not AWS/Cognito or visual browser acceptance",
+  "backendRevision": "999750fd3658d31809e63756d4dd2be61e7704d8",
+  "frontendBundleSha256": "3deb279fdbeb3f0f5bd6d063d8b1f32290b2b90d416e97db6bd7527d13044e0f",
+  "scriptSha256": "451403c84e6a360bc1519afafe0b6242e54ddff05452c4a52f1af950de75dad7",
+  "checks": [
+    "actual frontend login, membership, subject and SSE access proof",
+    "real GPU juice correction retains uncertainty, attribution and source-bound generation ID"
+  ],
+  "gpuResponses": [
+    {
+      "path": "/carebridge/drafts",
+      "response": {
+        "schema_version": "carebridge.v1",
+        "id": "36cef380-dd22-4c68-b011-293cb33e3ba5",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "vi",
+          "text": "Nói rằng: \"Tôi có thể đã uống nước ép.\"",
+          "sha256": "6be391713f2dfe9d769c16b36b1c9a61dad4fb8157141eb6b2182080b32e82d5"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "\"주스를 마셨을 수도 있습니다.\"라고 말했습니다.",
+          "segments": [
+            {
+              "text": "\"주스를 마셨을 수도 있습니다.\"라고 말했습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 39,
+                "quote": "Nói rằng: \"Tôi có thể đã uống nước ép.\""
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "hydration",
+            "text": "\"주스를 마셨을 수도 있습니다.\"라고 말했습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 39,
+              "quote": "Nói rằng: \"Tôi có thể đã uống nước ép.\""
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 39,
+              "quote": "Nói rằng: \"Tôi có thể đã uống nước ép.\""
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    },
+    {
+      "path": "/carebridge/qa/semantic",
+      "response": {
+        "status": "hold",
+        "model_checked": false,
+        "segments": [],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": false
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "severity": "hold",
+              "message": "도움·행동·대상·시점·발언 출처 등 원문 사실이 빠졌는지 확인해 주세요."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      }
+    }
+  ],
+  "translation": {
+    "source": "Nói rằng: \"Tôi có thể đã uống nước ép.\"",
+    "text": "\"주스를 마셨을 수도 있습니다.\"라고 말했습니다."
+  },
+  "allPassed": false,
+  "error": {
+    "name": "Error",
+    "message": "최종 검사 응답의 버전·형식을 확인하지 못했습니다."
+  },
+  "finishedAt": "2026-10-29T12:33:57.228Z"
+}

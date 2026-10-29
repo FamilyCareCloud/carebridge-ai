@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     stt_enabled: bool = True
     max_audio_bytes: int = Field(default=4 * 1024 * 1024, ge=1, le=32 * 1024 * 1024)
     max_audio_seconds: float = Field(default=30, gt=0, le=30)
+    stt_timeout_seconds: float = Field(default=10, gt=0, le=120)
+    stt_max_new_tokens: int = Field(default=384, ge=32, le=400)
     # OpenAI-compatible chat completions endpoint; used only for non-Korean text.
     carebridge_model_url: str = ""
     carebridge_model: str = ""

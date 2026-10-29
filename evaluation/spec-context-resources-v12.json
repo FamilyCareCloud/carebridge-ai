@@ -1,0 +1,158 @@
+{
+  "schema": "carebridge.rendering-validation-resources.v1",
+  "recorded_at": "2026-10-29T09:22:13.158044+00:00",
+  "git_revision": "482a5353e31cbd83ea04a1b9563f877017fcbd48",
+  "full_evaluation_sha256": "c772e322453e244ac779d09c725d975ed8ced35ee969c4f9c4f2439dff3be94a",
+  "reference_review_sha256": "744dc8ec965d3811217768e98b6e6f9b95d1463f44986361de071ebad7d13c9a",
+  "backend_contract_sha256": "2d5274e886e2dd4c57d553c14841eb58b553915d072846b76a7463d6c403a94b",
+  "baseline_evaluation_sha256": "6a12d41c56cd701961a94c7ce41791d4de39ae26aed3d217985b6fb0ac9539f2",
+  "same_config_weights_runtime_adapter_as_v9": true,
+  "current_app_code_hashes_verified": true,
+  "current_code": {
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/audio.py": "8109cf00fe2208346e51d4d37983db6680f69fb05f5289228d4813ce5ad03a88",
+    "app/carebridge/__init__.py": "6a3d7672c1948849e65f4de72599fec6ce4c2ae916ffb1380182a44f3a6c874c",
+    "app/carebridge/facts.py": "9d62e40ce44e2fca5f2700396e76e2214cff7f8a3b00cc15b1d8a2e516b11425",
+    "app/carebridge/guidance.py": "c1d857a760851affc1c6c8ca20c3e695b8b6abe78a5f000d91bfbc94390a1422",
+    "app/carebridge/language.py": "3b4b74b12d7f430e3c0c3bb445b9d73fd47b82976e1f5f154503aceede610ad8",
+    "app/carebridge/local.py": "40cd71817f18b3a0106eaf7e534b1becced30bd4b3f715027b2a991bb408c450",
+    "app/carebridge/provider.py": "a76289c0ca4cf7623cd7badb12b4174be45629a0d47397a3896b9f0df2909944",
+    "app/carebridge/rendering.py": "44bffb90f3bea99bfacfd5be68847914caede23042eee1149c109be9146c0934",
+    "app/carebridge/safety.py": "cecdb3fffee181cc5b7d9da50eff1133c6bf4ea39203593132f406f80a5213ea",
+    "app/carebridge/schemas.py": "a5c3109c48da578f31561da2b6643a1dd51b2d9918814999fd63e3363ae5bf0f",
+    "app/carebridge/semantic.py": "ab87b55ad928a4ac65f88a2be4d0cf8c85cb6860a8499ea6d2106088b601bf17",
+    "app/carebridge/service.py": "0b0b6fff90e0e0a52bf412d132b1c4334de60f2b75902cd7cb598c422cacfbbd",
+    "app/carebridge/workflow.py": "899463463617530445a1bd6f5d0e38958d4a47ad834dcc18eb0e02e23088981c",
+    "app/config.py": "2ad8974ceb7d01a78242db2acb8b3f29d49dd4a6ea407b9a0cc53d9d8d2b6058",
+    "app/inference.py": "28cc998536c59fa5c17f1ac44c993621327d47e4f8ef0da7e67a82004b15ca3b",
+    "app/main.py": "b93307c3e9c9c04cdea8872fd212584b47d43d2db1e81b37046442b7a09791a1",
+    "app/stt.py": "6fa1d478a65dd9e44033bc6515cffee92ebe6e03bae6d21950bad50689752510"
+  },
+  "resource_observations": [
+    {
+      "observed_at": "2026-10-29T09:05:36.4731843Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10219 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "0 %",
+          "temperature.gpu": "33"
+        }
+      ],
+      "ollama_models": []
+    },
+    {
+      "observed_at": "2026-10-29T09:08:05.1933122Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10807 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "39 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": []
+    },
+    {
+      "observed_at": "2026-10-29T09:11:42.6430587Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11582 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "39 %",
+          "temperature.gpu": "45"
+        }
+      ],
+      "ollama_models": []
+    },
+    {
+      "observed_at": "2026-10-29T09:14:13.9173967Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11574 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "44 %",
+          "temperature.gpu": "44"
+        }
+      ],
+      "ollama_models": []
+    },
+    {
+      "observed_at": "2026-10-29T09:17:01.5931291Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11564 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "41 %",
+          "temperature.gpu": "44"
+        }
+      ],
+      "ollama_models": []
+    },
+    {
+      "observed_at": "2026-10-29T09:19:43.0859534Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "3198 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "0 %",
+          "temperature.gpu": "38"
+        }
+      ],
+      "ollama_models": []
+    },
+    {
+      "observed_at": "2026-10-29T09:22:12.9343350Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10215 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "0 %",
+          "temperature.gpu": "35"
+        }
+      ],
+      "ollama_models": []
+    }
+  ],
+  "observations_sha256": "f3ac8e80fde4b2ab22e1b82ac60bf9e2ef06a2c3191c309a3bb0c8bbcbdb835d",
+  "all_samples_ollama_empty": true,
+  "sampling_limit": "Point-in-time observations, not continuous proof of exclusive GPU use.",
+  "full_summary": {
+    "translation_requests": 87,
+    "translation_http_200": 87,
+    "translation_hold": 1,
+    "source_evidence_valid": 87,
+    "sharing_blocked": 87,
+    "faithful_controls": 54,
+    "faithful_controls_review_required": 54,
+    "faithful_controls_false_hold": 0,
+    "injected_errors": 66,
+    "injected_errors_caught": 65,
+    "injected_errors_missed": 0,
+    "qa_request_failures": 1,
+    "translation_latency_p50_seconds": 5.106,
+    "translation_latency_max_seconds": 8.899,
+    "accuracy": "Not automatically scored; see separate reference-based AI review."
+  },
+  "workflow_passed": 26,
+  "workflow_total": 26,
+  "restored_service_health": {
+    "status": "ok",
+    "device": "cuda",
+    "stt_enabled": true,
+    "carebridge_schema": "carebridge.v1",
+    "translation_backend": "local",
+    "translation_loaded": true,
+    "semantic_check_enabled": true
+  },
+  "ollama_models_after_restore": [],
+  "scope": "Changed AI code validated offline; original fcc-ai service restored. No production deployment. Synthetic development cases and coding assistant language review, not independent native-speaker accuracy.",
+  "recorder_source": "import hashlib\nimport json\nimport sys\nimport urllib.request\nfrom datetime import datetime, timezone\nfrom pathlib import Path\n\nrun = sys.argv[1]\nassert run in ('v10','v11','v12')\nroot = Path(__file__).resolve().parents[2] / 'carebridge-ai'\ndef read(name):\n    raw = (root / 'evaluation' / name).read_bytes()\n    return json.loads(raw), hashlib.sha256(raw).hexdigest()\nfull, full_sha = read(f'spec-gpu-{run}.json')\nreview, review_sha = read(f'spec-reference-review-{run}.json')\ncontract, contract_sha = read(f'backend-contract-spec-{run}.json')\nbaseline, baseline_sha = read('spec-gpu-v9.json')\nassert full.get('finished_at')\nassert contract['evaluation_sha256'] == review['evaluation_sha256'] == full_sha\nfor path, digest in full['code_sha256'].items():\n    assert hashlib.sha256((root / path).read_bytes()).hexdigest() == digest, path\nfor path, digest in full.get('runner_dependencies_sha256',{}).items():\n    assert hashlib.sha256((root/path).read_bytes()).hexdigest()==digest,path\nassert full['config'] == baseline['config']\nassert full['model_snapshot'] == baseline['model_snapshot']\nassert full['runtime_versions'] == baseline['runtime_versions']\nassert full['adapter_sha256'] == baseline['adapter_sha256']\nraw = Path(__file__).with_name(f'gpu-resource-{run}-observations.jsonl').read_bytes()\nsamples = [json.loads(line) for line in raw.splitlines()]\ndef get_local(url):\n    with urllib.request.urlopen(url, timeout=5) as response:\n        return json.load(response)\nhealth = get_local('http://127.0.0.1:8002/health')\nassert health['status']=='ok' and health['device']=='cuda' and health['translation_loaded'] and health['stt_enabled']\nresult = dict(schema='carebridge.rendering-validation-resources.v1',\n    recorded_at=datetime.now(timezone.utc).isoformat(), git_revision=full['git_revision'],\n    full_evaluation_sha256=full_sha, reference_review_sha256=review_sha, backend_contract_sha256=contract_sha,\n    baseline_evaluation_sha256=baseline_sha, same_config_weights_runtime_adapter_as_v9=True,\n    current_app_code_hashes_verified=True, current_code=full['code_sha256'],\n    resource_observations=samples, observations_sha256=hashlib.sha256(raw).hexdigest(),\n    all_samples_ollama_empty=all(not s['ollama_models'] for s in samples),\n    sampling_limit='Point-in-time observations, not continuous proof of exclusive GPU use.',\n    full_summary=full['summary'], workflow_passed=full['workflow_passed'], workflow_total=full['workflow_total'],\n    restored_service_health=health, ollama_models_after_restore=get_local('http://127.0.0.1:11434/api/ps')['models'],\n    scope='Changed AI code validated offline; original fcc-ai service restored. No production deployment. Synthetic development cases and coding assistant language review, not independent native-speaker accuracy.',\n    recorder_source=Path(__file__).read_text(encoding='utf-8'))\nwith (root / f'evaluation/spec-context-resources-{run}.json').open('x', encoding='utf-8', newline='\\n') as f:\n    json.dump(result,f,ensure_ascii=False,indent=2)\n    f.write('\\n')\nprint(json.dumps(dict(samples=len(samples),all_samples_ollama_empty=result['all_samples_ollama_empty'],restored_health=health),ensure_ascii=False))\n"
+}

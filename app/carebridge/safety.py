@@ -2,8 +2,9 @@
 
 import hashlib
 import re
-from collections import Counter
 
+from app.carebridge.facts import assistance_preserved, numeric_facts, time_relations_preserved
+from app.carebridge.language import korean_output
 from app.carebridge.schemas import (
     CHECK_QUESTION,
     Draft,
@@ -93,17 +94,21 @@ def check_input(text: str) -> list[SourceSegment]:
 NEGATION = re.compile(
     r"\b(?:not|no|never|without|cannot|can['’]t|didn['’]t|doesn['’]t|wasn['’]t|"
     r"weren['’]t|hasn['’]t|haven['’]t|isn['’]t|aren['’]t|"
-    r"không|chưa|chẳng|tidak|belum|bukan|tanpa)\b",
+    r"unknown|không|chưa|chẳng|tidak|belum|bukan|tanpa)\b",
     re.I,
 )
-KOREAN_NEGATION = re.compile(r"않|없|아니|못(?:했|하|해|먹|마|걸|자)|(?:^|\s)안\s")
+KOREAN_NEGATION = re.compile(
+    r"않|없|아니|불명|모르|모릅|모른|모름|못(?:했|하|해|먹|마|걸|자)|(?:^|\s)안\s"
+)
 UNCERTAINTY = re.compile(
-    r"\b(?:may|might|perhaps|possibly|maybe|seems?|uncertain|unsure|"
-    r"có\s+thể|có\s+lẽ|hình\s+như|mungkin|sepertinya|tampaknya)\b",
+    r"\b(?:may|might|perhaps|possibly|maybe|seem(?:s|ed)?|uncertain|unsure|"
+    r"có\s+thể|có\s+lẽ|có\s+vẻ|hình\s+như|mungkin|sepertinya|tampak(?:nya)?)\b",
     re.I,
 )
 KOREAN_UNCERTAINTY = re.compile(
-    r"같(?:습|아|다|은)|아마|추정|듯|수(?:도)?\s*있|불명|확인.{0,8}필요"
+    r"같(?:습|아|다|은)|아마|추정|듯|수(?:도)?\s*있|불명|확인.{0,8}필요|"
+    r"(?:피곤|피로|졸려|졸리|힘들|지쳐|불편|아파|아픈|목말라|목마른|목이\s*말라|목이\s*마른)"
+    r".{0,4}보(?:입|였|이|인)"
 )
 
 
@@ -152,7 +157,7 @@ def assess(draft: Draft) -> QAResult:
     check(
         "TRANSLATION_CONSISTENCY",
         draft.translation.text == "\n".join(s.text for s in translated)
-        and all(s.text.strip() and re.search(r"[가-힣]", s.text) for s in translated),
+        and all(korean_output(s.text) for s in translated),
         "한국어 번역이 비어 있거나 구간별 번역과 전체 번역이 다릅니다.",
     )
     check(
@@ -167,11 +172,16 @@ def assess(draft: Draft) -> QAResult:
     check(
         "NUMERIC_FACTS_PRESERVED",
         all(
-            Counter(re.findall(r"\d+(?:\.\d+)?", t.text))
-            == Counter(re.findall(r"\d+(?:\.\d+)?", t.evidence.quote))
+            numeric_facts(t.text) == numeric_facts(t.evidence.quote)
+            and time_relations_preserved(t.evidence.quote, t.text)
             for t in translated
         ),
         "번역의 숫자가 원문과 다릅니다. 시각·수량을 담당자가 대조해 주세요.",
+    )
+    check(
+        "ASSISTANCE_FACT_PRESERVED",
+        all(assistance_preserved(t.evidence.quote, t.text) for t in translated),
+        "원문의 도움·부축 여부가 번역에 보존됐는지 확인해 주세요.",
     )
     check(
         "NEGATION_SIGNAL_PRESERVED",

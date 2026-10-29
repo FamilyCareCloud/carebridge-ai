@@ -10,11 +10,28 @@ from starlette.concurrency import run_in_threadpool
 
 from app.audio import AudioRejected
 from app.carebridge.local import LocalTranslationProvider
-from app.carebridge.provider import InvalidModelOutput, ModelUnavailable, TranslationProvider
+from app.carebridge.provider import (
+    InferenceTimeout,
+    InvalidModelOutput,
+    ModelUnavailable,
+    TranslationProvider,
+)
 from app.carebridge.safety import InputRejected, assess, check_input
 from app.carebridge.schemas import Draft, DraftRequest, Language, QAResult
 from app.carebridge.semantic import SemanticReview, review_semantics
 from app.carebridge.service import DraftService
+from app.carebridge.workflow import (
+    QA_REVISION,
+    WORKFLOW_VERSION,
+    EditRequest,
+    EditReview,
+    Generation,
+    GenerationRequest,
+    WorkflowConflict,
+    edit_result,
+    generation_result,
+    prepare_edit,
+)
 from app.config import Settings, settings
 from app.stt import Transcriber
 
@@ -78,6 +95,16 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
             status_code=502, content={"code": "INVALID_MODEL_OUTPUT", "detail": str(exc)}
         )
 
+    @app.exception_handler(InferenceTimeout)
+    async def timeout_error(_request, exc):
+        return JSONResponse(
+            status_code=504, content={"code": "INFERENCE_TIMEOUT", "detail": str(exc)}
+        )
+
+    @app.exception_handler(WorkflowConflict)
+    async def workflow_error(_request, exc):
+        return JSONResponse(status_code=409, content={"code": exc.code, "detail": str(exc)})
+
     def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
         if config.api_key and not hmac.compare_digest(
             (x_api_key or "").encode(), config.api_key.encode()
@@ -123,6 +150,8 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
             "device": engine.device if engine else "disabled",
             "stt_enabled": config.stt_enabled,
             "carebridge_schema": "carebridge.v1",
+            "carebridge_qa_revision": QA_REVISION,
+            "carebridge_workflow_version": WORKFLOW_VERSION,
             "translation_backend": config.carebridge_backend,
             "translation_loaded": getattr(translator, "loaded", False),
             "semantic_check_enabled": config.carebridge_semantic_check_enabled,
@@ -136,6 +165,17 @@ def create_app(config: Settings = settings, *, transcriber=None, provider=None) 
     @app.post("/carebridge/drafts", response_model=Draft, dependencies=protected)
     async def draft(request: DraftRequest):
         return await checked_draft(await service.create(request))
+
+    @app.post("/carebridge/generations", response_model=Generation, dependencies=protected)
+    async def generate(request: GenerationRequest):
+        value = await checked_draft(await service.create(request))
+        return generation_result(request, value, config)
+
+    @app.post("/carebridge/edits/qa", response_model=EditReview, dependencies=protected)
+    async def edited_qa(request: EditRequest):
+        value, changes = prepare_edit(request)
+        review = await semantic_review(value)
+        return edit_result(request, value, changes, review, config)
 
     async def checked_draft(value: Draft) -> Draft:
         if config.carebridge_semantic_check_enabled:

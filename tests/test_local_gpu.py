@@ -18,6 +18,7 @@ GOOD = {
     "negation_preserved": True,
     "uncertainty_preserved": True,
     "no_added_facts": True,
+    "no_omitted_facts": True,
     "no_medical_judgment": True,
 }
 
@@ -55,6 +56,7 @@ def local_client(config, raw, monkeypatch, **options):
         "negation_preserved",
         "uncertainty_preserved",
         "no_added_facts",
+        "no_omitted_facts",
         "no_medical_judgment",
     ],
 )
@@ -94,6 +96,7 @@ def test_semantic_pass_never_approves_or_erases_human_review(config, headers, mo
         json.dumps({"segments": [{**GOOD, "segment_id": "wrong"}]}),
         json.dumps({"segments": [GOOD, GOOD]}),
         json.dumps({"segments": [{**GOOD, "negation_preserved": "true"}]}),
+        json.dumps({"segments": [{k: v for k, v in GOOD.items() if k != "no_omitted_facts"}]}),
         json.dumps({"segments": [GOOD], "status": "approved"}),
     ],
 )
@@ -282,12 +285,18 @@ def test_stt_multilingual_disables_korean_adapter_but_legacy_keeps_it(monkeypatc
 
     def generate(*args, **kwargs):
         inferred.append(kwargs["language"])
-        return [[1]]
+        assert kwargs["return_dict_in_generate"] is True
+        assert kwargs["return_timestamps"] is False
+        return SimpleNamespace(sequences=[[1]])
 
     monkeypatch.setitem(sys.modules, "torch", SimpleNamespace(inference_mode=nullcontext))
     monkeypatch.setattr("app.stt.decode_audio", lambda *_args: [0.1])
     engine = Transcriber(Settings(_env_file=None))
-    engine._model = SimpleNamespace(disable_adapter=Adapter, generate=generate)
+    engine._model = SimpleNamespace(
+        disable_adapter=Adapter,
+        generate=generate,
+        generation_config=SimpleNamespace(eos_token_id=1),
+    )
     engine._processor = SimpleNamespace(
         feature_extractor=lambda *a, **k: SimpleNamespace(input_features=Features()),
         tokenizer=SimpleNamespace(batch_decode=lambda *a, **k: ["관찰 내용"]),

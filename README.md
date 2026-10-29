@@ -1,4 +1,10 @@
-# fcc-ai - Family Care Cloud AI 서버
+# carebridge-ai - CareBridge AI 서버
+
+새 기능명세의 원문 개정·사람 편집 QA 계약: [SPEC_WORKFLOW_V1.md](docs/SPEC_WORKFLOW_V1.md).
+`/carebridge/generations`와 `/carebridge/edits/qa`를 추가하며 기존 Draft API는 유지합니다.
+최신 확장 평가 오류 개선: [TRANSLATION_CONTEXT_V1.md](docs/TRANSLATION_CONTEXT_V1.md).
+이전 번역 개선과 확장 GPU 평가: [TRANSLATION_IMPROVEMENT_V3.md](docs/TRANSLATION_IMPROVEMENT_V3.md).
+이전 기능명세 GPU 평가: [SPEC_GPU_EVALUATION.md](docs/SPEC_GPU_EVALUATION.md).
 
 고령자 음성 인식(STT)과 CareBridge 다국어 관찰메모 검토 전 초안 서비스
 
@@ -8,7 +14,7 @@ Family Care Cloud는 가족이 함께 돌봄 기록을 남기고 다음 보호�
 이 저장소는 고령자 음성 명령을 텍스트로 바꾸는 음성 인식(STT)과,
 케어브릿지 명세서의 **교육용 가상·비식별 메모 → 한국어 초안 → 근거 QA**를 담당합니다.
 `fcc-backend`가 기존 `/transcribe` API를 음성 질의(`/groups/{g}/assistant/voice`)에 사용합니다.
-신규 CareBridge API는 별도 연동이 필요합니다.
+CareBridge API는 carebridge-backend의 그룹별 메모·검토·가족 미리보기 흐름에 연결됩니다.
 
 - 프론트/백엔드는 별도 저장소입니다. STT는 Whisper·LoRA 파일이 있는 GPU/CPU 환경에서 실행합니다.
 - CareBridge 텍스트 기능은 `requirements-core.txt`와 `FCC_AI_STT_ENABLED=false`만으로 실행할 수 있습니다.
@@ -18,6 +24,7 @@ Family Care Cloud는 가족이 함께 돌봄 기록을 남기고 다음 보호�
 - 기존 Care Handoff 요약은 계속 백엔드에서 처리합니다.
 
 **GPU 확장:** [로컬 Qwen3 4bit 번역·의미 재검사·다국어 STT·실행/검증](docs/LOCAL_GPU.md).
+**이관 후 보완:** [사실 누락·시각 표현 검사와 QA v2 적용 순서](docs/FIDELITY_V2.md).
 로컬 모델은 메모를 외부 번역 API로 보내지 않으며, 원문 근거와 사람 검토·공유 금지 계약을 유지합니다.
 
 **CareBridge 시작하기:** [API 계약·실행 방법·요구사항 대응·검증 한계](docs/CAREBRIDGE.md).

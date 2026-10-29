@@ -1,0 +1,2733 @@
+{
+  "schema": "carebridge.targeted-audit-evaluation.v1",
+  "started_at": "2026-10-29T08:05:21.226718+00:00",
+  "scope": "Targeted semantic rerun, not another full generation/workflow benchmark. Parent stays immutable. No native/held-out validation.",
+  "parent_sha256": "db7a178832bb39911f772f786ff06f801f0f91c701d914f03c3b5a953ebd5381",
+  "corpus_sha256": "8285ecefb299a797247d3c8f8138d84667fe0eb6457c5634291c8a822b75ac38",
+  "git_revision": "ed31cb6ac6edc6515cc191b76fa442b9b6079690",
+  "runner_sha256": "fa2af49ea4785ccbb36fe8f0f79f5ddf4af7a6265f71faf67cf3c394d74ea15e",
+  "code_sha256": {
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/audio.py": "8109cf00fe2208346e51d4d37983db6680f69fb05f5289228d4813ce5ad03a88",
+    "app/carebridge/__init__.py": "6a3d7672c1948849e65f4de72599fec6ce4c2ae916ffb1380182a44f3a6c874c",
+    "app/carebridge/facts.py": "0e082536146e016363e77bb86febd8c80c7e593288039ac68be1921ad9e38723",
+    "app/carebridge/guidance.py": "ab07e43903016a8cadf3c3de0f1e1c92eee556ee1c42c1475856f6e025097ea8",
+    "app/carebridge/language.py": "3b4b74b12d7f430e3c0c3bb445b9d73fd47b82976e1f5f154503aceede610ad8",
+    "app/carebridge/local.py": "40cd71817f18b3a0106eaf7e534b1becced30bd4b3f715027b2a991bb408c450",
+    "app/carebridge/provider.py": "ea26a5b9b6d770c17fc511a1d4f7e0de8b103aa2d2ff06f48d4086faa3ea2a2b",
+    "app/carebridge/safety.py": "cecdb3fffee181cc5b7d9da50eff1133c6bf4ea39203593132f406f80a5213ea",
+    "app/carebridge/schemas.py": "a5c3109c48da578f31561da2b6643a1dd51b2d9918814999fd63e3363ae5bf0f",
+    "app/carebridge/semantic.py": "f7735abb287d7cab3b237fd36603a8c06183e0511ad2a7c168abf278368d6233",
+    "app/carebridge/service.py": "2196b79ca977c8cafc485f6d5094519db8a2569c53f6add9f11e1f8d8eede57d",
+    "app/carebridge/workflow.py": "899463463617530445a1bd6f5d0e38958d4a47ad834dcc18eb0e02e23088981c",
+    "app/config.py": "2ad8974ceb7d01a78242db2acb8b3f29d49dd4a6ea407b9a0cc53d9d8d2b6058",
+    "app/inference.py": "28cc998536c59fa5c17f1ac44c993621327d47e4f8ef0da7e67a82004b15ca3b",
+    "app/main.py": "b93307c3e9c9c04cdea8872fd212584b47d43d2db1e81b37046442b7a09791a1",
+    "app/stt.py": "6fa1d478a65dd9e44033bc6515cffee92ebe6e03bae6d21950bad50689752510"
+  },
+  "changed_app_files": [
+    "app/carebridge/facts.py",
+    "app/carebridge/guidance.py",
+    "app/carebridge/semantic.py"
+  ],
+  "affected_translation_ids": [
+    "en-context-habitual-walking",
+    "id-context-habitual-walking",
+    "vi-context-habitual-walking"
+  ],
+  "translation_prompt_unchanged": true,
+  "semantic_prompt_sha256": "19256eb0755d5422f86b50ae783f9ba08b153696a47420d3ec58a284edf444a4",
+  "parent_semantic_prompt_sha256": "dc6c73a2485c3d38c119e191953f36865b857b0ad9f3f9dc21bcc7cc6a43d17d",
+  "results": [
+    {
+      "kind": "generated",
+      "id": "en-context-habitual-walking",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "7ef3ab8f-199c-4fac-b625-f9ad5edbab17",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "en",
+          "text": "Seems tired whenever walking.",
+          "sha256": "62862fa2207667bf5a249b3c472b2239b01c9fdd91743d59be1116b778cf42de"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸을 때마다 피곤해 보입니다.",
+          "segments": [
+            {
+              "text": "걸을 때마다 피곤해 보입니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 29,
+                "quote": "Seems tired whenever walking."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸을 때마다 피곤해 보입니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "review_required",
+      "http_status": 200,
+      "response": {
+        "status": "review_required",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 4.393,
+      "passed": true
+    },
+    {
+      "kind": "generated",
+      "id": "vi-context-habitual-walking",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "e14faaa9-50db-41db-be48-3c95e5fe7ebd",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "vi",
+          "text": "Có vẻ mệt mỗi khi đi bộ.",
+          "sha256": "449787bf54337f1d82eee31a3193115c2fe3c4badc5664aecc59bc3a5d6b8606"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸을 때마다 피곤해 보입니다.",
+          "segments": [
+            {
+              "text": "걸을 때마다 피곤해 보입니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 24,
+                "quote": "Có vẻ mệt mỗi khi đi bộ."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸을 때마다 피곤해 보입니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "review_required",
+      "http_status": 200,
+      "response": {
+        "status": "review_required",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.153,
+      "passed": true
+    },
+    {
+      "kind": "generated",
+      "id": "id-context-habitual-walking",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "a6c2c68a-7630-4f69-8f1e-fcc37cea7420",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Tampak lelah setiap kali berjalan.",
+          "sha256": "ce2b7090bd070c41aca621dc41e997d1a57a38fdf816b8b8ccd7e95e8ad83673"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸을 때마다 피곤해 보였습니다.",
+          "segments": [
+            {
+              "text": "걸을 때마다 피곤해 보였습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 34,
+                "quote": "Tampak lelah setiap kali berjalan."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸을 때마다 피곤해 보였습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "review_required",
+      "http_status": 200,
+      "response": {
+        "status": "review_required",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.219,
+      "passed": true
+    },
+    {
+      "kind": "qa",
+      "id": "error-en-negation_scope",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-en-contrast",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "en",
+          "text": "Drank water but did not eat soup.",
+          "sha256": "235387cb0343a265be32269ffb7d2e3583d438527354f43fb0a4388c991b99af"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+          "segments": [
+            {
+              "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 33,
+                "quote": "Drank water but did not eat soup."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "meal",
+            "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Drank water but did not eat soup."
+            }
+          }
+        ],
+        "additional_checks": [],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "hold",
+      "http_status": 200,
+      "response": {
+        "status": "hold",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Drank water but did not eat soup."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": false
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": false
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "severity": "hold",
+              "message": "부정 표현이 원문과 같은지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "severity": "hold",
+              "message": "추측·불확실성이 단정으로 바뀌었는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "severity": "hold",
+              "message": "도움·행동·대상·시점·발언 출처 등 원문 사실이 빠졌는지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.258,
+      "passed": true
+    },
+    {
+      "kind": "qa",
+      "id": "error-vi-negation_scope",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-vi-contrast",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "vi",
+          "text": "Đã uống nước nhưng không ăn súp.",
+          "sha256": "7ba6032e4d10e4d7caa1ffceffeb3dd139acbe0f72117faca77249c7144645da"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+          "segments": [
+            {
+              "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 32,
+                "quote": "Đã uống nước nhưng không ăn súp."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "meal",
+            "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 32,
+              "quote": "Đã uống nước nhưng không ăn súp."
+            }
+          }
+        ],
+        "additional_checks": [],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "hold",
+      "http_status": 200,
+      "response": {
+        "status": "hold",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 32,
+              "quote": "Đã uống nước nhưng không ăn súp."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": false
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": false
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "severity": "hold",
+              "message": "부정 표현이 원문과 같은지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "severity": "hold",
+              "message": "추측·불확실성이 단정으로 바뀌었는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "severity": "hold",
+              "message": "도움·행동·대상·시점·발언 출처 등 원문 사실이 빠졌는지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.392,
+      "passed": true
+    },
+    {
+      "kind": "qa",
+      "id": "error-id-negation_scope",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-id-contrast",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Minum air tetapi tidak makan sup.",
+          "sha256": "fced7b1e9c80eb11e395b407074b3162a0a1f5749c275be79ee13ce6bb66ace9"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+          "segments": [
+            {
+              "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 33,
+                "quote": "Minum air tetapi tidak makan sup."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "meal",
+            "text": "물은 마시지 않았지만 수프는 먹었습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Minum air tetapi tidak makan sup."
+            }
+          }
+        ],
+        "additional_checks": [],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "hold",
+      "http_status": 200,
+      "response": {
+        "status": "hold",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 33,
+              "quote": "Minum air tetapi tidak makan sup."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": false
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": false
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "severity": "hold",
+              "message": "부정 표현이 원문과 같은지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "severity": "hold",
+              "message": "추측·불확실성이 단정으로 바뀌었는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "severity": "hold",
+              "message": "도움·행동·대상·시점·발언 출처 등 원문 사실이 빠졌는지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.475,
+      "passed": true
+    },
+    {
+      "kind": "qa",
+      "id": "en-context-habitual-walking-faithful",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-en-context-habitual-walking",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "en",
+          "text": "Seems tired whenever walking.",
+          "sha256": "62862fa2207667bf5a249b3c472b2239b01c9fdd91743d59be1116b778cf42de"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸을 때마다 피곤해 보입니다.",
+          "segments": [
+            {
+              "text": "걸을 때마다 피곤해 보입니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 29,
+                "quote": "Seems tired whenever walking."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸을 때마다 피곤해 보입니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "review_required",
+      "http_status": 200,
+      "response": {
+        "status": "review_required",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.332,
+      "passed": true
+    },
+    {
+      "kind": "qa",
+      "id": "vi-context-habitual-walking-faithful",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-vi-context-habitual-walking",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "vi",
+          "text": "Có vẻ mệt mỗi khi đi bộ.",
+          "sha256": "449787bf54337f1d82eee31a3193115c2fe3c4badc5664aecc59bc3a5d6b8606"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸을 때마다 피곤해 보입니다.",
+          "segments": [
+            {
+              "text": "걸을 때마다 피곤해 보입니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 24,
+                "quote": "Có vẻ mệt mỗi khi đi bộ."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸을 때마다 피곤해 보입니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "review_required",
+      "http_status": 200,
+      "response": {
+        "status": "review_required",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.399,
+      "passed": true
+    },
+    {
+      "kind": "qa",
+      "id": "id-context-habitual-walking-faithful",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-id-context-habitual-walking",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Tampak lelah setiap kali berjalan.",
+          "sha256": "ce2b7090bd070c41aca621dc41e997d1a57a38fdf816b8b8ccd7e95e8ad83673"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸을 때마다 피곤해 보입니다.",
+          "segments": [
+            {
+              "text": "걸을 때마다 피곤해 보입니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 34,
+                "quote": "Tampak lelah setiap kali berjalan."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸을 때마다 피곤해 보입니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "review_required",
+      "http_status": 200,
+      "response": {
+        "status": "review_required",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": true
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": true
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.315,
+      "passed": true
+    },
+    {
+      "kind": "lost_repetition",
+      "id": "en-context-habitual-walking-lost-repetition",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-en-context-habitual-walking",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "en",
+          "text": "Seems tired whenever walking.",
+          "sha256": "62862fa2207667bf5a249b3c472b2239b01c9fdd91743d59be1116b778cf42de"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸은 후 피곤해 보였습니다.",
+          "segments": [
+            {
+              "text": "걸은 후 피곤해 보였습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 29,
+                "quote": "Seems tired whenever walking."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸은 후 피곤해 보였습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "hold",
+      "http_status": 200,
+      "response": {
+        "status": "hold",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 29,
+              "quote": "Seems tired whenever walking."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": false
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": false
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "severity": "hold",
+              "message": "도움·행동·대상·시점·발언 출처 등 원문 사실이 빠졌는지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.338,
+      "passed": true
+    },
+    {
+      "kind": "lost_repetition",
+      "id": "id-context-habitual-walking-lost-repetition",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-id-context-habitual-walking",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "id",
+          "text": "Tampak lelah setiap kali berjalan.",
+          "sha256": "ce2b7090bd070c41aca621dc41e997d1a57a38fdf816b8b8ccd7e95e8ad83673"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸은 후 피곤해 보였습니다.",
+          "segments": [
+            {
+              "text": "걸은 후 피곤해 보였습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 34,
+                "quote": "Tampak lelah setiap kali berjalan."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸은 후 피곤해 보였습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "hold",
+      "http_status": 200,
+      "response": {
+        "status": "hold",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 34,
+              "quote": "Tampak lelah setiap kali berjalan."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": false
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": false
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "severity": "hold",
+              "message": "도움·행동·대상·시점·발언 출처 등 원문 사실이 빠졌는지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.362,
+      "passed": true
+    },
+    {
+      "kind": "lost_repetition",
+      "id": "vi-context-habitual-walking-lost-repetition",
+      "draft": {
+        "schema_version": "carebridge.v1",
+        "id": "evaluation-vi-context-habitual-walking",
+        "status": "review_required",
+        "label": "검토 전 초안 · 공식기록 아님",
+        "mode": "model_translation",
+        "source": {
+          "kind": "text",
+          "language": "vi",
+          "text": "Có vẻ mệt mỗi khi đi bộ.",
+          "sha256": "449787bf54337f1d82eee31a3193115c2fe3c4badc5664aecc59bc3a5d6b8606"
+        },
+        "translation": {
+          "language": "ko",
+          "text": "걸은 후 피곤해 보였습니다.",
+          "segments": [
+            {
+              "text": "걸은 후 피곤해 보였습니다.",
+              "evidence": {
+                "segment_id": "s001",
+                "start": 0,
+                "end": 24,
+                "quote": "Có vẻ mệt mỗi khi đi bộ."
+              }
+            }
+          ]
+        },
+        "observations": [
+          {
+            "id": "o001",
+            "category": "condition",
+            "text": "걸은 후 피곤해 보였습니다.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            }
+          }
+        ],
+        "additional_checks": [
+          {
+            "id": "c001",
+            "question": "이 관찰의 의미와 빠진 정보를 원문 작성자에게 확인해 주세요.",
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            }
+          }
+        ],
+        "qa": {
+          "checks": [],
+          "issues": [],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "expected": "hold",
+      "http_status": 200,
+      "response": {
+        "status": "hold",
+        "model_checked": true,
+        "segments": [
+          {
+            "evidence": {
+              "segment_id": "s001",
+              "start": 0,
+              "end": 24,
+              "quote": "Có vẻ mệt mỗi khi đi bộ."
+            },
+            "checks": [
+              {
+                "code": "SEMANTIC_NEGATION",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_UNCERTAINTY",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_ADDED_FACTS",
+                "passed": false
+              },
+              {
+                "code": "SEMANTIC_MEDICAL",
+                "passed": true
+              },
+              {
+                "code": "SEMANTIC_OMITTED_FACTS",
+                "passed": false
+              }
+            ]
+          }
+        ],
+        "qa": {
+          "checks": [
+            {
+              "code": "SOURCE_INTEGRITY",
+              "passed": true
+            },
+            {
+              "code": "SOURCE_COVERAGE",
+              "passed": true
+            },
+            {
+              "code": "EVIDENCE_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "TRANSLATION_CONSISTENCY",
+              "passed": true
+            },
+            {
+              "code": "OBSERVATION_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NUMERIC_FACTS_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "ASSISTANCE_FACT_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "NEGATION_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "UNCERTAINTY_SIGNAL_PRESERVED",
+              "passed": true
+            },
+            {
+              "code": "FOLLOW_UP_GROUNDING",
+              "passed": true
+            },
+            {
+              "code": "NO_IDENTIFIERS_DETECTED",
+              "passed": true
+            },
+            {
+              "code": "NO_MEDICAL_JUDGMENT",
+              "passed": true
+            },
+            {
+              "code": "NO_INSTRUCTIONS",
+              "passed": true
+            },
+            {
+              "code": "SHARING_BLOCKED",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_NEGATION",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_UNCERTAINTY",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "passed": false
+            },
+            {
+              "code": "SEMANTIC_MEDICAL",
+              "passed": true
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "passed": false
+            }
+          ],
+          "issues": [
+            {
+              "code": "HUMAN_REVIEW_REQUIRED",
+              "severity": "review",
+              "message": "근거 연결은 번역의 의미 정확성을 보증하지 않습니다. 원문·번역·초안을 담당자가 대조해야 합니다."
+            },
+            {
+              "code": "SEMANTIC_ADDED_FACTS",
+              "severity": "hold",
+              "message": "원문에 없는 사실이 번역에 추가됐는지 확인해 주세요."
+            },
+            {
+              "code": "SEMANTIC_OMITTED_FACTS",
+              "severity": "hold",
+              "message": "도움·행동·대상·시점·발언 출처 등 원문 사실이 빠졌는지 확인해 주세요."
+            },
+            {
+              "code": "MODEL_REVIEW_NOT_PROOF",
+              "severity": "review",
+              "message": "의미 검사는 동일 모델의 보조 신호이며 독립적인 정확도 증명이 아닙니다. 담당자가 원문을 확인해야 합니다."
+            }
+          ],
+          "requires_human_review": true,
+          "external_share_allowed": false
+        }
+      },
+      "seconds": 3.318,
+      "passed": true
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "model_snapshot": "62efd7f9d748e394734a7adae2adf96e13a2abc8",
+  "finished_at": "2026-10-29T08:06:16.364066+00:00",
+  "passed": 12,
+  "total": 12
+}

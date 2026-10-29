@@ -4,6 +4,8 @@ import httpx
 import pytest
 from fastapi.testclient import TestClient
 
+from app.carebridge.provider import SYSTEM_PROMPT
+from app.carebridge.schemas import ModelDraft
 from app.main import create_app
 from tests.conftest import model_provider, model_response
 
@@ -26,7 +28,10 @@ def test_configured_model_is_called_with_untrusted_data_and_schema(config, heade
         payload = json.loads(req.content)
         assert payload["temperature"] == 0
         assert payload["response_format"] == {"type": "json_object"}
-        assert "untrusted source DATA" in payload["messages"][0]["content"]
+        assert [m["role"] for m in payload["messages"]] == ["system", "user"]
+        system = payload["messages"][0]["content"]
+        assert system == SYSTEM_PROMPT + "\nSchema: " + json.dumps(ModelDraft.model_json_schema())
+        assert PAYLOAD["memo"] not in system
         data = json.loads(payload["messages"][1]["content"])
         assert data["segments"] == [{"segment_id": "s001", "text": PAYLOAD["memo"]}]
         assert req.url.path == "/v1/chat/completions"
@@ -91,7 +96,7 @@ def test_provider_failure_is_503_without_exposing_response(config, headers, stat
     assert "provider-secret" not in response.text
 
 
-def test_timeout_is_503_and_not_retried(config, headers):
+def test_timeout_is_504_and_not_retried(config, headers):
     calls = []
 
     def handler(req):
@@ -99,7 +104,8 @@ def test_timeout_is_503_and_not_retried(config, headers):
         raise httpx.ReadTimeout("upstream-secret")
 
     response = call(config, headers, handler)
-    assert response.status_code == 503
+    assert response.status_code == 504
+    assert response.json()["code"] == "INFERENCE_TIMEOUT"
     assert "upstream-secret" not in response.text
     assert len(calls) == 1
 

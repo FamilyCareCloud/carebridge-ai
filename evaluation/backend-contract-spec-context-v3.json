@@ -1,0 +1,30 @@
+{
+  "schema": "carebridge.backend-compatibility.v1",
+  "evaluated_at": "2026-10-29T08:06:40.195Z",
+  "evaluation_sha256": "a199b9d58efe1c30edcff45a4659257e633825a801adf7e839a8c40329f0cc21",
+  "corpus_sha256": "8285ecefb299a797247d3c8f8138d84667fe0eb6457c5634291c8a822b75ac38",
+  "backend_revision": "a073e7ee23d0991fa2373287d6da164257703cb8",
+  "backend_contract_sha256": "2284436b8d1075b7a71134839793ad9a3490fa9e77d3e0dd8254d92428744c52",
+  "drafts": [
+    "en-context-habitual-walking",
+    "vi-context-habitual-walking",
+    "id-context-habitual-walking"
+  ],
+  "reviews": [
+    "en-context-habitual-walking",
+    "vi-context-habitual-walking",
+    "id-context-habitual-walking",
+    "error-en-negation_scope",
+    "error-vi-negation_scope",
+    "error-id-negation_scope",
+    "en-context-habitual-walking-faithful",
+    "vi-context-habitual-walking-faithful",
+    "id-context-habitual-walking-faithful",
+    "en-context-habitual-walking-lost-repetition",
+    "id-context-habitual-walking-lost-repetition",
+    "vi-context-habitual-walking-lost-repetition"
+  ],
+  "failures": [],
+  "skipped_failed_requests": [],
+  "all_checked_responses_compatible": true
+}
