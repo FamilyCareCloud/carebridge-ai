@@ -1,0 +1,268 @@
+{
+  "schema": "carebridge.gpu-isolation-recheck.v1",
+  "recorded_at": "2026-10-29T08:06:57.993376+00:00",
+  "git_revision": "ed31cb6ac6edc6515cc191b76fa442b9b6079690",
+  "full_evaluation_sha256": "6a12d41c56cd701961a94c7ce41791d4de39ae26aed3d217985b6fb0ac9539f2",
+  "targeted_evaluation_sha256": "a199b9d58efe1c30edcff45a4659257e633825a801adf7e839a8c40329f0cc21",
+  "failed_baseline_evaluation_sha256": "cf24eb89c2d7ea2894c7afdfaab6a420074f9af1c7f4d19eff9208a42d3182f0",
+  "reference_review_sha256": "c9027120a775512ffc14745f64c1ed2bc2af53bbe1eb156af2244a85369a4541",
+  "backend_contract_sha256": "7e040ad05d84a7d0461a4669d1c6ee8b77947f1ccf98457e538d882a6edc6487",
+  "targeted_backend_contract_sha256": "851586bcaaf1135eff74d1b131eae1711c198275a74e9a60d631469658a77e93",
+  "observations_sha256": "1a38e82d7b69a92b083d05f73c6c87c748fc7f12561fbdbfa037f11718052a5f",
+  "same_app_code_corpus_runner_config_weights_runtime_and_adapter_as_v8": true,
+  "previous_generation_failures": 37,
+  "previous_generation_failures_now_http_200": [
+    "vi-contrast",
+    "vi-multiline",
+    "vi-chronology",
+    "id-ambiguity",
+    "id-contrast",
+    "id-multiline",
+    "id-chronology",
+    "en-extension-uncertain-completion",
+    "vi-extension-transport-contrast",
+    "vi-extension-quoted-negation",
+    "id-extension-duration",
+    "id-extension-delay",
+    "id-extension-uncertain-completion",
+    "id-extension-fatigue-context",
+    "id-extension-transport-contrast",
+    "id-extension-quoted-negation",
+    "en-context-after-walking",
+    "en-context-habitual-walking",
+    "en-context-lifetime-negation",
+    "en-context-different-delay",
+    "en-context-wheelchair-destination",
+    "vi-context-after-walking",
+    "vi-context-habitual-walking",
+    "vi-context-lifetime-negation",
+    "vi-context-different-delay",
+    "vi-context-wheelchair-destination",
+    "id-context-after-walking",
+    "id-context-habitual-walking",
+    "id-context-lifetime-negation",
+    "id-context-different-delay",
+    "id-context-wheelchair-destination",
+    "en-transfer-quoted-soup",
+    "en-transfer-quoted-outside",
+    "vi-transfer-quoted-soup",
+    "vi-transfer-quoted-outside",
+    "id-transfer-quoted-soup",
+    "id-transfer-quoted-outside"
+  ],
+  "matched_success_latency": {
+    "case_count": 38,
+    "v8_p50_seconds": 12.9465,
+    "v9_p50_seconds": 5.3985,
+    "scope": "Same successful case IDs in both runs; one measurement per case per run, not a load benchmark."
+  },
+  "current_app_code_hashes_verified": true,
+  "resource_observations": [
+    {
+      "observed_at": "2026-10-29T07:53:14.6364197Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11105 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "41 %",
+          "temperature.gpu": "41"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 3,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T07:55:24.6265596Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11179 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "41 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 26,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T07:57:56.7491294Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11512 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "44 %",
+          "temperature.gpu": "44"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 53,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T07:59:46.9224911Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11906 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "36 %",
+          "temperature.gpu": "44"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 73,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:01:07.2610495Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11930 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "38 %",
+          "temperature.gpu": "44"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 75,
+        "workflow": 0,
+        "qa": 38
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:03:33.2698441Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11871 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "38 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 75,
+        "workflow": 0,
+        "qa": 90
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:05:10.4424445Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11932 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "38 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 75,
+        "workflow": 22,
+        "qa": 102
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:06:06.7752919Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10053 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "36 %",
+          "temperature.gpu": "44"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": true,
+        "translations": 75,
+        "workflow": 26,
+        "qa": 102
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:06:57.7311098Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10512 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "24 %",
+          "temperature.gpu": "40"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": true,
+        "translations": 75,
+        "workflow": 26,
+        "qa": 102
+      }
+    }
+  ],
+  "all_samples_ollama_empty": true,
+  "sampling_limit": "Point-in-time samples, not continuous proof of exclusive GPU use. Desktop apps may also use GPU resources.",
+  "full_summary": {
+    "translation_requests": 75,
+    "translation_http_200": 75,
+    "translation_hold": 1,
+    "source_evidence_valid": 75,
+    "sharing_blocked": 75,
+    "faithful_controls": 48,
+    "faithful_controls_review_required": 48,
+    "faithful_controls_false_hold": 0,
+    "injected_errors": 54,
+    "injected_errors_caught": 54,
+    "injected_errors_missed": 0,
+    "qa_request_failures": 0,
+    "translation_latency_p50_seconds": 5.4,
+    "translation_latency_max_seconds": 9.486,
+    "accuracy": "Not automatically scored; see separate reference-based AI review."
+  },
+  "workflow_passed": 26,
+  "workflow_total": 26,
+  "targeted_passed": 12,
+  "targeted_total": 12,
+  "restored_service_health": {
+    "status": "ok",
+    "device": "cuda",
+    "stt_enabled": true,
+    "carebridge_schema": "carebridge.v1",
+    "translation_backend": "local",
+    "translation_loaded": true,
+    "semantic_check_enabled": true
+  },
+  "ollama_models_after_restore": [],
+  "interpretation": "Compare this completed run with the preserved interrupted v8 run. Conditions without a loaded Ollama model were observed, without changing app code or inference limits. This supports investigating resource competition but is not a randomized causal experiment or native-language accuracy measurement.",
+  "recorder_source": "import hashlib\nimport json\nimport urllib.request\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nfrom statistics import median\n\nroot = Path(__file__).resolve().parents[2] / \"carebridge-ai\"\n\ndef read(name):\n    raw = (root / \"evaluation\" / name).read_bytes()\n    return json.loads(raw), hashlib.sha256(raw).hexdigest()\n\nfull, full_sha = read(\"spec-gpu-v9.json\")\ntargeted, targeted_sha = read(\"spec-context-qa-v2.json\")\nbaseline, baseline_sha = read(\"spec-gpu-v8.json\")\nreview, review_sha = read(\"spec-reference-review-v9.json\")\ncontract, contract_sha = read(\"backend-contract-spec-v9.json\")\nextra_contract, extra_contract_sha = read(\"backend-contract-spec-context-v3.json\")\nassert full.get(\"finished_at\") and targeted.get(\"finished_at\")\nassert full[\"code_sha256\"] == targeted[\"code_sha256\"] == baseline[\"code_sha256\"]\nassert full[\"corpus_sha256\"] == baseline[\"corpus_sha256\"] == targeted[\"corpus_sha256\"]\nassert full[\"runner_sha256\"] == baseline[\"runner_sha256\"]\nassert full[\"config\"] == baseline[\"config\"]\nassert full[\"model_snapshot\"] == baseline[\"model_snapshot\"] == targeted[\"model_snapshot\"]\nassert full[\"runtime_versions\"] == baseline[\"runtime_versions\"]\nassert full[\"adapter_sha256\"] == baseline[\"adapter_sha256\"]\nassert contract[\"evaluation_sha256\"] == review[\"evaluation_sha256\"] == full_sha\nassert extra_contract[\"evaluation_sha256\"] == targeted_sha\nfor path, digest in full[\"code_sha256\"].items():\n    assert hashlib.sha256((root / path).read_bytes()).hexdigest() == digest, path\nobservations_path = Path(__file__).with_name(\"gpu-resource-v9-observations.jsonl\")\nobservations_raw = observations_path.read_bytes()\nobservations = [json.loads(line) for line in observations_raw.splitlines()]\nassert observations\nold_success = {r[\"id\"]: r for r in baseline[\"translations\"] if r[\"http_status\"] == 200}\nnew_translations = {r[\"id\"]: r for r in full[\"translations\"]}\nmatched = [cid for cid in old_success if new_translations[cid][\"http_status\"] == 200]\nold_failures = [r[\"id\"] for r in baseline[\"translations\"] if r[\"http_status\"] != 200]\nrecovered = [cid for cid in old_failures if new_translations[cid][\"http_status\"] == 200]\n\ndef get_local(url):\n    with urllib.request.urlopen(url, timeout=5) as response:\n        return json.load(response)\n\nhealth = get_local(\"http://127.0.0.1:8002/health\")\nassert health[\"status\"] == \"ok\" and health[\"translation_loaded\"] and health[\"stt_enabled\"]\nresult = {\n    \"schema\": \"carebridge.gpu-isolation-recheck.v1\",\n    \"recorded_at\": datetime.now(timezone.utc).isoformat(),\n    \"git_revision\": full[\"git_revision\"],\n    \"full_evaluation_sha256\": full_sha,\n    \"targeted_evaluation_sha256\": targeted_sha,\n    \"failed_baseline_evaluation_sha256\": baseline_sha,\n    \"reference_review_sha256\": review_sha,\n    \"backend_contract_sha256\": contract_sha,\n    \"targeted_backend_contract_sha256\": extra_contract_sha,\n    \"observations_sha256\": hashlib.sha256(observations_raw).hexdigest(),\n    \"same_app_code_corpus_runner_config_weights_runtime_and_adapter_as_v8\": True,\n    \"previous_generation_failures\": len(old_failures),\n    \"previous_generation_failures_now_http_200\": recovered,\n    \"matched_success_latency\": {\n        \"case_count\": len(matched),\n        \"v8_p50_seconds\": median(old_success[cid][\"seconds\"] for cid in matched),\n        \"v9_p50_seconds\": median(new_translations[cid][\"seconds\"] for cid in matched),\n        \"scope\": \"Same successful case IDs in both runs; one measurement per case per run, not a load benchmark.\",\n    },\n    \"current_app_code_hashes_verified\": True,\n    \"resource_observations\": observations,\n    \"all_samples_ollama_empty\": all(not s[\"ollama_models\"] for s in observations),\n    \"sampling_limit\": \"Point-in-time samples, not continuous proof of exclusive GPU use. Desktop apps may also use GPU resources.\",\n    \"full_summary\": full[\"summary\"],\n    \"workflow_passed\": full[\"workflow_passed\"],\n    \"workflow_total\": full[\"workflow_total\"],\n    \"targeted_passed\": targeted[\"passed\"],\n    \"targeted_total\": targeted[\"total\"],\n    \"restored_service_health\": health,\n    \"ollama_models_after_restore\": get_local(\"http://127.0.0.1:11434/api/ps\")[\"models\"],\n    \"interpretation\": \"Compare this completed run with the preserved interrupted v8 run. Conditions without a loaded Ollama model were observed, without changing app code or inference limits. This supports investigating resource competition but is not a randomized causal experiment or native-language accuracy measurement.\",\n    \"recorder_source\": Path(__file__).read_text(encoding=\"utf-8\"),\n}\nwith (root / \"evaluation/spec-context-resources-v9.json\").open(\"x\", encoding=\"utf-8\", newline=\"\\n\") as f:\n    json.dump(result, f, ensure_ascii=False, indent=2)\n    f.write(\"\\n\")\nprint(json.dumps({\"samples\": len(observations), \"all_samples_ollama_empty\": result[\"all_samples_ollama_empty\"], \"summary\": full[\"summary\"], \"workflow\": [full[\"workflow_passed\"], full[\"workflow_total\"]], \"targeted\": [targeted[\"passed\"], targeted[\"total\"]], \"same_code_and_settings\": True, \"restored_service\": health}, ensure_ascii=False, indent=2))\n"
+}
