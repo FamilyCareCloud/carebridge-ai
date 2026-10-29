@@ -6,8 +6,8 @@ import pytest
 from app.carebridge import guidance
 from app.carebridge.guidance import source_hints, translation_payload
 from app.carebridge.local import LocalTranslationProvider
-from app.carebridge.provider import translation_system_prompt
-from app.carebridge.safety import check_input
+from app.carebridge.provider import KOREAN_CONTEXT_PROMPT, SYSTEM_PROMPT, translation_system_prompt
+from app.carebridge.safety import check_input, lexical_signals
 from app.carebridge.workflow import pipeline_info
 from tests.conftest import model_provider, model_response
 from tests.test_gpu_regressions import make_draft
@@ -57,6 +57,29 @@ def test_caller_cannot_supply_internal_hints(client, headers):
         },
     )
     assert response.status_code == 422
+
+
+def test_unhinted_request_keeps_original_model_input():
+    data = translation_payload(check_input("Walked with help."), "en")
+    assert data == {
+        "source_language": "en",
+        "segments": [{"segment_id": "s001", "text": "Walked with help."}],
+    }
+    assert translation_system_prompt(data) == SYSTEM_PROMPT
+
+
+def test_indonesian_reported_negation_uses_source_context_not_object_lookup():
+    source = 'Mengatakan, "Saya tidak makan sup."'
+    data = translation_payload(check_input(source), "id")
+    assert data["segments"][0]["text"] == source
+    assert translation_system_prompt(data) == KOREAN_CONTEXT_PROMPT
+    assert "sup" not in translation_system_prompt(data)
+
+
+def test_actual_thirst_is_not_given_uncertain_hint():
+    assert source_hints("Was thirsty after walking.") == [
+        {"source_phrase": "after walking", "meaning": guidance.AFTER_HINT}
+    ]
 
 
 def test_guidance_changes_are_in_pipeline_fingerprint(config, monkeypatch):
@@ -170,6 +193,30 @@ def test_http_and_local_use_identical_source_hints_and_system(config, monkeypatc
             "SEMANTIC_NEGATION",
             True,
         ),
+        (
+            'Said, "I have never drunk milk."',
+            "우유를 마시지 않았다고 말했습니다.",
+            "SEMANTIC_NEGATION",
+            False,
+        ),
+        (
+            'Mengatakan, "Saya tidak pernah minum susu."',
+            "우유를 마시지 않았다고 말했습니다.",
+            "SEMANTIC_NEGATION",
+            False,
+        ),
+        (
+            'Nói rằng: "Tôi chưa bao giờ uống sữa."',
+            "우유를 마시지 않았다고 말했습니다.",
+            "SEMANTIC_NEGATION",
+            False,
+        ),
+        (
+            'Said, "I have never drunk milk."',
+            "우유를 한 번도 마시지 않았다고 말했습니다.",
+            "SEMANTIC_NEGATION",
+            True,
+        ),
     ],
 )
 def test_model_pass_cannot_hide_scope_changes(
@@ -208,3 +255,18 @@ def test_genuine_lifetime_negation_is_not_rewritten_to_simple_negation(source):
     meanings = [h["meaning"] for h in source_hints(source)]
     assert guidance.LIFETIME_HINT in meanings
     assert guidance.NEGATION_HINT not in meanings
+
+
+@pytest.mark.parametrize(
+    "text,uncertain",
+    [
+        ("걸은 후 목말라 보였습니다.", True),
+        ("걸은 후 목이 말라 보였습니다.", True),
+        ("목마른 듯합니다.", True),
+        ("걸은 후 목이 말랐습니다.", False),
+        ("물이 보였습니다.", False),
+        ("탈수 증상이 보입니다.", False),
+    ],
+)
+def test_thirst_appearance_preserves_uncertainty_without_accepting_visibility(text, uncertain):
+    assert lexical_signals(text)[1] is uncertain

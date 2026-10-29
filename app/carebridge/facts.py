@@ -34,6 +34,12 @@ WALKING_CONDITION_KO = re.compile(
     r"(?:걷다|걷고|걸어)\s*보면|(?:걷|걸을|보행할|산책할)\s*때(?:마다)?"
 )
 LIFETIME_NEGATION_KO = re.compile(r"(?:적|경험)(?:이|은)?\s*(?:전혀\s*)?없")
+EXPERIENTIAL_NEGATION = re.compile(
+    r"\b(?:have|has)\s+never\b|chưa\s+bao\s+giờ|\b(?:tidak|belum)\s+pernah\b", re.I
+)
+EXPERIENTIAL_NEGATION_KO = re.compile(
+    r"(?:적|경험|일)(?:이|은)?\s*(?:전혀\s*)?없|한\s*번도|평생|지금까지|이제껏|여태"
+)
 
 
 def numeric_facts(text: str) -> tuple[Counter, Counter, Counter]:
@@ -127,6 +133,8 @@ def temporal_context_preserved(source: str, translation: str) -> bool:
 
 
 def negation_scope_preserved(source: str, translation: str) -> bool:
+    if EXPERIENTIAL_NEGATION.search(source) and not EXPERIENTIAL_NEGATION_KO.search(translation):
+        return False
     return not (
         SIMPLE_NEGATION.search(source)
         and not LIFETIME_NEGATION.search(source)

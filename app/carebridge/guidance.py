@@ -16,11 +16,14 @@ from app.carebridge.schemas import SourceSegment
 
 TERM_HINTS = [
     (r"\bdinner\b|bữa\s+tối|ăn\s+tối|\bmakan\s+malam\b", "저녁 식사"),
-    (r"\bwheelchairs?\b|xe\s+lăn|\bkursi\s+roda\b", "이동 도구의 한국어 명칭: 휠체어"),
+    (r"\bwheelchairs?\b|xe\s+lăn|\bkursi\s+roda\b", "휠체어"),
+    (r"\bpergi\b", "갔습니다"),
+    (r"\bvườn\b", "정원"),
+    (r"\bseem(?:s|ed)?\s+thirsty\b|có\s+vẻ\s+khát\s+nước|\btampak\s+haus\b", "목말라 보였음"),
 ]
-AFTER_HINT = "걷기 이후에 관찰한 순서입니다. 한국어 표현: '걸은 후' 또는 '걷고 나서'."
-DELAY_HINT = "잠들기 전 간격: {value}{unit} 후. 잠을 잔 지속시간이 아닙니다."
-NEGATION_HINT = "단순 부정을 담은 발언입니다. 간접 인용 표현: '...하지 않았다고 말했습니다' 또는 '...없다고 말했습니다'. 원문의 부정 범위와 시제를 유지하세요."
+AFTER_HINT = "걸은 후"
+DELAY_HINT = "{value}{unit} 후에 잠들었음"
+NEGATION_HINT = "해당 시점의 행동 부정"
 LIFETIME_HINT = (
     "해당 행동을 한 경험이 없다는 발언입니다. 한국어 표현: '...한 적이 없다고 말했습니다'."
 )
@@ -28,17 +31,15 @@ EXPLICIT_LIFETIME = re.compile(r"\bnever\b|chưa\s+bao\s+giờ|\b(?:tidak|belum)
 HABITUAL_WALKING = re.compile(
     r"\bwhenever\s+walking\b|mỗi\s+khi\s+đi\s+bộ|\bsetiap\s+kali\s+berjalan\b", re.I
 )
-HABITUAL_HINT = "걷는 때마다 반복되는 관찰입니다. 한국어 표현: '걸을 때마다'."
+HABITUAL_HINT = "걸을 때마다"
 NEGATED_WALKING = re.compile(
     r"\b(?:did|does|do)\s+not\s+walk\b|không\s+đi\s+bộ|\btidak\s+berjalan\b", re.I
 )
-NEGATED_WALKING_HINT = "걷지 않았다는 관찰입니다. 한국어 표현: '걷지 않았으며'. 걷는 능력에 관한 판단은 추가하지 마세요."
+NEGATED_WALKING_HINT = "걷지 않았음"
 MOVEMENT_HELP = re.compile(
     r"\bwith\s+(?:help|assistance)\b|với\s+(?:sự\s+)?hỗ\s+trợ|\b(?:dengan|dan)\s+bantuan\b", re.I
 )
-MOVEMENT_HELP_HINT = (
-    "이동할 때 도움을 받았습니다. 한국어 표현: '도움을 받아'. 도움 제공자는 원문대로 유지하세요."
-)
+MOVEMENT_HELP_HINT = "도움을 받아"
 UNITS = {"min": "분", "hour": "시간"}
 MAX_HINTS = 8
 
@@ -47,11 +48,13 @@ def guidance_definition() -> str:
     """Include the matched-hint templates/rules in the pipeline prompt fingerprint."""
     return json.dumps(
         {
-            "version": "source-hints.v2",
+            "version": "source-hints.v3",
+            "system_rendering": "id reported simple negation: Korean instructions; lifetime: JSON guides; other hints: short per-segment lines; no hints: original system",
             "terms": TERM_HINTS,
             "after_walking": [AFTER_WALKING.pattern, SOURCE_CONDITION.pattern, AFTER_HINT],
             "delay": [[p.pattern for p in DELAY_SOURCE], DURATION_UNITS, UNITS, DELAY_HINT],
             "reported_negation": [
+                "id",
                 REPORTED_SPEECH.pattern,
                 SIMPLE_NEGATION.pattern,
                 LIFETIME_NEGATION.pattern,
@@ -70,7 +73,7 @@ def guidance_definition() -> str:
     )
 
 
-def source_hints(source: str) -> list[dict[str, str]]:
+def source_hints(source: str, language: str = "") -> list[dict[str, str]]:
     hints = []
     for pattern, meaning in TERM_HINTS:
         if match := re.search(pattern, source, re.I):
@@ -96,7 +99,8 @@ def source_hints(source: str) -> list[dict[str, str]]:
                 }
             )
     if (
-        REPORTED_SPEECH.search(source)
+        language == "id"
+        and REPORTED_SPEECH.search(source)
         and (match := SIMPLE_NEGATION.search(source))
         and not LIFETIME_NEGATION.search(source)
     ):
@@ -110,7 +114,7 @@ def translation_payload(segments: list[SourceSegment], language: str) -> dict:
     data = []
     for segment in segments:
         item = {"segment_id": segment.segment_id, "text": segment.quote}
-        if hints := source_hints(segment.quote):
+        if hints := source_hints(segment.quote, language):
             item["source_hints"] = hints
         data.append(item)
     return {"source_language": language, "segments": data}
