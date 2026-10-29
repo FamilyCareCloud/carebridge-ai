@@ -40,6 +40,12 @@ EXPERIENTIAL_NEGATION = re.compile(
 EXPERIENTIAL_NEGATION_KO = re.compile(
     r"(?:적|경험|일)(?:이|은)?\s*(?:전혀\s*)?없|한\s*번도|평생|지금까지|이제껏|여태"
 )
+SOURCE_INTENTION = re.compile(
+    r"\b(?:will|would|intend|plan|want|going\s+to|akan|berniat|berencana|ingin)\b|"
+    r"sẽ|định|muốn",
+    re.I,
+)
+NEGATIVE_INTENTION_KO = re.compile(r"않겠(?:다고|습니다)")
 
 
 def numeric_facts(text: str) -> tuple[Counter, Counter, Counter]:
@@ -139,6 +145,15 @@ def negation_scope_preserved(source: str, translation: str) -> bool:
         SIMPLE_NEGATION.search(source)
         and not LIFETIME_NEGATION.search(source)
         and LIFETIME_NEGATION_KO.search(translation)
+    )
+
+
+def reported_intention_preserved(source: str, translation: str) -> bool:
+    return not (
+        REPORTED_SPEECH.search(source)
+        and SIMPLE_NEGATION.search(source)
+        and not SOURCE_INTENTION.search(source)
+        and NEGATIVE_INTENTION_KO.search(translation)
     )
 
 

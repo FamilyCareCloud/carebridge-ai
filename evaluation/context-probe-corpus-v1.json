@@ -1,0 +1,281 @@
+{
+  "schema": "carebridge.translation-evaluation.v1",
+  "scope": "Previous 69 development cases unchanged. Six reported-negation transfer cases fixed before full GPU v6, after development prompt exploration. Synthetic AI-authored references, not independent/native-speaker validation.",
+  "languages": [
+    "en",
+    "vi",
+    "id"
+  ],
+  "translation_cases": [
+    {
+      "id": "en-extension-quoted-negation",
+      "language": "en",
+      "source": "Said, \"I did not drink milk.\"",
+      "reference": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마시지 않음",
+        "발언 내용",
+        "관찰된 사실로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-extension-quoted-negation",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi không uống sữa.\"",
+      "reference": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마시지 않음",
+        "발언 내용",
+        "관찰된 사실로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-extension-quoted-negation",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak minum susu.\"",
+      "reference": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마시지 않음",
+        "발언 내용",
+        "관찰된 사실로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-context-after-walking",
+      "language": "en",
+      "source": "Seemed thirsty after walking.",
+      "reference": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "required_facts": [
+        "걷기 이후",
+        "목말라 보임",
+        "단정/반복 조건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition",
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-context-lifetime-negation",
+      "language": "en",
+      "source": "Said, \"I have never drunk milk.\"",
+      "reference": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-context-after-walking",
+      "language": "vi",
+      "source": "Có vẻ khát sau khi đi bộ.",
+      "reference": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "required_facts": [
+        "걷기 이후",
+        "목말라 보임",
+        "단정/반복 조건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition",
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-context-lifetime-negation",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi chưa bao giờ uống sữa.\"",
+      "reference": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-context-after-walking",
+      "language": "id",
+      "source": "Tampak haus setelah berjalan.",
+      "reference": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "required_facts": [
+        "걷기 이후",
+        "목말라 보임",
+        "단정/반복 조건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition",
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-context-lifetime-negation",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak pernah minum susu.\"",
+      "reference": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-transfer-quoted-soup",
+      "language": "en",
+      "source": "Said, \"I did not eat soup.\"",
+      "reference": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "수프"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-transfer-quoted-outside",
+      "language": "en",
+      "source": "Said, \"I did not go outside today.\"",
+      "reference": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "오늘 외출"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-transfer-quoted-soup",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi không ăn súp.\"",
+      "reference": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "수프"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-transfer-quoted-outside",
+      "language": "vi",
+      "source": "Nói rằng: \"Hôm nay tôi không ra ngoài.\"",
+      "reference": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "오늘 외출"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-transfer-quoted-soup",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak makan sup.\"",
+      "reference": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "수프"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-transfer-quoted-outside",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak keluar rumah hari ini.\"",
+      "reference": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "오늘 외출"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    }
+  ],
+  "qa_cases": [],
+  "parent_sha256": "e4ed4656dc6785cd2ffb8ad336bc1f3a614aa2ae2ba6128b09b50bfd871ef553",
+  "parent_corpus_sha256": "e08ab74d76d1f40fd3b8bbd5cff3b48ce9cf495e4e069b9d63533b356f372a51"
+}

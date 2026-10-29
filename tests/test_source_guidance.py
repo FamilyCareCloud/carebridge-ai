@@ -8,6 +8,9 @@ from app.carebridge.guidance import source_hints, translation_payload
 from app.carebridge.local import LocalTranslationProvider
 from app.carebridge.provider import KOREAN_CONTEXT_PROMPT, SYSTEM_PROMPT, translation_system_prompt
 from app.carebridge.safety import check_input, lexical_signals
+from app.carebridge.schemas import Draft, DraftRequest
+from app.carebridge.semantic import AUDIT_PROMPT, REPORTED_AUDIT_PROMPT, audit_prompt
+from app.carebridge.service import DraftService
 from app.carebridge.workflow import pipeline_info
 from tests.conftest import model_provider, model_response
 from tests.test_gpu_regressions import make_draft
@@ -80,6 +83,30 @@ def test_actual_thirst_is_not_given_uncertain_hint():
     assert source_hints("Was thirsty after walking.") == [
         {"source_phrase": "after walking", "meaning": guidance.AFTER_HINT}
     ]
+
+
+def test_habitual_never_is_not_glossed_as_experiential_negation():
+    assert source_hints('Said, "I never walk alone."', "en") == []
+
+
+@pytest.mark.parametrize(
+    "source,target,reported",
+    [
+        ('Mengatakan, "Saya tidak makan sup."', "수프를 먹지 않았다고 말했습니다.", True),
+        ("Said there was no pain today.", "오늘 통증이 없었다고 말했습니다.", False),
+        ("Drank water but did not eat soup.", "물은 마셨지만 수프는 먹지 않았습니다.", False),
+        (
+            'Said, "I drank water but did not eat soup."',
+            "물은 마셨지만 수프는 먹지 않았다고 말했습니다.",
+            False,
+        ),
+    ],
+)
+def test_reported_audit_does_not_replace_general_or_contrast_checks(
+    config, headers, source, target, reported
+):
+    draft = Draft.model_validate(make_draft(config, headers, source, target))
+    assert audit_prompt(draft) == (REPORTED_AUDIT_PROMPT if reported else AUDIT_PROMPT)
 
 
 def test_guidance_changes_are_in_pipeline_fingerprint(config, monkeypatch):
@@ -217,6 +244,18 @@ def test_http_and_local_use_identical_source_hints_and_system(config, monkeypatc
             "SEMANTIC_NEGATION",
             True,
         ),
+        (
+            'Mengatakan, "Saya tidak keluar rumah hari ini."',
+            "오늘 집 밖으로 나가지 않겠다고 말했습니다.",
+            "SEMANTIC_ADDED_FACTS",
+            False,
+        ),
+        (
+            'Said, "I will not go outside today."',
+            "오늘 밖에 나가지 않겠다고 말했습니다.",
+            "SEMANTIC_ADDED_FACTS",
+            True,
+        ),
     ],
 )
 def test_model_pass_cannot_hide_scope_changes(
@@ -270,3 +309,39 @@ def test_genuine_lifetime_negation_is_not_rewritten_to_simple_negation(source):
 )
 def test_thirst_appearance_preserves_uncertainty_without_accepting_visibility(text, uncertain):
     assert lexical_signals(text)[1] is uncertain
+
+
+@pytest.mark.parametrize(
+    "source,language,target,needs_check",
+    [
+        ("Seemed thirsty after walking.", "en", "걸은 후 목말라 보였습니다.", True),
+        ("Có vẻ khát sau khi đi bộ.", "vi", "걸은 후 목말라 보였습니다.", True),
+        ("Tampak haus setelah berjalan.", "id", "걸은 후 목말라 보였습니다.", True),
+        ("Drank water.", "en", "물을 마셨습니다.", False),
+    ],
+)
+def test_model_cannot_omit_confirmation_for_explicit_source_uncertainty(
+    config, source, language, target, needs_check
+):
+    provider = model_provider(
+        config,
+        lambda request: model_response(
+            [
+                {
+                    "segment_id": "s001",
+                    "translation": target,
+                    "category": "hydration",
+                    "needs_confirmation": False,
+                }
+            ]
+        ),
+    )
+    draft = asyncio.run(
+        DraftService(provider).create(
+            DraftRequest(memo=source, source_language=language, data_use="synthetic_deidentified")
+        )
+    )
+    assert bool(draft.additional_checks) is needs_check
+    assert draft.translation.text == target
+    if needs_check:
+        assert draft.additional_checks[0].evidence.quote == source

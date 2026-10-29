@@ -17,7 +17,7 @@ from app.carebridge.schemas import (
     SourceSegment,
     Text,
 )
-from app.carebridge.semantic import AUDIT_PROMPT, SemanticReview
+from app.carebridge.semantic import SemanticReview, semantic_prompt_material
 from app.config import Settings
 
 WORKFLOW_VERSION = "carebridge.workflow.v1"
@@ -55,7 +55,7 @@ def pipeline_info(config: Settings) -> Pipeline:
             else config.carebridge_model
         ),
         translation_prompt_sha256=digest(translation_prompt_material()),
-        semantic_prompt_sha256=digest(AUDIT_PROMPT),
+        semantic_prompt_sha256=digest(semantic_prompt_material()),
     )
 
 

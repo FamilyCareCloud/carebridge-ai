@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from app.carebridge.language import korean_output
 from app.carebridge.provider import InvalidModelOutput, TranslationProvider
-from app.carebridge.safety import assess, check_input, digest
+from app.carebridge.safety import assess, check_input, digest, lexical_signals
 from app.carebridge.schemas import (
     AdditionalCheck,
     Draft,
@@ -84,7 +84,7 @@ class DraftService:
                     evidence=evidence,
                 )
             )
-            if model_segment.needs_confirmation:
+            if model_segment.needs_confirmation or lexical_signals(evidence.quote)[1]:
                 additional_checks.append(
                     AdditionalCheck(id=f"c{len(additional_checks) + 1:03d}", evidence=evidence)
                 )
