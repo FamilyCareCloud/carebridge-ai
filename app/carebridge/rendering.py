@@ -95,6 +95,10 @@ ALREADY_SOURCE = (
     r"mungkin sudah (?P<meal>sarapan|makan siang|makan malam), tetapi belum dikonfirmasi[.]?"
 )
 ALREADY_KO = r"(?P<meal>아침|점심|저녁) 식사했을 수도 있지만, 확인되지 않았습니다[.]?"
+UNCONFIRMED_MEAL_VI = r"có thể đã ăn (?P<meal>sáng|trưa|tối), nhưng chưa được xác nhận[.]?"
+UNCONFIRMED_MEAL_KO = (
+    r"(?P<meal>아침|점심|저녁) 식사(?:를 )?했을 수도 있지만, (?:아직 )?확인되지 않았습니다[.]?"
+)
 # Correct only the object in a single, quoted drinking claim. Compound claims,
 # quantities and unsupported grammar abstain; all other wording and QA survive.
 QUOTED_JUICE = {
@@ -108,6 +112,7 @@ JUICE_KO = (
 )
 TRANSPORT_CONTRAST = r"tidak berjalan ke (?P<place>taman|kamar|ruang makan); pergi ke sana dengan kursi roda dan bantuan[.]?"
 TRANSPORT_KO = r"(?P<place>공원|정원|방|식사실|식당)에 가는 도중 걸어 가지 않았으며 휠체어와 도움을 받아 갔습니다[.]?"
+TRANSPORT_RENDERED_KO = r"(?P<place>공원|정원|정원 또는 공원|방|식사실|식당)까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다[.]?"
 TRANSPORT_PLACES = {"taman": ["공원", "정원"], "kamar": ["방"], "ruang makan": ["식사실", "식당"]}
 
 
@@ -139,6 +144,7 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
     if language not in REPORTS:
         return segment
     text = segment.translation
+    confirmation = segment.needs_confirmation
     if lexical_signals(source)[0]:
         text = re.sub(
             PAST_NEGATION,
@@ -164,11 +170,29 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
     body = quoted_body(source, language)
     if body and full(QUOTED_JUICE[language], body) and (match := full(JUICE_KO, text)):
         text = '"주스를 ' + match["claim"] + '."라고 말했습니다.'
+    if language == "vi":
+        meal = full(UNCONFIRMED_MEAL_VI, source)
+        if meal and (match := full(UNCONFIRMED_MEAL_KO, text)):
+            if MEALS[meal["meal"].lower()] == match["meal"]:
+                # đã marks a completed action; it does not require adding 이미.
+                text = f"{match['meal']} 식사를 했을 수도 있지만, 아직 확인되지 않았습니다."
+                confirmation = True
     if language == "id":
         contrast = full(TRANSPORT_CONTRAST, source)
-        if contrast and (match := full(TRANSPORT_KO, text)):
-            if match["place"] in TRANSPORT_PLACES[contrast["place"].lower()]:
-                text = f"{match['place']}까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다."
+        match = full(TRANSPORT_KO, text) or full(TRANSPORT_RENDERED_KO, text)
+        if contrast and match:
+            place = contrast["place"].lower()
+            if match["place"] in TRANSPORT_PLACES[place] or (
+                place == "taman" and match["place"] == "정원 또는 공원"
+            ):
+                # Bare taman does not distinguish garden from park. Preserve
+                # that ambiguity explicitly and require source-author review.
+                target = "정원 또는 공원" if place == "taman" else match["place"]
+                text = (
+                    f"{target}까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다."
+                )
+                if place == "taman":
+                    confirmation = True
         if full(HELP_SOURCE, source) and (match := full(HELP_KO, text)):
             text = "도움을 받아 휠체어를 이용해 " + match["rest"]
         already = full(ALREADY_SOURCE, source)
@@ -182,7 +206,7 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
         update={
             "translation": text,
             "category": category or segment.category,
-            "needs_confirmation": False if category else segment.needs_confirmation,
+            "needs_confirmation": False if category else confirmation,
         }
     )
 
@@ -190,7 +214,7 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
 def rendering_definition() -> str:
     return json.dumps(
         {
-            "version": "source-bound-rendering.v2",
+            "version": "source-bound-rendering.v3",
             "max_output_characters": MAX_RENDERED_CHARACTERS,
             "lexical_signals": [
                 NEGATION.pattern,
@@ -207,8 +231,14 @@ def rendering_definition() -> str:
             "layout": REPORTED_LAYOUT,
             "help": [HELP_SOURCE, HELP_KO],
             "already": [ALREADY_SOURCE, ALREADY_KO],
+            "unconfirmed_meal_vi": [UNCONFIRMED_MEAL_VI, UNCONFIRMED_MEAL_KO],
             "quoted_juice": [QUOTED_JUICE, JUICE_KO],
-            "transport_contrast": [TRANSPORT_CONTRAST, TRANSPORT_KO, TRANSPORT_PLACES],
+            "transport_contrast": [
+                TRANSPORT_CONTRAST,
+                TRANSPORT_KO,
+                TRANSPORT_RENDERED_KO,
+                TRANSPORT_PLACES,
+            ],
             "scope": "en/vi/id model outputs only; whole-clause metadata; lexical uncertainty always wins; all existing QA runs afterwards",
         },
         ensure_ascii=False,
