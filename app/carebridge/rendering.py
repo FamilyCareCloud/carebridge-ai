@@ -96,9 +96,7 @@ ALREADY_SOURCE = (
 )
 ALREADY_KO = r"(?P<meal>아침|점심|저녁) 식사했을 수도 있지만, 확인되지 않았습니다[.]?"
 UNCONFIRMED_MEAL_VI = r"có thể đã ăn (?P<meal>sáng|trưa|tối), nhưng chưa được xác nhận[.]?"
-UNCONFIRMED_MEAL_KO = (
-    r"(?P<meal>아침|점심|저녁) 식사(?:를 )?했을 수도 있지만, (?:아직 )?확인되지 않았습니다[.]?"
-)
+UNCONFIRMED_MEAL_KO = r"(?P<meal>아침|점심|저녁)(?: 식사(?:를 )?했|을 먹었)을 수도 있지만,? (?:아직 )?확인되지 않았습니다[.]?"
 # Correct only the object in a single, quoted drinking claim. Compound claims,
 # quantities and unsupported grammar abstain; all other wording and QA survive.
 QUOTED_JUICE = {
@@ -114,6 +112,13 @@ TRANSPORT_CONTRAST = r"tidak berjalan ke (?P<place>taman|kamar|ruang makan); per
 TRANSPORT_KO = r"(?P<place>공원|정원|방|식사실|식당)에 가는 도중 걸어 가지 않았으며 휠체어와 도움을 받아 갔습니다[.]?"
 TRANSPORT_RENDERED_KO = r"(?P<place>공원|정원|정원 또는 공원|방|식사실|식당)까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다[.]?"
 TRANSPORT_PLACES = {"taman": ["공원", "정원"], "kamar": ["방"], "ruang makan": ["식사실", "식당"]}
+QUALIFIED_TRANSPORT_SOURCE = r"tidak berjalan ke (?P<place>taman kota|taman rumah); pergi ke sana dengan kursi roda dan bantuan[.]?"
+QUALIFIED_PLACES = {"taman kota": ("공원", "도시 공원"), "taman rumah": ("정원", "집 정원")}
+QUALIFIED_TRANSPORT_KO = [
+    r"도움을 받아 휠체어로 (?P<place>공원|정원)에 갔습니다[.]?",
+    r"(?P<place>공원|정원)(?:으)?로 걸어 ?가지 않았으며, 휠체어와 도움을 받아 갔습니다[.]?",
+    r"(?P<place>도시 공원|집 정원)까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다[.]?",
+]
 
 
 def full(pattern: str, text: str):
@@ -178,6 +183,15 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
                 text = f"{match['meal']} 식사를 했을 수도 있지만, 아직 확인되지 않았습니다."
                 confirmation = True
     if language == "id":
+        qualified = full(QUALIFIED_TRANSPORT_SOURCE, source)
+        if qualified:
+            allowed = QUALIFIED_PLACES[qualified["place"].lower()]
+            for pattern in QUALIFIED_TRANSPORT_KO:
+                if (match := full(pattern, text)) and match["place"] in allowed:
+                    # Both propositions and the location qualifier are explicit
+                    # in this complete source clause. No free-text additions.
+                    text = f"{allowed[1]}까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다."
+                    break
         contrast = full(TRANSPORT_CONTRAST, source)
         match = full(TRANSPORT_KO, text) or full(TRANSPORT_RENDERED_KO, text)
         if contrast and match:
@@ -214,7 +228,7 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
 def rendering_definition() -> str:
     return json.dumps(
         {
-            "version": "source-bound-rendering.v3",
+            "version": "source-bound-rendering.v4",
             "max_output_characters": MAX_RENDERED_CHARACTERS,
             "lexical_signals": [
                 NEGATION.pattern,
@@ -233,6 +247,11 @@ def rendering_definition() -> str:
             "already": [ALREADY_SOURCE, ALREADY_KO],
             "unconfirmed_meal_vi": [UNCONFIRMED_MEAL_VI, UNCONFIRMED_MEAL_KO],
             "quoted_juice": [QUOTED_JUICE, JUICE_KO],
+            "qualified_transport": [
+                QUALIFIED_TRANSPORT_SOURCE,
+                QUALIFIED_TRANSPORT_KO,
+                QUALIFIED_PLACES,
+            ],
             "transport_contrast": [
                 TRANSPORT_CONTRAST,
                 TRANSPORT_KO,
