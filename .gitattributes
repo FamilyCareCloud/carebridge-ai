@@ -5,4 +5,4 @@ evaluation/backend-contract-spec-*.json -text
 evaluation/spec-reference-*.json -text
 evaluation/prompt-comparison-*.json -text
 evaluation/context-probe-*.json -text
-evaluation/spec-context-*.json -text
+evaluation/spec-context-*.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

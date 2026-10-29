@@ -1,0 +1,17 @@
+{
+    "schema":  "carebridge.gpu-resource-observation.v1",
+    "observed_at":  "2026-10-29T04:43:45.3514266Z",
+    "evaluation":  "evaluation/spec-gpu-v8.json",
+    "gpu":  [
+                {
+                    "name":  "NVIDIA GeForce RTX 5070 Ti",
+                    "utilization.gpu [%]":  "32 %",
+                    "memory.used [MiB]":  "15694 MiB",
+                    "memory.total [MiB]":  "16303 MiB",
+                    "temperature.gpu":  "44",
+                    "power.draw [W]":  "102.54 W"
+                }
+            ],
+    "ollama_ps":  "NAME         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \r\nqwen3:14b    bdbd181c33f2    9.7 GB    100% GPU     4096       llamacpp    4 minutes from now",
+    "scope":  "Read-only point-in-time observation during evaluation. Concurrent memory use is observed; this alone does not prove the cause of timeouts."
+}

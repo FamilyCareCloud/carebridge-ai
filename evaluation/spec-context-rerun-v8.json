@@ -1,0 +1,69 @@
+{
+  "schema": "carebridge.interrupted-evaluation.v1",
+  "recorded_at": "2026-10-29T05:00:45.845392+00:00",
+  "status": "interrupted_after_repeated_inference_failures",
+  "evaluation_path": "evaluation/spec-gpu-v8.json",
+  "evaluation_sha256": "cf24eb89c2d7ea2894c7afdfaab6a420074f9af1c7f4d19eff9208a42d3182f0",
+  "git_revision": "f7e3574a004ddc05f282afe9b2b5e2ee2a7351f8",
+  "app_code_hashes_verified": true,
+  "reason": "The three initial faithful semantic controls all timed out after 37 of 75 generation requests failed. Concurrent Ollama qwen3:14b GPU occupancy was observed. Stopped only the identified evaluation process and restored the original service; did not stop Ollama or alter inference limits. No isolated rerun was performed, so causality is not proven.",
+  "resource_observation_path": "evaluation/spec-context-resources-v8.json",
+  "resource_observation_sha256": "a260fbadfc427ca9a575af2fa6cc1d9d1e55da398d044e8df3fbb5a6228bd922",
+  "recorded_completed_responses": {
+    "generation": 75,
+    "semantic": 12,
+    "workflow": 0
+  },
+  "unverified_planned_cases": {
+    "semantic": 90,
+    "workflow": 26
+  },
+  "inflight_request_note": "A request may have been in flight at termination; only persisted completed responses are counted. The original report remains incomplete, without a fabricated finished_at.",
+  "translation_http_status_counts": {
+    "200": 38,
+    "504": 36,
+    "502": 1
+  },
+  "semantic_http_status_counts": {
+    "504": 7,
+    "200": 5
+  },
+  "semantic_success_model_checked": {
+    "False": 5
+  },
+  "recorded_response_summary": {
+    "translation_requests": 75,
+    "translation_http_200": 38,
+    "translation_hold": 0,
+    "source_evidence_valid": 38,
+    "sharing_blocked": 38,
+    "faithful_controls": 3,
+    "faithful_controls_review_required": 0,
+    "faithful_controls_false_hold": 0,
+    "injected_errors": 9,
+    "injected_errors_caught": 5,
+    "injected_errors_missed": 0,
+    "qa_request_failures": 7,
+    "translation_latency_p50_seconds": 12.947,
+    "translation_latency_max_seconds": 18.906,
+    "accuracy": "Not automatically scored; see separate reference-based AI review."
+  },
+  "cpu_checks": {
+    "pytest_passed": 280,
+    "pytest_warnings": 3,
+    "ruff_check": "passed",
+    "ruff_format_files": 35,
+    "source": "Observed command output in the same session at the same app revision; audio library deprecation warnings only."
+  },
+  "restored_service_health": {
+    "status": "ok",
+    "device": "cuda",
+    "stt_enabled": true,
+    "carebridge_schema": "carebridge.v1",
+    "translation_backend": "local",
+    "translation_loaded": true,
+    "semantic_check_enabled": true
+  },
+  "scope": "Current local branch verification only; no merge/deployment or native-language/held-out quality validation. This interrupted run is not a complete pass.",
+  "recorder_source": "import hashlib\nimport json\nimport sys\nimport urllib.request\nfrom collections import Counter\nfrom datetime import datetime, timezone\nfrom pathlib import Path\n\nroot = Path(__file__).resolve().parents[2] / \"carebridge-ai\"\nsys.path.insert(0, str(root))\nfrom scripts.evaluate_translation import summarize\n\nraw = (root / \"evaluation/spec-gpu-v8.json\").read_bytes()\nreport = json.loads(raw)\nassert not report.get(\"finished_at\")\nassert len(report[\"translations\"]) == 75\nassert len(report[\"qa_cases\"]) == 12\nassert len(report[\"workflow_cases\"]) == 0\nfor path, digest in report[\"code_sha256\"].items():\n    assert hashlib.sha256((root / path).read_bytes()).hexdigest() == digest, path\nwith urllib.request.urlopen(\"http://127.0.0.1:8002/health\", timeout=3) as response:\n    health = json.load(response)\nassert health[\"translation_loaded\"] and health[\"stt_enabled\"] and health[\"device\"] == \"cuda\"\nresource_raw = (root / \"evaluation/spec-context-resources-v8.json\").read_bytes()\nresult = {\n    \"schema\": \"carebridge.interrupted-evaluation.v1\",\n    \"recorded_at\": datetime.now(timezone.utc).isoformat(),\n    \"status\": \"interrupted_after_repeated_inference_failures\",\n    \"evaluation_path\": \"evaluation/spec-gpu-v8.json\",\n    \"evaluation_sha256\": hashlib.sha256(raw).hexdigest(),\n    \"git_revision\": report[\"git_revision\"],\n    \"app_code_hashes_verified\": True,\n    \"reason\": \"The three initial faithful semantic controls all timed out after 37 of 75 generation requests failed. Concurrent Ollama qwen3:14b GPU occupancy was observed. Stopped only the identified evaluation process and restored the original service; did not stop Ollama or alter inference limits. No isolated rerun was performed, so causality is not proven.\",\n    \"resource_observation_path\": \"evaluation/spec-context-resources-v8.json\",\n    \"resource_observation_sha256\": hashlib.sha256(resource_raw).hexdigest(),\n    \"recorded_completed_responses\": {\"generation\": 75, \"semantic\": 12, \"workflow\": 0},\n    \"unverified_planned_cases\": {\"semantic\": 90, \"workflow\": 26},\n    \"inflight_request_note\": \"A request may have been in flight at termination; only persisted completed responses are counted. The original report remains incomplete, without a fabricated finished_at.\",\n    \"translation_http_status_counts\": dict(Counter(r[\"http_status\"] for r in report[\"translations\"])),\n    \"semantic_http_status_counts\": dict(Counter(r[\"http_status\"] for r in report[\"qa_cases\"])),\n    \"semantic_success_model_checked\": dict(Counter(str(r[\"response\"].get(\"model_checked\")) for r in report[\"qa_cases\"] if r[\"http_status\"] == 200)),\n    \"recorded_response_summary\": summarize(report),\n    \"cpu_checks\": {\"pytest_passed\": 280, \"pytest_warnings\": 3, \"ruff_check\": \"passed\", \"ruff_format_files\": 35, \"source\": \"Observed command output in the same session at the same app revision; audio library deprecation warnings only.\"},\n    \"restored_service_health\": health,\n    \"scope\": \"Current local branch verification only; no merge/deployment or native-language/held-out quality validation. This interrupted run is not a complete pass.\",\n    \"recorder_source\": Path(__file__).read_text(encoding=\"utf-8\"),\n}\nwith (root / \"evaluation/spec-context-rerun-v8.json\").open(\"x\", encoding=\"utf-8\", newline=\"\\n\") as f:\n    json.dump(result, f, ensure_ascii=False, indent=2)\n    f.write(\"\\n\")\nprint(json.dumps({k: v for k, v in result.items() if k not in (\"recorder_source\",)}, ensure_ascii=False, indent=2))\n"
+}
