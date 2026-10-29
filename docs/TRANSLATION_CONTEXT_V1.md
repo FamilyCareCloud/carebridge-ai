@@ -2,7 +2,68 @@
 
 이전 [확장 평가](TRANSLATION_IMPROVEMENT_V3.md)의 생성 실패 2건, 주요 의미 오류 5건, 정상 기준문 보류 오탐 1건을 대상으로 개선했다. 기존 원문·기준문·원시 평가 파일은 변경하지 않는다.
 
-## 최신 재검증 v9: Ollama 모델이 없는 조건에서 전체 통과
+## 추가 개선: 한국어 표현·분류·확인 표시와 음료 대상
+
+v9에서 남은 경미한 표현 문제와 메타데이터 불일치를 대상으로 모델 생성 뒤, 기존 구조·의미 QA 앞에 제한적인 원문 기반 보정을 추가했다. 원문 언어가 명시된 `en/vi/id` 모델 번역 경로에 적용한다. `app/carebridge/rendering.py`는 평가 ID나 기준문을 조회하지 않는다. 원문·근거 구간·한국어 원문 메모·사람 편집본은 그대로 유지한다.
+
+- 명시적 부정 원문과 잘못 활용된 한국어가 함께 있는 경우 `마셨지 않았다 → 마시지 않았다`처럼 활용을 다듬는다.
+- 원문이 정확한 절반이고 식사 종류가 일치할 때만 `반 정도/반량 → 절반`으로 다듬는다. 대략적인 절반은 그대로 둔다.
+- 원문의 잠들기 전 간격과 숫자·단위가 일치하면 `식사 후 20분 후 → 식사 20분 후`의 중복을 없앤다. 수면 지속 시간은 이 규칙에 포함하지 않는다.
+- 명시적 인용문의 앞에 떨어져 있는 발언 동사를 한국어 인용 구조로 연결한다. 지원하는 인도네시아어 문장에서는 도움·휠체어의 연결과 `sudah`의 이미 표현도 다듬는다.
+- 원문 전체가 지원하는 명확한 관찰/인용 패턴과 일치할 때만 행동에 맞는 분류를 정하고 불필요한 추가 확인 표시를 제거한다. 모호한 대명사·복합 주장·질문·알 수 없는 수식어나 불확실성은 이 대상에서 제외한다. 원문의 불확실성 표지는 계속 추가 확인 항목에 남는다.
+
+보정 뒤에도 모든 기존 QA를 실행한다. 잘못된 부정·대상·수량을 정답으로 간주하거나 실패한 모델 QA를 강제 통과시키지 않는다. `review_required`도 사람 검토 전 상태이며 외부 공유를 허용하지 않는다. 최대 출력 길이를 넘기는 보정은 적용하지 않는다. 응답 스키마는 유지하며 번역 파이프라인 지문에는 보정 규칙 정의를 포함한다.
+
+### v10: 기존 문제 개선과 새 오역 발견
+
+코드 `0ab3097`의 [GPU v10](../evaluation/spec-gpu-v10.json)은 [자료 v6](../evaluation/translation-corpus-v6.json)의 번역 87건, 의미 검사 105건, 업무 흐름 26건을 완료했다. 이전 75건·QA 102건을 변경하지 않고 주스/불확실한 주스, 정확한/대략적인 절반 12건과 반복 누락 오류 3건을 추가했다. 보정 전 `model_output`도 실제 모델 응답에서 기록한다.
+
+[원문 대조 v10](../evaluation/spec-reference-review-v10.json)에서 기존 75건은 clean 60→73건, minor 15→2건이었다. 과도한 확인 표시 9건과 분류 불일치 8건은 0건이 됐고, 기존 베트남어 부정 인용 보류도 해소됐다. 기존 75건의 보정 전 번역 텍스트는 v9와 모두 같았다.
+
+그러나 새 12건 중 주요 오류 3건이 발견됐다. 영어 주스 미섭취를 경험 전체의 부정으로 확대한 1건은 기존 QA가 보류했다. **베트남어 `nước ép`(주스)을 수프로 옮긴 2건은 모델 QA가 놓쳤다.** 따라서 HTTP 87/87, 정상 기준문 48/48, 의도적 오류 57/57, 업무 흐름 26/26과 실행 종료 코드 0을 번역 품질 전체 통과로 해석하지 않는다. [계약 검사](../evaluation/backend-contract-spec-v10.json)는 215/215 호환이며 언어 정확도 검사와 별개다. [자원·서버 복구 기록](../evaluation/spec-context-resources-v10.json)도 보존한다.
+
+### v11: 대상 검사 보강, 결과 저장 중 중단
+
+원문에서 실제 일치한 `juice/jus/nước ép`의 뜻풀이와 영어 인용문의 `did not drink` 표현 단서를 추가했다. 음료 대상을 잃거나 수프·물·우유로 바꾸면 모델이 허용해도 `SEMANTIC_OMITTED_FACTS`로 보류한다. 이 명시적 대상 검사 정의도 의미 검사 지문에 포함한다.
+
+[입력 비교 기록](../evaluation/spec-context-inputs-v11.json)에서 실제 모델 입력·시스템 지침이 달라진 요청은 87건 중 7건이고 나머지 80건은 동일했다. [자료 v7](../evaluation/translation-corpus-v7.json)은 번역 87건을 그대로 유지하고 정상 주스 기준문 6건, 대상 변경 6건, 부정 범위 확대 3건을 추가했다. 새 QA까지 포함한 범위는 정상 기준문 54건·의도적 오류 66건, 업무 흐름 26건이다. 자료는 v11 실행 전에 고정했다.
+
+코드 `cb16ec0`의 [v11 실행](../evaluation/spec-gpu-v11.json)은 번역 87건을 마친 뒤 결과 파일 교체에서 `PermissionError: WinError 5`로 중단됐다. [중단 기록](../evaluation/spec-context-interruption-v11.json)에 따르면 본 파일에는 QA 87건, [교체 대기 파일](../evaluation/spec-context-pending-v11.json)에는 QA 88건이 남았다. 업무 흐름은 실행하지 않았다. 동시 진행 관측 중 발생한 Windows 파일 잠금과 일치하는 오류이며, 전체 실행 성공으로 집계하지 않는다.
+
+[87개 생성문 대조](../evaluation/spec-reference-review-v11.json)에서 영어 부정 범위와 베트남어 확정 주스 문장의 오역 2건은 해소됐다. 베트남어 불확실한 주스 문장은 여전히 수프로 옮겼으나 대상 검사로 보류됐다. clean 84건, minor 2건, major 1건이며 주요 오류 중 보류되지 않은 것은 없다. 번역을 모두 해결했다는 뜻은 아니다.
+
+### v12: 저장 복구, 의미 모델 응답 오류 1건
+
+번역 앱 코드는 v11과 동일하게 유지한다. 평가 파일 교체에만 최대 1.9초의 Windows 잠금 재시도를 추가했다. 실패가 계속되면 이전 결과와 새 임시 결과를 보존하고 예외를 알린다. 모델 요청을 재시도하거나 성공으로 바꾸지 않는다. 진행 관측도 실행 중인 JSON을 열지 않고 프로세스 출력과 GPU 상태를 사용한다. 평가 보조 스크립트의 해시도 기록한다.
+
+코드 `482a535`의 [v12](../evaluation/spec-gpu-v12.json)는 끝까지 실행됐지만 종료 코드는 **1**이다. 번역 87/87, 정상 기준문 54/54, 업무 흐름 26/26을 확인했다. 의도적 오류 66건 중 65건은 보류됐고 `vi-rendering-juice-wrong-object` 1건은 모델의 잘못된 JSON 형식으로 HTTP 502가 됐다. 이를 오류 탐지 성공으로 집계하지 않는다. [계약 검사](../evaluation/backend-contract-spec-v12.json)는 성공한 응답 229건만 호환이며 실패 요청 1건을 제외했다. [번역 대조](../evaluation/spec-reference-review-v12.json)는 v11의 87개 번역과 정확히 같았고, [자원·복구 기록](../evaluation/spec-context-resources-v12.json)도 보존한다.
+
+### v13: 명확한 누락은 모델 호출 전에 보류
+
+이미 지원하는 명시적 대상·행동·발언 출처 누락 규칙을 의미 모델 호출 앞으로 이동했다. 이런 오류는 모델의 JSON 응답 성공 여부와 무관하게 `hold`, `model_checked=false`, `segments=[]`와 `SEMANTIC_OMITTED_FACTS`로 반환한다. 모델이 검사한 것처럼 표시하지 않는다. 백엔드 #8에는 이 명시적 누락 사전 보류의 호환 검사를 추가한다. 규칙으로 판단할 수 없는 문장은 기존 모델 검사를 계속 받으며, 그 모델의 잘못된 응답은 여전히 오류로 반환한다. 새 판단 규칙이나 강제 통과를 추가한 변경은 아니다. 호출 순서도 의미 검사 지문에 포함했다.
+
+코드 `07026d6`의 [전체 GPU v13](../evaluation/spec-gpu-v13.json)를 종료 코드 **0**으로 완료했다. 자동 테스트 **353건**, Ruff 코드·형식 검사도 통과했다.
+
+| 항목 | v13 전체 실행 결과 |
+|---|---|
+| 번역 응답 / 원문 근거 / 공유 제한 | 각각 87/87 |
+| 정상 기준문 | 54/54 정상 검토 상태, 오탐 0건 |
+| 의도적 오류 | 66/66 보류, 의미 검사 요청 실패 0건 |
+| 편집·충돌·음성·장애 흐름 | 26/26 |
+| 백엔드 계약 | Draft 100 + Review 130 = 230/230 호환 |
+| 생성+의미 QA 지연 | 중앙값 5.110초, 최대 9.056초 |
+
+기존 백엔드 검사기는 규칙 기반 사전 보류 응답 9건을 거절했다. [기존 계약 결과](../evaluation/backend-contract-spec-v13.json)를 보존하고, [백엔드 #8](https://github.com/FamilyCareCloud/carebridge-backend/pull/8)에 실패 체크·같은 코드의 보류 사유·빈 구간·보류 상태가 모두 있는 명시적 누락 응답을 허용하는 호환 변경을 추가했다. 백엔드 테스트 69건과 [수정 후 동일 230건 재검사](../evaluation/backend-contract-spec-v13-compatible.json)가 통과했다. 기존 qa.v2 서비스에는 이 백엔드 호환 변경을 먼저 반영해야 한다. 승인·가족 열람 제한은 유지한다.
+
+[원문 대조 v13](../evaluation/spec-reference-review-v13.json)는 완료된 v13의 번역 객체 87개가 앞선 v12의 생성문 87개와 정확히 같음을 확인하고 언어 소견을 재사용했다. 상태·분류·확인 표시는 다시 계산했다. **clean 84건, minor 2건, major 1건(보류)**이며 추가 확인·분류 기준 불일치는 각각 0건이다. 이전 75건만 비교하면 경미한 소견 15→2건, 과도한 확인 표시 9→0건, 분류 불일치 8→0건이다. 새 12건에서 발견한 주요 오류 3건 중 2건은 수정됐고 1건은 탐지·보류된다.
+
+남은 주요 오류는 `Nói rằng: "Tôi có thể đã uống nước ép."`를 `"수프를 마셨을 수도 있습니다."라고 말했습니다.`로 옮기는 사례다. **번역 자체는 해결되지 않았으며** 대상 검사로 보류한다. 경미한 2건은 베트남어 완료 표현의 강조와 인도네시아어 이동 표현·정원/공원 해석에 대한 기존 소견이다. 단어·구절 패턴이 지원하지 않는 문장까지 정확성을 보장하지 않는다.
+
+[계약 결과](../evaluation/backend-contract-spec-v13-compatible.json)와 [자원·복구 기록](../evaluation/spec-context-resources-v13.json)을 함께 보존했다. 원래 GPU 서버는 CUDA·번역·음성 활성 상태로 복구됐다. Ollama는 6회 관측에서 로드 모델이 없었으며, 이는 연속적인 GPU 독점 증명은 아니다. v12 대비 앱 변경은 `semantic.py`의 기존 누락 규칙 실행 순서와 그 지문이며, 생성 코드·자료·설정·모델·패키지·어댑터는 같다. 이전 실행을 합산하지 않고 새 파일에 전체를 재실행했다. v12에서 실패한 `vi-rendering-juice-wrong-object`는 HTTP 200, `hold`, `model_checked=false`로 응답했다. 전체 QA 중 33건은 규칙에 의한 사전 보류이며 GPU 의미 모델의 탐지로 집계하지 않는다.
+
+반복 사용한 합성 개발 자료와 코딩 AI 대조 결과이며 원어민 검증·독립 미공개 정확도 평가·현장 검증은 아니다. 정상 기준문 통과, 실제 생성문 품질, 오류 탐지, API 계약을 구분한다. 코드는 PR 검토 단계이며 운영 병합·배포는 수행하지 않았다.
+
+## 이전 재검증 v9: Ollama 모델이 없는 조건에서 전체 통과
 
 2026-10-29 코드 `ed31cb6`로 [전체 GPU 평가 v9](../evaluation/spec-gpu-v9.json)를 완료했다. 번역 75건·의미 검사 102건·업무 흐름 26건을 전부 실행해 종료 코드 **0**을 확인했다. [추가 반복 조건 검사](../evaluation/spec-context-qa-v2.json)도 12/12, 종료 코드 **0**이다. 앱 코드·고정 자료·실행 스크립트·추론 설정·모델 스냅샷·패키지 버전·음성 어댑터는 실패한 v8과 같음을 해시와 기록으로 확인했다.
 
@@ -46,7 +107,7 @@
 
 원래 GPU 서비스의 복구 후 상태는 `status=ok`, `device=cuda`, `translation_loaded=true`, `stt_enabled=true`였다. 앱 코드 변경·병합·배포는 수행하지 않았다. 이후 Ollama 모델이 없는 조건의 전체 검증은 위 v9에 별도 기록했다. 아래 v7 및 첫 12건 추가 검증은 **이전 실행의 근거**이며 v8의 실패를 대체하지 않는다.
 
-## 구현 방식
+## 이전 v7~v9 구현 방식
 
 1. **원문에 있는 단서만 제공한다.** 저녁 식사·휠체어·이동·정원 표현, 걷기 이후/반복 조건, 잠들기 전 숫자 간격, 목말라 보인다는 표현을 실제로 찾은 경우에만 `source_hints`를 해당 구간에 붙인다. 인도네시아어 부정 인용은 한국어 지침을 사용하고, 경험 전체의 부정에는 해당 의미의 지침을 사용한다. 문장 ID나 정답을 조회하지 않고 번역 후 문자열도 바꾸지 않는다. 단서가 없는 요청은 이전과 같은 생성 지침·입력을 유지한다.
 2. **의미 범위의 모순을 양방향 검사한다.** 명시된 '걸은 후'를 조건/반복인 '걷다 보면'으로 바꾸거나, 단순 부정을 '한 적이 없다'로 확대하면 모델이 통과시켜도 보류한다. 반대로 명시적인 반복 관찰을 한 번의 사후 관찰로 줄이거나, 경험 부정을 단순한 부정으로 축소한 경우도 보류한다. 실제 반복 조건과 '한 번도' 같은 경험 부정의 다른 표현은 별도로 다룬다. 제한된 표현을 다루는 보조 규칙이며 일반 의미 증명은 아니다.
@@ -80,7 +141,7 @@ HTTP와 로컬 CUDA 경로는 같은 입력 생성 함수를 사용한다. 단�
 | [전체 GPU v6](../evaluation/spec-gpu-v6.json) | 생성 75/75와 정상 대조군 48/48을 만족했지만 의도적 오류 3/51을 놓쳤다. 짧은 QA를 모든 문장에 적용하지 않고 단순 직접 인용에 한정했다. 새 수프·외출 사례에서 내용 누락/시제·방향 변화도 발견해 단서와 의사 변화 검사를 추가했다. |
 | [인용·상태 재비교](../evaluation/prompt-comparison-v4.json) | [원문 부분집합](../evaluation/context-probe-corpus-v1.json) 15건의 실제 입력과 출력을 보존했다. 마지막 전체 평가 전의 중간 후보이며 최종 결과로 집계하지 않는다. |
 
-최종 코드의 자동 테스트는 280건이며 Ruff 검사와 형식 검사를 함께 사용한다. 실제 GPU 검사는 고정된 Qwen3 8B 4bit 스냅샷과 Whisper/LoRA를 사용한다. 평가 스크립트는 출력 파일을 덮어쓰지 않고 실행 코드·자료·모델 지문을 기록한다.
+당시 코드의 자동 테스트는 280건이며 Ruff 검사와 형식 검사를 함께 사용한다. 실제 GPU 검사는 고정된 Qwen3 8B 4bit 스냅샷과 Whisper/LoRA를 사용한다. 평가 스크립트는 출력 파일을 덮어쓰지 않고 실행 코드·자료·모델 지문을 기록한다.
 
 ## 이전 검증 결과: v7 및 의미 검사 추가 실행
 
@@ -105,11 +166,9 @@ v7 전체 실행의 종료 코드는 **1**이다. 정상 반복 관찰문을 기
 
 원래 GPU 서비스의 설정과 프로세스를 복구했다. 이번 개선 코드는 PR에서 검토하며 공개 서비스 병합·배포는 수행하지 않았다.
 
-GPU 서비스를 확인해 중복 모델 로드를 피하고, 평가 종료 시 기존 프로세스와 설정을 복구한다. 새 출력 파일명을 사용한다.
+현재 코드의 전체 재현에는 자료 v7을 사용한다. GPU 서비스를 확인해 중복 모델 로드를 피하고, 평가 종료 시 기존 프로세스와 설정을 복구한다. 새 출력 파일명을 사용한다. 이전 `recheck_context_audit_gpu.py`는 과거 후보 간 변경 파일을 제한하는 검사이므로 현재 보정 구현의 재검증에 사용하지 않는다. 반복 누락 검사도 아래 전체 평가에 포함됐다.
 
 ```powershell
-python scripts/compare_translation_prompts_gpu.py --baseline-ref 6ef3409 --candidate-only --corpus evaluation/translation-corpus-v5.json --output evaluation/새로운-단서비교.json
-python scripts/evaluate_spec_gpu.py --corpus evaluation/translation-corpus-v5.json --output evaluation/새로운-전체평가.json --audio evaluation/spec-synthetic-english.wav --adapter-path C:/별도준비/whisper-senior-lora
-node scripts/check_backend_contract.mjs evaluation/새로운-전체평가.json ../carebridge-backend evaluation/새로운-계약검증.json evaluation/translation-corpus-v5.json
-python scripts/recheck_context_audit_gpu.py --parent evaluation/spec-gpu-v7.json --corpus evaluation/translation-corpus-v5.json --output evaluation/새로운-문맥QA.json
+python scripts/evaluate_spec_gpu.py --corpus evaluation/translation-corpus-v7.json --output evaluation/새로운-전체평가.json --audio evaluation/spec-synthetic-english.wav --adapter-path C:/별도준비/whisper-senior-lora
+node scripts/check_backend_contract.mjs evaluation/새로운-전체평가.json ../carebridge-backend evaluation/새로운-계약검증.json evaluation/translation-corpus-v7.json
 ```
