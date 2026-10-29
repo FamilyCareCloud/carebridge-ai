@@ -1,0 +1,2529 @@
+{
+  "schema": "carebridge.translation-evaluation.v1",
+  "scope": "Previous 69 development cases unchanged. Six reported-negation transfer cases fixed before full GPU v6, after development prompt exploration. Synthetic AI-authored references, not independent/native-speaker validation. v5 retains all cases and adds three intention-change QA mutations before final v7 run. v6 preserves all 75 translation/102 QA cases, adds 12 juice/uncertainty/exact-versus-approximate-half transfer cases and three lost-repetition QA mutations before the source-bound rendering GPU run. Synthetic development cases, not held-out/native-speaker validation. Approximate quantity alone does not request event confirmation in these references.",
+  "languages": [
+    "en",
+    "vi",
+    "id"
+  ],
+  "translation_cases": [
+    {
+      "id": "en-meal",
+      "language": "en",
+      "source": "Ate half of breakfast.",
+      "reference": [
+        "아침 식사를 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "완료된 섭취",
+        "아침 식사",
+        "절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-negation",
+      "language": "en",
+      "source": "Did not drink water this morning.",
+      "reference": [
+        "오늘 아침에 물을 마시지 않았습니다."
+      ],
+      "required_facts": [
+        "오늘 아침",
+        "물",
+        "마시지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-uncertainty",
+      "language": "en",
+      "source": "May have slept after lunch.",
+      "reference": [
+        "점심 후에 잠을 잤을 수도 있습니다."
+      ],
+      "required_facts": [
+        "점심 후",
+        "수면은 추측",
+        "단정 금지"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-quantity",
+      "language": "en",
+      "source": "Drank 150 mL of water this morning.",
+      "reference": [
+        "오늘 아침에 물 150 mL를 마셨습니다."
+      ],
+      "required_facts": [
+        "오늘 아침",
+        "물",
+        "150 mL",
+        "완료된 섭취"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-time",
+      "language": "en",
+      "source": "Started resting at 14:30.",
+      "reference": [
+        "14:30에 휴식을 시작했습니다."
+      ],
+      "required_facts": [
+        "시작",
+        "휴식",
+        "14:30"
+      ],
+      "expected_categories": [
+        "other"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-medication",
+      "language": "en",
+      "source": "At 20:00, had not taken the medicine yet.",
+      "reference": [
+        "20:00에 약을 아직 복용하지 않았습니다."
+      ],
+      "required_facts": [
+        "20:00",
+        "약",
+        "아직 미복용",
+        "복용 지시 추가 금지"
+      ],
+      "expected_categories": [
+        "medication"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-assistance",
+      "language": "en",
+      "source": "Walked to the bathroom with help.",
+      "reference": [
+        "도움을 받아 화장실까지 걸어갔습니다."
+      ],
+      "required_facts": [
+        "걷기",
+        "도움을 받음",
+        "화장실까지",
+        "도움 제공자 특정 금지"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-reported_speech",
+      "language": "en",
+      "source": "Said there was no pain today.",
+      "reference": [
+        "오늘 통증이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "오늘",
+        "통증 없음",
+        "본인이 말한 내용",
+        "검사로 확인한 사실로 변경 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-ambiguity",
+      "language": "en",
+      "source": "Seemed tired. The reason was unknown.",
+      "reference": [
+        "피곤해 보였습니다. 이유는 알 수 없습니다."
+      ],
+      "required_facts": [
+        "피곤해 보임",
+        "원인 불명",
+        "진단 및 원인 추가 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-contrast",
+      "language": "en",
+      "source": "Drank water but did not eat soup.",
+      "reference": [
+        "물은 마셨지만 수프는 먹지 않았습니다."
+      ],
+      "required_facts": [
+        "물 섭취는 긍정",
+        "수프 섭취는 부정",
+        "대상별 부정 범위 보존"
+      ],
+      "expected_categories": [
+        "meal",
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-multiline",
+      "language": "en",
+      "source": "Ate half of lunch.\nDid not go outside today.",
+      "reference": [
+        "점심 식사를 절반 먹었습니다.",
+        "오늘 밖에 나가지 않았습니다."
+      ],
+      "required_facts": [
+        "점심",
+        "절반",
+        "오늘",
+        "외출하지 않음",
+        "2개 구간 누락 금지"
+      ],
+      "expected_categories": [
+        "meal",
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-chronology",
+      "language": "en",
+      "source": "Slept for 30 minutes after lunch and woke up at 15:00.",
+      "reference": [
+        "점심 후 30분 동안 잤고 15:00에 깨어났습니다."
+      ],
+      "required_facts": [
+        "점심 후",
+        "수면",
+        "30분",
+        "15:00에 기상",
+        "인과 추가 금지"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-meal",
+      "language": "vi",
+      "source": "Đã ăn một nửa bữa sáng.",
+      "reference": [
+        "아침 식사를 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "완료된 섭취",
+        "아침 식사",
+        "절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-negation",
+      "language": "vi",
+      "source": "Sáng nay không uống nước.",
+      "reference": [
+        "오늘 아침에 물을 마시지 않았습니다."
+      ],
+      "required_facts": [
+        "오늘 아침",
+        "물",
+        "마시지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-uncertainty",
+      "language": "vi",
+      "source": "Có thể đã ngủ sau bữa trưa.",
+      "reference": [
+        "점심 후에 잠을 잤을 수도 있습니다."
+      ],
+      "required_facts": [
+        "점심 후",
+        "수면은 추측",
+        "단정 금지"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-quantity",
+      "language": "vi",
+      "source": "Sáng nay đã uống 150 mL nước.",
+      "reference": [
+        "오늘 아침에 물 150 mL를 마셨습니다."
+      ],
+      "required_facts": [
+        "오늘 아침",
+        "물",
+        "150 mL",
+        "완료된 섭취"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-time",
+      "language": "vi",
+      "source": "Bắt đầu nghỉ ngơi lúc 14:30.",
+      "reference": [
+        "14:30에 휴식을 시작했습니다."
+      ],
+      "required_facts": [
+        "시작",
+        "휴식",
+        "14:30"
+      ],
+      "expected_categories": [
+        "other"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-medication",
+      "language": "vi",
+      "source": "Lúc 20:00 vẫn chưa uống thuốc.",
+      "reference": [
+        "20:00에 약을 아직 복용하지 않았습니다."
+      ],
+      "required_facts": [
+        "20:00",
+        "약",
+        "아직 미복용",
+        "복용 지시 추가 금지"
+      ],
+      "expected_categories": [
+        "medication"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-assistance",
+      "language": "vi",
+      "source": "Đã đi bộ đến nhà vệ sinh với sự hỗ trợ.",
+      "reference": [
+        "도움을 받아 화장실까지 걸어갔습니다."
+      ],
+      "required_facts": [
+        "걷기",
+        "도움을 받음",
+        "화장실까지",
+        "도움 제공자 특정 금지"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-reported_speech",
+      "language": "vi",
+      "source": "Nói rằng hôm nay không bị đau.",
+      "reference": [
+        "오늘 통증이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "오늘",
+        "통증 없음",
+        "본인이 말한 내용",
+        "검사로 확인한 사실로 변경 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-ambiguity",
+      "language": "vi",
+      "source": "Có vẻ mệt. Không rõ lý do.",
+      "reference": [
+        "피곤해 보였습니다. 이유는 알 수 없습니다."
+      ],
+      "required_facts": [
+        "피곤해 보임",
+        "원인 불명",
+        "진단 및 원인 추가 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-contrast",
+      "language": "vi",
+      "source": "Đã uống nước nhưng không ăn súp.",
+      "reference": [
+        "물은 마셨지만 수프는 먹지 않았습니다."
+      ],
+      "required_facts": [
+        "물 섭취는 긍정",
+        "수프 섭취는 부정",
+        "대상별 부정 범위 보존"
+      ],
+      "expected_categories": [
+        "meal",
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-multiline",
+      "language": "vi",
+      "source": "Đã ăn một nửa bữa trưa.\nHôm nay không ra ngoài.",
+      "reference": [
+        "점심 식사를 절반 먹었습니다.",
+        "오늘 밖에 나가지 않았습니다."
+      ],
+      "required_facts": [
+        "점심",
+        "절반",
+        "오늘",
+        "외출하지 않음",
+        "2개 구간 누락 금지"
+      ],
+      "expected_categories": [
+        "meal",
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-chronology",
+      "language": "vi",
+      "source": "Đã ngủ 30 phút sau bữa trưa và thức dậy lúc 15:00.",
+      "reference": [
+        "점심 후 30분 동안 잤고 15:00에 깨어났습니다."
+      ],
+      "required_facts": [
+        "점심 후",
+        "수면",
+        "30분",
+        "15:00에 기상",
+        "인과 추가 금지"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-meal",
+      "language": "id",
+      "source": "Sudah makan setengah sarapan.",
+      "reference": [
+        "아침 식사를 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "완료된 섭취",
+        "아침 식사",
+        "절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-negation",
+      "language": "id",
+      "source": "Tidak minum air pagi ini.",
+      "reference": [
+        "오늘 아침에 물을 마시지 않았습니다."
+      ],
+      "required_facts": [
+        "오늘 아침",
+        "물",
+        "마시지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-uncertainty",
+      "language": "id",
+      "source": "Mungkin sudah tidur setelah makan siang.",
+      "reference": [
+        "점심 후에 잠을 잤을 수도 있습니다."
+      ],
+      "required_facts": [
+        "점심 후",
+        "수면은 추측",
+        "단정 금지"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-quantity",
+      "language": "id",
+      "source": "Pagi ini sudah minum 150 mL air.",
+      "reference": [
+        "오늘 아침에 물 150 mL를 마셨습니다."
+      ],
+      "required_facts": [
+        "오늘 아침",
+        "물",
+        "150 mL",
+        "완료된 섭취"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-time",
+      "language": "id",
+      "source": "Mulai beristirahat pukul 14:30.",
+      "reference": [
+        "14:30에 휴식을 시작했습니다."
+      ],
+      "required_facts": [
+        "시작",
+        "휴식",
+        "14:30"
+      ],
+      "expected_categories": [
+        "other"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-medication",
+      "language": "id",
+      "source": "Pada pukul 20:00 belum minum obat.",
+      "reference": [
+        "20:00에 약을 아직 복용하지 않았습니다."
+      ],
+      "required_facts": [
+        "20:00",
+        "약",
+        "아직 미복용",
+        "복용 지시 추가 금지"
+      ],
+      "expected_categories": [
+        "medication"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-assistance",
+      "language": "id",
+      "source": "Berjalan ke kamar mandi dengan bantuan.",
+      "reference": [
+        "도움을 받아 화장실까지 걸어갔습니다."
+      ],
+      "required_facts": [
+        "걷기",
+        "도움을 받음",
+        "화장실까지",
+        "도움 제공자 특정 금지"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-reported_speech",
+      "language": "id",
+      "source": "Mengatakan tidak ada rasa sakit hari ini.",
+      "reference": [
+        "오늘 통증이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "오늘",
+        "통증 없음",
+        "본인이 말한 내용",
+        "검사로 확인한 사실로 변경 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-ambiguity",
+      "language": "id",
+      "source": "Tampak lelah. Alasannya tidak diketahui.",
+      "reference": [
+        "피곤해 보였습니다. 이유는 알 수 없습니다."
+      ],
+      "required_facts": [
+        "피곤해 보임",
+        "원인 불명",
+        "진단 및 원인 추가 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-contrast",
+      "language": "id",
+      "source": "Minum air tetapi tidak makan sup.",
+      "reference": [
+        "물은 마셨지만 수프는 먹지 않았습니다."
+      ],
+      "required_facts": [
+        "물 섭취는 긍정",
+        "수프 섭취는 부정",
+        "대상별 부정 범위 보존"
+      ],
+      "expected_categories": [
+        "meal",
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-multiline",
+      "language": "id",
+      "source": "Makan setengah makan siang.\nTidak keluar hari ini.",
+      "reference": [
+        "점심 식사를 절반 먹었습니다.",
+        "오늘 밖에 나가지 않았습니다."
+      ],
+      "required_facts": [
+        "점심",
+        "절반",
+        "오늘",
+        "외출하지 않음",
+        "2개 구간 누락 금지"
+      ],
+      "expected_categories": [
+        "meal",
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-chronology",
+      "language": "id",
+      "source": "Tidur selama 30 menit setelah makan siang dan bangun pukul 15:00.",
+      "reference": [
+        "점심 후 30분 동안 잤고 15:00에 깨어났습니다."
+      ],
+      "required_facts": [
+        "점심 후",
+        "수면",
+        "30분",
+        "15:00에 기상",
+        "인과 추가 금지"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-extension-duration",
+      "language": "en",
+      "source": "Slept for 20 minutes after breakfast.",
+      "reference": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "required_facts": [
+        "아침 식사 후",
+        "수면 지속 시간 20분",
+        "완료된 수면"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-extension-delay",
+      "language": "en",
+      "source": "Fell asleep 20 minutes after breakfast.",
+      "reference": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "required_facts": [
+        "아침 식사와 잠듦 사이 20분",
+        "수면 시간은 불명",
+        "완료된 잠듦"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-extension-uncertain-completion",
+      "language": "en",
+      "source": "May have already eaten dinner, but this has not been confirmed.",
+      "reference": [
+        "이미 저녁을 먹었을 수도 있지만, 확인되지 않았습니다."
+      ],
+      "required_facts": [
+        "저녁",
+        "이미 먹었을 가능성",
+        "미확인"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-extension-fatigue-context",
+      "language": "en",
+      "source": "Seemed tired after walking. The cause is not known.",
+      "reference": [
+        "걸은 후 피곤해 보였습니다. 원인은 알려지지 않았습니다."
+      ],
+      "required_facts": [
+        "피곤해 보임",
+        "걷기 이후",
+        "원인 불명",
+        "걷기가 원인이라는 단정 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-extension-transport-contrast",
+      "language": "en",
+      "source": "Did not walk to the garden; went there in a wheelchair with help.",
+      "reference": [
+        "정원까지 걷지 않았으며, 도움을 받아 휠체어로 갔습니다."
+      ],
+      "required_facts": [
+        "걷지 않음",
+        "정원",
+        "휠체어",
+        "도움 받음"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-extension-quoted-negation",
+      "language": "en",
+      "source": "Said, \"I did not drink milk.\"",
+      "reference": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마시지 않음",
+        "발언 내용",
+        "관찰된 사실로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-extension-duration",
+      "language": "vi",
+      "source": "Đã ngủ 20 phút sau bữa sáng.",
+      "reference": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "required_facts": [
+        "아침 식사 후",
+        "수면 지속 시간 20분",
+        "완료된 수면"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-extension-delay",
+      "language": "vi",
+      "source": "Đã ngủ thiếp đi 20 phút sau bữa sáng.",
+      "reference": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "required_facts": [
+        "아침 식사와 잠듦 사이 20분",
+        "수면 시간은 불명",
+        "완료된 잠듦"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-extension-uncertain-completion",
+      "language": "vi",
+      "source": "Có thể đã ăn tối, nhưng chưa được xác nhận.",
+      "reference": [
+        "이미 저녁을 먹었을 수도 있지만, 확인되지 않았습니다."
+      ],
+      "required_facts": [
+        "저녁",
+        "이미 먹었을 가능성",
+        "미확인"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-extension-fatigue-context",
+      "language": "vi",
+      "source": "Có vẻ mệt sau khi đi bộ. Chưa rõ nguyên nhân.",
+      "reference": [
+        "걸은 후 피곤해 보였습니다. 원인은 알려지지 않았습니다."
+      ],
+      "required_facts": [
+        "피곤해 보임",
+        "걷기 이후",
+        "원인 불명",
+        "걷기가 원인이라는 단정 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-extension-transport-contrast",
+      "language": "vi",
+      "source": "Không đi bộ ra vườn; đã ra đó bằng xe lăn với sự hỗ trợ.",
+      "reference": [
+        "정원까지 걷지 않았으며, 도움을 받아 휠체어로 갔습니다."
+      ],
+      "required_facts": [
+        "걷지 않음",
+        "정원",
+        "휠체어",
+        "도움 받음"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-extension-quoted-negation",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi không uống sữa.\"",
+      "reference": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마시지 않음",
+        "발언 내용",
+        "관찰된 사실로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-extension-duration",
+      "language": "id",
+      "source": "Tidur selama 20 menit setelah sarapan.",
+      "reference": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "required_facts": [
+        "아침 식사 후",
+        "수면 지속 시간 20분",
+        "완료된 수면"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-extension-delay",
+      "language": "id",
+      "source": "Tertidur 20 menit setelah sarapan.",
+      "reference": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "required_facts": [
+        "아침 식사와 잠듦 사이 20분",
+        "수면 시간은 불명",
+        "완료된 잠듦"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-extension-uncertain-completion",
+      "language": "id",
+      "source": "Mungkin sudah makan malam, tetapi belum dikonfirmasi.",
+      "reference": [
+        "이미 저녁을 먹었을 수도 있지만, 확인되지 않았습니다."
+      ],
+      "required_facts": [
+        "저녁",
+        "이미 먹었을 가능성",
+        "미확인"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-extension-fatigue-context",
+      "language": "id",
+      "source": "Tampak lelah setelah berjalan. Penyebabnya belum diketahui.",
+      "reference": [
+        "걸은 후 피곤해 보였습니다. 원인은 알려지지 않았습니다."
+      ],
+      "required_facts": [
+        "피곤해 보임",
+        "걷기 이후",
+        "원인 불명",
+        "걷기가 원인이라는 단정 금지"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-extension-transport-contrast",
+      "language": "id",
+      "source": "Tidak berjalan ke taman; pergi ke sana dengan kursi roda dan bantuan.",
+      "reference": [
+        "정원까지 걷지 않았으며, 도움을 받아 휠체어로 갔습니다."
+      ],
+      "required_facts": [
+        "걷지 않음",
+        "정원",
+        "휠체어",
+        "도움 받음"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-extension-quoted-negation",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak minum susu.\"",
+      "reference": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마시지 않음",
+        "발언 내용",
+        "관찰된 사실로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-context-after-walking",
+      "language": "en",
+      "source": "Seemed thirsty after walking.",
+      "reference": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "required_facts": [
+        "걷기 이후",
+        "목말라 보임",
+        "단정/반복 조건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition",
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-context-habitual-walking",
+      "language": "en",
+      "source": "Seems tired whenever walking.",
+      "reference": [
+        "걸을 때마다 피곤해 보입니다."
+      ],
+      "required_facts": [
+        "걷는 때마다",
+        "피곤해 보임",
+        "일회성 사건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-context-lifetime-negation",
+      "language": "en",
+      "source": "Said, \"I have never drunk milk.\"",
+      "reference": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-context-different-delay",
+      "language": "en",
+      "source": "Fell asleep 17 minutes after dinner.",
+      "reference": [
+        "저녁 식사 17분 후에 잠들었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "잠들기 전 17분 간격",
+        "수면 지속시간 아님"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-context-wheelchair-destination",
+      "language": "en",
+      "source": "Went to the dining room in a wheelchair with assistance.",
+      "reference": [
+        "도움을 받아 휠체어로 식당에 갔습니다."
+      ],
+      "required_facts": [
+        "식당",
+        "휠체어",
+        "도움",
+        "걷기로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-context-after-walking",
+      "language": "vi",
+      "source": "Có vẻ khát sau khi đi bộ.",
+      "reference": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "required_facts": [
+        "걷기 이후",
+        "목말라 보임",
+        "단정/반복 조건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition",
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-context-habitual-walking",
+      "language": "vi",
+      "source": "Có vẻ mệt mỗi khi đi bộ.",
+      "reference": [
+        "걸을 때마다 피곤해 보입니다."
+      ],
+      "required_facts": [
+        "걷는 때마다",
+        "피곤해 보임",
+        "일회성 사건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-context-lifetime-negation",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi chưa bao giờ uống sữa.\"",
+      "reference": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-context-different-delay",
+      "language": "vi",
+      "source": "Đã ngủ thiếp đi 17 phút sau bữa tối.",
+      "reference": [
+        "저녁 식사 17분 후에 잠들었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "잠들기 전 17분 간격",
+        "수면 지속시간 아님"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-context-wheelchair-destination",
+      "language": "vi",
+      "source": "Đã đến phòng ăn bằng xe lăn với sự hỗ trợ.",
+      "reference": [
+        "도움을 받아 휠체어로 식당에 갔습니다."
+      ],
+      "required_facts": [
+        "식당",
+        "휠체어",
+        "도움",
+        "걷기로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-context-after-walking",
+      "language": "id",
+      "source": "Tampak haus setelah berjalan.",
+      "reference": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "required_facts": [
+        "걷기 이후",
+        "목말라 보임",
+        "단정/반복 조건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition",
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-context-habitual-walking",
+      "language": "id",
+      "source": "Tampak lelah setiap kali berjalan.",
+      "reference": [
+        "걸을 때마다 피곤해 보입니다."
+      ],
+      "required_facts": [
+        "걷는 때마다",
+        "피곤해 보임",
+        "일회성 사건으로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "condition"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-context-lifetime-negation",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak pernah minum susu.\"",
+      "reference": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-context-different-delay",
+      "language": "id",
+      "source": "Tertidur 17 menit setelah makan malam.",
+      "reference": [
+        "저녁 식사 17분 후에 잠들었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "잠들기 전 17분 간격",
+        "수면 지속시간 아님"
+      ],
+      "expected_categories": [
+        "sleep"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-context-wheelchair-destination",
+      "language": "id",
+      "source": "Pergi ke ruang makan dengan kursi roda dan bantuan.",
+      "reference": [
+        "도움을 받아 휠체어로 식당에 갔습니다."
+      ],
+      "required_facts": [
+        "식당",
+        "휠체어",
+        "도움",
+        "걷기로 바꾸지 않음"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-transfer-quoted-soup",
+      "language": "en",
+      "source": "Said, \"I did not eat soup.\"",
+      "reference": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "수프"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-transfer-quoted-outside",
+      "language": "en",
+      "source": "Said, \"I did not go outside today.\"",
+      "reference": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "오늘 외출"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-transfer-quoted-soup",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi không ăn súp.\"",
+      "reference": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "수프"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-transfer-quoted-outside",
+      "language": "vi",
+      "source": "Nói rằng: \"Hôm nay tôi không ra ngoài.\"",
+      "reference": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "오늘 외출"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-transfer-quoted-soup",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak makan sup.\"",
+      "reference": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "수프"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-transfer-quoted-outside",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak keluar rumah hari ini.\"",
+      "reference": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "발언 출처",
+        "해당 행동 부정",
+        "오늘 외출"
+      ],
+      "expected_categories": [
+        "mobility"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-rendering-juice",
+      "language": "en",
+      "source": "Said, \"I did not drink juice.\"",
+      "reference": [
+        "주스를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "미섭취"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-rendering-juice",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi không uống nước ép.\"",
+      "reference": [
+        "주스를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "미섭취"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-rendering-juice",
+      "language": "id",
+      "source": "Mengatakan, \"Saya tidak minum jus.\"",
+      "reference": [
+        "주스를 마시지 않았다고 말했습니다."
+      ],
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "미섭취"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-rendering-uncertain-juice",
+      "language": "en",
+      "source": "Said, \"I may have drunk juice.\"",
+      "reference": [
+        "주스를 마셨을 수도 있다고 말했습니다."
+      ],
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "섭취 가능성"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "vi-rendering-uncertain-juice",
+      "language": "vi",
+      "source": "Nói rằng: \"Tôi có thể đã uống nước ép.\"",
+      "reference": [
+        "주스를 마셨을 수도 있다고 말했습니다."
+      ],
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "섭취 가능성"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "id-rendering-uncertain-juice",
+      "language": "id",
+      "source": "Mengatakan, \"Saya mungkin sudah minum jus.\"",
+      "reference": [
+        "이미 주스를 마셨을 수도 있다고 말했습니다."
+      ],
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "섭취 가능성"
+      ],
+      "expected_categories": [
+        "hydration"
+      ],
+      "confirmation_segments": [
+        0
+      ]
+    },
+    {
+      "id": "en-rendering-exact-half",
+      "language": "en",
+      "source": "Ate half of dinner.",
+      "reference": [
+        "저녁 식사를 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "완료된 섭취",
+        "정확한 절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-rendering-exact-half",
+      "language": "vi",
+      "source": "Đã ăn một nửa bữa tối.",
+      "reference": [
+        "저녁 식사를 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "완료된 섭취",
+        "정확한 절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-rendering-exact-half",
+      "language": "id",
+      "source": "Sudah makan setengah makan malam.",
+      "reference": [
+        "저녁 식사를 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "완료된 섭취",
+        "정확한 절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "en-rendering-approx-half",
+      "language": "en",
+      "source": "Ate about half of dinner.",
+      "reference": [
+        "저녁 식사를 약 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "완료된 섭취",
+        "약 절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "vi-rendering-approx-half",
+      "language": "vi",
+      "source": "Đã ăn khoảng một nửa bữa tối.",
+      "reference": [
+        "저녁 식사를 약 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "완료된 섭취",
+        "약 절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    },
+    {
+      "id": "id-rendering-approx-half",
+      "language": "id",
+      "source": "Sudah makan sekitar setengah makan malam.",
+      "reference": [
+        "저녁 식사를 약 절반 먹었습니다."
+      ],
+      "required_facts": [
+        "저녁 식사",
+        "완료된 섭취",
+        "약 절반"
+      ],
+      "expected_categories": [
+        "meal"
+      ],
+      "confirmation_segments": []
+    }
+  ],
+  "qa_cases": [
+    {
+      "id": "control-en-negation",
+      "base_id": "en-negation",
+      "expected": "review_required",
+      "translation": [
+        "오늘 아침에 물을 마시지 않았습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "control-en-uncertainty",
+      "base_id": "en-uncertainty",
+      "expected": "review_required",
+      "translation": [
+        "점심 후에 잠을 잤을 수도 있습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "control-en-assistance",
+      "base_id": "en-assistance",
+      "expected": "review_required",
+      "translation": [
+        "도움을 받아 화장실까지 걸어갔습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "error-en-negation_dropped",
+      "base_id": "en-negation",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물을 마셨습니다."
+      ],
+      "reason": "미섭취를 섭취로 반전"
+    },
+    {
+      "id": "error-en-uncertainty_dropped",
+      "base_id": "en-uncertainty",
+      "expected": "hold",
+      "translation": [
+        "점심 후에 잠을 잤습니다."
+      ],
+      "reason": "추측을 확정 관찰로 변경"
+    },
+    {
+      "id": "error-en-quantity_changed",
+      "base_id": "en-quantity",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물 500 mL를 마셨습니다."
+      ],
+      "reason": "150을 500으로 변경"
+    },
+    {
+      "id": "error-en-unit_changed",
+      "base_id": "en-quantity",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물 150 L를 마셨습니다."
+      ],
+      "reason": "숫자를 유지하고 mL를 L로 변경"
+    },
+    {
+      "id": "error-en-time_changed",
+      "base_id": "en-time",
+      "expected": "hold",
+      "translation": [
+        "04:30에 휴식을 시작했습니다."
+      ],
+      "reason": "14:30을 04:30으로 변경"
+    },
+    {
+      "id": "error-en-added_fact",
+      "base_id": "en-assistance",
+      "expected": "hold",
+      "translation": [
+        "도움을 받아 화장실까지 걸어갔고 가족에게 전화를 걸었습니다."
+      ],
+      "reason": "원문에 없는 가족에게 전화한 행동 추가"
+    },
+    {
+      "id": "error-en-omitted_fact",
+      "base_id": "en-assistance",
+      "expected": "hold",
+      "translation": [
+        "화장실까지 걸어갔습니다."
+      ],
+      "reason": "도움을 받았다는 사실 누락"
+    },
+    {
+      "id": "error-en-report_to_fact",
+      "base_id": "en-reported_speech",
+      "expected": "hold",
+      "translation": [
+        "오늘 통증이 없었습니다."
+      ],
+      "reason": "당사자의 보고를 확인된 관찰로 변경"
+    },
+    {
+      "id": "error-en-negation_scope",
+      "base_id": "en-contrast",
+      "expected": "hold",
+      "translation": [
+        "물은 마시지 않았지만 수프는 먹었습니다."
+      ],
+      "reason": "부정표현은 남기되 물과 수프의 긍정·부정 대상 반전"
+    },
+    {
+      "id": "control-vi-negation",
+      "base_id": "vi-negation",
+      "expected": "review_required",
+      "translation": [
+        "오늘 아침에 물을 마시지 않았습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "control-vi-uncertainty",
+      "base_id": "vi-uncertainty",
+      "expected": "review_required",
+      "translation": [
+        "점심 후에 잠을 잤을 수도 있습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "control-vi-assistance",
+      "base_id": "vi-assistance",
+      "expected": "review_required",
+      "translation": [
+        "도움을 받아 화장실까지 걸어갔습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "error-vi-negation_dropped",
+      "base_id": "vi-negation",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물을 마셨습니다."
+      ],
+      "reason": "미섭취를 섭취로 반전"
+    },
+    {
+      "id": "error-vi-uncertainty_dropped",
+      "base_id": "vi-uncertainty",
+      "expected": "hold",
+      "translation": [
+        "점심 후에 잠을 잤습니다."
+      ],
+      "reason": "추측을 확정 관찰로 변경"
+    },
+    {
+      "id": "error-vi-quantity_changed",
+      "base_id": "vi-quantity",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물 500 mL를 마셨습니다."
+      ],
+      "reason": "150을 500으로 변경"
+    },
+    {
+      "id": "error-vi-unit_changed",
+      "base_id": "vi-quantity",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물 150 L를 마셨습니다."
+      ],
+      "reason": "숫자를 유지하고 mL를 L로 변경"
+    },
+    {
+      "id": "error-vi-time_changed",
+      "base_id": "vi-time",
+      "expected": "hold",
+      "translation": [
+        "04:30에 휴식을 시작했습니다."
+      ],
+      "reason": "14:30을 04:30으로 변경"
+    },
+    {
+      "id": "error-vi-added_fact",
+      "base_id": "vi-assistance",
+      "expected": "hold",
+      "translation": [
+        "도움을 받아 화장실까지 걸어갔고 가족에게 전화를 걸었습니다."
+      ],
+      "reason": "원문에 없는 가족에게 전화한 행동 추가"
+    },
+    {
+      "id": "error-vi-omitted_fact",
+      "base_id": "vi-assistance",
+      "expected": "hold",
+      "translation": [
+        "화장실까지 걸어갔습니다."
+      ],
+      "reason": "도움을 받았다는 사실 누락"
+    },
+    {
+      "id": "error-vi-report_to_fact",
+      "base_id": "vi-reported_speech",
+      "expected": "hold",
+      "translation": [
+        "오늘 통증이 없었습니다."
+      ],
+      "reason": "당사자의 보고를 확인된 관찰로 변경"
+    },
+    {
+      "id": "error-vi-negation_scope",
+      "base_id": "vi-contrast",
+      "expected": "hold",
+      "translation": [
+        "물은 마시지 않았지만 수프는 먹었습니다."
+      ],
+      "reason": "부정표현은 남기되 물과 수프의 긍정·부정 대상 반전"
+    },
+    {
+      "id": "control-id-negation",
+      "base_id": "id-negation",
+      "expected": "review_required",
+      "translation": [
+        "오늘 아침에 물을 마시지 않았습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "control-id-uncertainty",
+      "base_id": "id-uncertainty",
+      "expected": "review_required",
+      "translation": [
+        "점심 후에 잠을 잤을 수도 있습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "control-id-assistance",
+      "base_id": "id-assistance",
+      "expected": "review_required",
+      "translation": [
+        "도움을 받아 화장실까지 걸어갔습니다."
+      ],
+      "reason": "충실한 정답 대조군"
+    },
+    {
+      "id": "error-id-negation_dropped",
+      "base_id": "id-negation",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물을 마셨습니다."
+      ],
+      "reason": "미섭취를 섭취로 반전"
+    },
+    {
+      "id": "error-id-uncertainty_dropped",
+      "base_id": "id-uncertainty",
+      "expected": "hold",
+      "translation": [
+        "점심 후에 잠을 잤습니다."
+      ],
+      "reason": "추측을 확정 관찰로 변경"
+    },
+    {
+      "id": "error-id-quantity_changed",
+      "base_id": "id-quantity",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물 500 mL를 마셨습니다."
+      ],
+      "reason": "150을 500으로 변경"
+    },
+    {
+      "id": "error-id-unit_changed",
+      "base_id": "id-quantity",
+      "expected": "hold",
+      "translation": [
+        "오늘 아침에 물 150 L를 마셨습니다."
+      ],
+      "reason": "숫자를 유지하고 mL를 L로 변경"
+    },
+    {
+      "id": "error-id-time_changed",
+      "base_id": "id-time",
+      "expected": "hold",
+      "translation": [
+        "04:30에 휴식을 시작했습니다."
+      ],
+      "reason": "14:30을 04:30으로 변경"
+    },
+    {
+      "id": "error-id-added_fact",
+      "base_id": "id-assistance",
+      "expected": "hold",
+      "translation": [
+        "도움을 받아 화장실까지 걸어갔고 가족에게 전화를 걸었습니다."
+      ],
+      "reason": "원문에 없는 가족에게 전화한 행동 추가"
+    },
+    {
+      "id": "error-id-omitted_fact",
+      "base_id": "id-assistance",
+      "expected": "hold",
+      "translation": [
+        "화장실까지 걸어갔습니다."
+      ],
+      "reason": "도움을 받았다는 사실 누락"
+    },
+    {
+      "id": "error-id-report_to_fact",
+      "base_id": "id-reported_speech",
+      "expected": "hold",
+      "translation": [
+        "오늘 통증이 없었습니다."
+      ],
+      "reason": "당사자의 보고를 확인된 관찰로 변경"
+    },
+    {
+      "id": "error-id-negation_scope",
+      "base_id": "id-contrast",
+      "expected": "hold",
+      "translation": [
+        "물은 마시지 않았지만 수프는 먹었습니다."
+      ],
+      "reason": "부정표현은 남기되 물과 수프의 긍정·부정 대상 반전"
+    },
+    {
+      "id": "en-extension-duration-faithful",
+      "base_id": "en-extension-duration",
+      "translation": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "en-extension-duration-swapped",
+      "base_id": "en-extension-duration",
+      "translation": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "expected": "hold",
+      "reason": "지속 시간과 행동 전 간격을 바꾼 번역"
+    },
+    {
+      "id": "en-extension-delay-faithful",
+      "base_id": "en-extension-delay",
+      "translation": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "en-extension-delay-swapped",
+      "base_id": "en-extension-delay",
+      "translation": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "expected": "hold",
+      "reason": "지속 시간과 행동 전 간격을 바꾼 번역"
+    },
+    {
+      "id": "en-extension-uncertain-completion-faithful",
+      "base_id": "en-extension-uncertain-completion",
+      "translation": [
+        "이미 저녁을 먹었을 수도 있지만, 확인되지 않았습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "en-extension-fatigue-context-faithful",
+      "base_id": "en-extension-fatigue-context",
+      "translation": [
+        "걸은 후 피곤해 보였습니다. 원인은 알려지지 않았습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "en-extension-transport-contrast-faithful",
+      "base_id": "en-extension-transport-contrast",
+      "translation": [
+        "정원까지 걷지 않았으며, 도움을 받아 휠체어로 갔습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "en-extension-quoted-negation-faithful",
+      "base_id": "en-extension-quoted-negation",
+      "translation": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "vi-extension-duration-faithful",
+      "base_id": "vi-extension-duration",
+      "translation": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "vi-extension-duration-swapped",
+      "base_id": "vi-extension-duration",
+      "translation": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "expected": "hold",
+      "reason": "지속 시간과 행동 전 간격을 바꾼 번역"
+    },
+    {
+      "id": "vi-extension-delay-faithful",
+      "base_id": "vi-extension-delay",
+      "translation": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "vi-extension-delay-swapped",
+      "base_id": "vi-extension-delay",
+      "translation": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "expected": "hold",
+      "reason": "지속 시간과 행동 전 간격을 바꾼 번역"
+    },
+    {
+      "id": "vi-extension-uncertain-completion-faithful",
+      "base_id": "vi-extension-uncertain-completion",
+      "translation": [
+        "이미 저녁을 먹었을 수도 있지만, 확인되지 않았습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "vi-extension-fatigue-context-faithful",
+      "base_id": "vi-extension-fatigue-context",
+      "translation": [
+        "걸은 후 피곤해 보였습니다. 원인은 알려지지 않았습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "vi-extension-transport-contrast-faithful",
+      "base_id": "vi-extension-transport-contrast",
+      "translation": [
+        "정원까지 걷지 않았으며, 도움을 받아 휠체어로 갔습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "vi-extension-quoted-negation-faithful",
+      "base_id": "vi-extension-quoted-negation",
+      "translation": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "id-extension-duration-faithful",
+      "base_id": "id-extension-duration",
+      "translation": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "id-extension-duration-swapped",
+      "base_id": "id-extension-duration",
+      "translation": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "expected": "hold",
+      "reason": "지속 시간과 행동 전 간격을 바꾼 번역"
+    },
+    {
+      "id": "id-extension-delay-faithful",
+      "base_id": "id-extension-delay",
+      "translation": [
+        "아침 식사 20분 후에 잠들었습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "id-extension-delay-swapped",
+      "base_id": "id-extension-delay",
+      "translation": [
+        "아침 식사 후 20분 동안 잤습니다."
+      ],
+      "expected": "hold",
+      "reason": "지속 시간과 행동 전 간격을 바꾼 번역"
+    },
+    {
+      "id": "id-extension-uncertain-completion-faithful",
+      "base_id": "id-extension-uncertain-completion",
+      "translation": [
+        "이미 저녁을 먹었을 수도 있지만, 확인되지 않았습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "id-extension-fatigue-context-faithful",
+      "base_id": "id-extension-fatigue-context",
+      "translation": [
+        "걸은 후 피곤해 보였습니다. 원인은 알려지지 않았습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "id-extension-transport-contrast-faithful",
+      "base_id": "id-extension-transport-contrast",
+      "translation": [
+        "정원까지 걷지 않았으며, 도움을 받아 휠체어로 갔습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "id-extension-quoted-negation-faithful",
+      "base_id": "id-extension-quoted-negation",
+      "translation": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "expected": "review_required",
+      "reason": "사전에 작성한 의미 보존 기준 번역"
+    },
+    {
+      "id": "en-context-after-walking-faithful",
+      "base_id": "en-context-after-walking",
+      "translation": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "en-context-after-walking-changed",
+      "base_id": "en-context-after-walking",
+      "translation": [
+        "걷다 보면 목말라 보입니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "en-context-habitual-walking-faithful",
+      "base_id": "en-context-habitual-walking",
+      "translation": [
+        "걸을 때마다 피곤해 보입니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "en-context-lifetime-negation-faithful",
+      "base_id": "en-context-lifetime-negation",
+      "translation": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "en-context-lifetime-negation-changed",
+      "base_id": "en-context-lifetime-negation",
+      "translation": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "en-context-different-delay-faithful",
+      "base_id": "en-context-different-delay",
+      "translation": [
+        "저녁 식사 17분 후에 잠들었습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "en-context-different-delay-changed",
+      "base_id": "en-context-different-delay",
+      "translation": [
+        "저녁 식사 후 17분 동안 잤습니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "en-context-wheelchair-destination-faithful",
+      "base_id": "en-context-wheelchair-destination",
+      "translation": [
+        "도움을 받아 휠체어로 식당에 갔습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "en-extension-quoted-negation-widened",
+      "base_id": "en-extension-quoted-negation",
+      "translation": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "expected": "hold",
+      "reason": "단순 미섭취를 경험 전체 부정으로 확대"
+    },
+    {
+      "id": "vi-context-after-walking-faithful",
+      "base_id": "vi-context-after-walking",
+      "translation": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "vi-context-after-walking-changed",
+      "base_id": "vi-context-after-walking",
+      "translation": [
+        "걷다 보면 목말라 보입니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "vi-context-habitual-walking-faithful",
+      "base_id": "vi-context-habitual-walking",
+      "translation": [
+        "걸을 때마다 피곤해 보입니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "vi-context-lifetime-negation-faithful",
+      "base_id": "vi-context-lifetime-negation",
+      "translation": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "vi-context-lifetime-negation-changed",
+      "base_id": "vi-context-lifetime-negation",
+      "translation": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "vi-context-different-delay-faithful",
+      "base_id": "vi-context-different-delay",
+      "translation": [
+        "저녁 식사 17분 후에 잠들었습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "vi-context-different-delay-changed",
+      "base_id": "vi-context-different-delay",
+      "translation": [
+        "저녁 식사 후 17분 동안 잤습니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "vi-context-wheelchair-destination-faithful",
+      "base_id": "vi-context-wheelchair-destination",
+      "translation": [
+        "도움을 받아 휠체어로 식당에 갔습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "vi-extension-quoted-negation-widened",
+      "base_id": "vi-extension-quoted-negation",
+      "translation": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "expected": "hold",
+      "reason": "단순 미섭취를 경험 전체 부정으로 확대"
+    },
+    {
+      "id": "id-context-after-walking-faithful",
+      "base_id": "id-context-after-walking",
+      "translation": [
+        "걸은 후 목말라 보였습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "id-context-after-walking-changed",
+      "base_id": "id-context-after-walking",
+      "translation": [
+        "걷다 보면 목말라 보입니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "id-context-habitual-walking-faithful",
+      "base_id": "id-context-habitual-walking",
+      "translation": [
+        "걸을 때마다 피곤해 보입니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "id-context-lifetime-negation-faithful",
+      "base_id": "id-context-lifetime-negation",
+      "translation": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "id-context-lifetime-negation-changed",
+      "base_id": "id-context-lifetime-negation",
+      "translation": [
+        "우유를 마시지 않았다고 말했습니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "id-context-different-delay-faithful",
+      "base_id": "id-context-different-delay",
+      "translation": [
+        "저녁 식사 17분 후에 잠들었습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "id-context-different-delay-changed",
+      "base_id": "id-context-different-delay",
+      "translation": [
+        "저녁 식사 후 17분 동안 잤습니다."
+      ],
+      "expected": "hold",
+      "reason": "시간 관계 또는 부정 범위 변경"
+    },
+    {
+      "id": "id-context-wheelchair-destination-faithful",
+      "base_id": "id-context-wheelchair-destination",
+      "translation": [
+        "도움을 받아 휠체어로 식당에 갔습니다."
+      ],
+      "expected": "review_required",
+      "reason": "새 문맥 대조의 의미 보존 기준문"
+    },
+    {
+      "id": "id-extension-quoted-negation-widened",
+      "base_id": "id-extension-quoted-negation",
+      "translation": [
+        "우유를 마신 적이 없다고 말했습니다."
+      ],
+      "expected": "hold",
+      "reason": "단순 미섭취를 경험 전체 부정으로 확대"
+    },
+    {
+      "id": "en-transfer-quoted-soup-faithful",
+      "base_id": "en-transfer-quoted-soup",
+      "expected": "review_required",
+      "translation": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "reason": "다른 동사와 대상의 정상 부정 인용문"
+    },
+    {
+      "id": "en-transfer-quoted-soup-widened",
+      "base_id": "en-transfer-quoted-soup",
+      "expected": "hold",
+      "translation": [
+        "수프를 먹은 적이 없다고 말했습니다."
+      ],
+      "reason": "발언의 단순 부정을 경험 전체로 확대"
+    },
+    {
+      "id": "en-transfer-quoted-outside-faithful",
+      "base_id": "en-transfer-quoted-outside",
+      "expected": "review_required",
+      "translation": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "reason": "다른 동사와 대상의 정상 부정 인용문"
+    },
+    {
+      "id": "en-transfer-quoted-outside-widened",
+      "base_id": "en-transfer-quoted-outside",
+      "expected": "hold",
+      "translation": [
+        "밖에 나간 적이 없다고 말했습니다."
+      ],
+      "reason": "발언의 단순 부정을 경험 전체로 확대"
+    },
+    {
+      "id": "vi-transfer-quoted-soup-faithful",
+      "base_id": "vi-transfer-quoted-soup",
+      "expected": "review_required",
+      "translation": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "reason": "다른 동사와 대상의 정상 부정 인용문"
+    },
+    {
+      "id": "vi-transfer-quoted-soup-widened",
+      "base_id": "vi-transfer-quoted-soup",
+      "expected": "hold",
+      "translation": [
+        "수프를 먹은 적이 없다고 말했습니다."
+      ],
+      "reason": "발언의 단순 부정을 경험 전체로 확대"
+    },
+    {
+      "id": "vi-transfer-quoted-outside-faithful",
+      "base_id": "vi-transfer-quoted-outside",
+      "expected": "review_required",
+      "translation": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "reason": "다른 동사와 대상의 정상 부정 인용문"
+    },
+    {
+      "id": "vi-transfer-quoted-outside-widened",
+      "base_id": "vi-transfer-quoted-outside",
+      "expected": "hold",
+      "translation": [
+        "밖에 나간 적이 없다고 말했습니다."
+      ],
+      "reason": "발언의 단순 부정을 경험 전체로 확대"
+    },
+    {
+      "id": "id-transfer-quoted-soup-faithful",
+      "base_id": "id-transfer-quoted-soup",
+      "expected": "review_required",
+      "translation": [
+        "수프를 먹지 않았다고 말했습니다."
+      ],
+      "reason": "다른 동사와 대상의 정상 부정 인용문"
+    },
+    {
+      "id": "id-transfer-quoted-soup-widened",
+      "base_id": "id-transfer-quoted-soup",
+      "expected": "hold",
+      "translation": [
+        "수프를 먹은 적이 없다고 말했습니다."
+      ],
+      "reason": "발언의 단순 부정을 경험 전체로 확대"
+    },
+    {
+      "id": "id-transfer-quoted-outside-faithful",
+      "base_id": "id-transfer-quoted-outside",
+      "expected": "review_required",
+      "translation": [
+        "오늘 밖에 나가지 않았다고 말했습니다."
+      ],
+      "reason": "다른 동사와 대상의 정상 부정 인용문"
+    },
+    {
+      "id": "id-transfer-quoted-outside-widened",
+      "base_id": "id-transfer-quoted-outside",
+      "expected": "hold",
+      "translation": [
+        "밖에 나간 적이 없다고 말했습니다."
+      ],
+      "reason": "발언의 단순 부정을 경험 전체로 확대"
+    },
+    {
+      "id": "en-transfer-quoted-outside-added-intention",
+      "base_id": "en-transfer-quoted-outside",
+      "expected": "hold",
+      "translation": [
+        "오늘 집 밖으로 나가지 않겠다고 말했습니다."
+      ],
+      "reason": "Added intention to an observation report"
+    },
+    {
+      "id": "vi-transfer-quoted-outside-added-intention",
+      "base_id": "vi-transfer-quoted-outside",
+      "expected": "hold",
+      "translation": [
+        "오늘 집 밖으로 나가지 않겠다고 말했습니다."
+      ],
+      "reason": "Added intention to an observation report"
+    },
+    {
+      "id": "id-transfer-quoted-outside-added-intention",
+      "base_id": "id-transfer-quoted-outside",
+      "expected": "hold",
+      "translation": [
+        "오늘 집 밖으로 나가지 않겠다고 말했습니다."
+      ],
+      "reason": "Added intention to an observation report"
+    },
+    {
+      "id": "en-context-habitual-walking-lost-repetition",
+      "base_id": "en-context-habitual-walking",
+      "expected": "hold",
+      "translation": [
+        "걸은 후 피곤해 보였습니다."
+      ],
+      "reason": "Repeated observation reduced to a single after-event observation"
+    },
+    {
+      "id": "vi-context-habitual-walking-lost-repetition",
+      "base_id": "vi-context-habitual-walking",
+      "expected": "hold",
+      "translation": [
+        "걸은 후 피곤해 보였습니다."
+      ],
+      "reason": "Repeated observation reduced to a single after-event observation"
+    },
+    {
+      "id": "id-context-habitual-walking-lost-repetition",
+      "base_id": "id-context-habitual-walking",
+      "expected": "hold",
+      "translation": [
+        "걸은 후 피곤해 보였습니다."
+      ],
+      "reason": "Repeated observation reduced to a single after-event observation"
+    }
+  ],
+  "parent_sha256": "8285ecefb299a797247d3c8f8138d84667fe0eb6457c5634291c8a822b75ac38",
+  "parent_corpus_sha256": "055e8faac2dc6ee8d9eed158d0e40125b003606fe7ff87edf30145ce4fc82382"
+}

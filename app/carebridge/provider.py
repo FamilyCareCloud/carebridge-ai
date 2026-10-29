@@ -10,6 +10,7 @@ from app.carebridge.guidance import (
     guidance_definition,
     translation_payload,
 )
+from app.carebridge.rendering import rendering_definition
 from app.carebridge.schemas import ModelDraft, SourceSegment
 from app.config import Settings
 
@@ -74,6 +75,8 @@ def translation_prompt_material() -> str:
         + KOREAN_CONTEXT_PROMPT
         + "\nSource guidance definition: "
         + guidance_definition()
+        + "\nSource-bound output rendering definition: "
+        + rendering_definition()
     )
 
 

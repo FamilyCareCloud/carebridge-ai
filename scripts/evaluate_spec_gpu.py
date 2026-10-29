@@ -62,7 +62,16 @@ def main() -> int:
         carebridge_semantic_check_enabled=True,
         carebridge_timeout_seconds=args.timeout,
     )
-    provider = LocalTranslationProvider(config)
+
+    class RecordingProvider(LocalTranslationProvider):
+        last_model_output = None
+
+        async def generate(self, segments, source_language):
+            candidate = await super().generate(segments, source_language)
+            self.last_model_output = candidate.model_dump(mode="json")
+            return candidate
+
+    provider = RecordingProvider(config)
     corpus_raw = args.corpus.read_bytes()
     fixture = json.loads(corpus_raw.decode("utf-8-sig"))
     code_files = {
@@ -124,7 +133,8 @@ def main() -> int:
         }
 
     def generation(client, memo, language="ko", revision=1, **extra):
-        return post(
+        provider.last_model_output = None
+        result = post(
             client,
             "/carebridge/generations",
             {
@@ -136,6 +146,9 @@ def main() -> int:
                 **extra,
             },
         )
+        if provider.last_model_output is not None:
+            result["model_output"] = provider.last_model_output
+        return result
 
     def edit_payload(original, editor="author"):
         draft = original["draft"]
