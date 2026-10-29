@@ -1,0 +1,358 @@
+{
+  "schema": "carebridge.focused-reference-review.v1",
+  "recorded_at": "2026-10-29T15:37:50.540862+00:00",
+  "reviewer": "coding assistant; not a native-speaking human reviewer",
+  "scope": "22 synthetic development cases. Six affected source meanings reviewed directly; sixteen unchanged outputs reuse exact complete-translation-object annotations from v15. No independent/native-speaker or held-out accuracy claim.",
+  "evaluation_sha256": "c78090db7a3998ec66b6e742f83a227153b27f29faaa1082bae8f9f25e009d5e",
+  "runner_all_passed": false,
+  "runner_flag_explanation": "The raw runner conservatively left two qualified-transport wording variants as manual_review_required because they differ from reference strings. All protocol gates passed. This separate review resolves those two meaning-equivalent forms; the raw file, exit status and earlier v15 failures remain unchanged.",
+  "all_protocol_gates_passed": true,
+  "source_reference_review_complete": true,
+  "summary": {
+    "count": 22,
+    "development_clean": 22,
+    "minor": 0,
+    "major": 0,
+    "qa_cases": 41,
+    "faithful_controls": 22,
+    "injected_errors_caught": 19
+  },
+  "cases": [
+    {
+      "id": "vi-extension-uncertain-completion",
+      "source": "Có thể đã ăn tối, nhưng chưa được xác nhận.",
+      "translation": "저녁 식사를 했을 수도 있지만, 아직 확인되지 않았습니다.",
+      "required_facts": [
+        "저녁 식사",
+        "이미 완료되었을 가능성, 사실로 단정 금지",
+        "아직 미확인; 이미라는 부사는 필수 아님"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Direct source/reference semantic review of six bounded affected clauses",
+      "exact_reference": true,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "id-extension-transport-contrast",
+      "source": "Tidak berjalan ke taman; pergi ke sana dengan kursi roda dan bantuan.",
+      "translation": "정원 또는 공원까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다.",
+      "required_facts": [
+        "도보 이동 부정",
+        "휠체어 이동",
+        "다른 사람의 도움",
+        "taman은 문맥 없이 정원/공원 중 하나로 단정하지 않음"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Direct source/reference semantic review of six bounded affected clauses",
+      "exact_reference": true,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "en-context-lifetime-negation",
+      "source": "Said, \"I have never drunk milk.\"",
+      "translation": "우유를 마신 적이 없다고 말했습니다.",
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": true,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "en-context-different-delay",
+      "source": "Fell asleep 17 minutes after dinner.",
+      "translation": "저녁 식사 17분 후에 잠들었습니다.",
+      "required_facts": [
+        "저녁 식사",
+        "잠들기 전 17분 간격",
+        "수면 지속시간 아님"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": true,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "vi-context-habitual-walking",
+      "source": "Có vẻ mệt mỗi khi đi bộ.",
+      "translation": "걸을 때마다 피곤해 보입니다.",
+      "required_facts": [
+        "걷는 때마다",
+        "피곤해 보임",
+        "일회성 사건으로 바꾸지 않음"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": true,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "vi-context-lifetime-negation",
+      "source": "Nói rằng: \"Tôi chưa bao giờ uống sữa.\"",
+      "translation": "\"우유를 마신 적이 없다고 말했습니다.\"",
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "vi-context-wheelchair-destination",
+      "source": "Đã đến phòng ăn bằng xe lăn với sự hỗ trợ.",
+      "translation": "도움을 받아 휠체어로 식사실에 도착했습니다.",
+      "required_facts": [
+        "식당",
+        "휠체어",
+        "도움",
+        "걷기로 바꾸지 않음"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "id-context-after-walking",
+      "source": "Tampak haus setelah berjalan.",
+      "translation": "걸은 후 목말라 보였음",
+      "required_facts": [
+        "걷기 이후",
+        "목말라 보임",
+        "단정/반복 조건으로 바꾸지 않음"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "id-context-lifetime-negation",
+      "source": "Mengatakan, \"Saya tidak pernah minum susu.\"",
+      "translation": "\"우유를 마신 적이 없다고 말했습니다.\"",
+      "required_facts": [
+        "우유",
+        "마신 경험 없음",
+        "발언 출처"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "en-rendering-juice",
+      "source": "Said, \"I did not drink juice.\"",
+      "translation": "\"주스는 마시지 않았다\"고 말했다.",
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "미섭취"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "vi-rendering-juice",
+      "source": "Nói rằng: \"Tôi không uống nước ép.\"",
+      "translation": "\"저는 주스를 마시지 않았습니다.\"라고 말했습니다.",
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "미섭취"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "id-rendering-juice",
+      "source": "Mengatakan, \"Saya tidak minum jus.\"",
+      "translation": "\"저는 주스를 마시지 않았어요.\"라고 말했습니다.",
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "미섭취"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "en-rendering-uncertain-juice",
+      "source": "Said, \"I may have drunk juice.\"",
+      "translation": "\"주스를 마셨을 수도 있습니다.\"라고 말했습니다.",
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "섭취 가능성"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "vi-rendering-uncertain-juice",
+      "source": "Nói rằng: \"Tôi có thể đã uống nước ép.\"",
+      "translation": "\"주스를 마셨을 수도 있습니다.\"라고 말했습니다.",
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "섭취 가능성"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "id-rendering-uncertain-juice",
+      "source": "Mengatakan, \"Saya mungkin sudah minum jus.\"",
+      "translation": "\"저는 이미 주스를 마셨을 수도 있습니다.\"라고 말했습니다.",
+      "required_facts": [
+        "주스",
+        "발언 출처",
+        "섭취 가능성"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "en-object-soup-control",
+      "source": "Said, \"I may have drunk soup.\"",
+      "translation": "\"수프를 마셨을 수도 있습니다.\"라고 말했습니다.",
+      "required_facts": [
+        "수프",
+        "마셨을 가능성",
+        "발언 전달"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": true,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "vi-object-soup-control",
+      "source": "Nói rằng: \"Tôi có thể đã uống súp.\"",
+      "translation": "\"수프를 마셨을 수도 있습니다.\"라고 말했습니다.",
+      "required_facts": [
+        "수프",
+        "마셨을 가능성",
+        "발언 전달"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": true,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "id-object-soup-control",
+      "source": "Mengatakan, \"Saya mungkin sudah minum sup.\"",
+      "translation": "\"저는 이미 수프를 마셨을 수도 있습니다.\"라고 말했습니다.",
+      "required_facts": [
+        "수프",
+        "마셨을 가능성",
+        "발언 전달"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Reused only for exactly equal complete translation object from frozen v15",
+      "exact_reference": false,
+      "exact_v15_translation": true
+    },
+    {
+      "id": "vi-review-breakfast-possibility",
+      "source": "Có thể đã ăn sáng, nhưng chưa được xác nhận.",
+      "translation": "아침 식사를 했을 수도 있지만, 아직 확인되지 않았습니다.",
+      "required_facts": [
+        "아침 식사",
+        "완료 가능성",
+        "아직 미확인"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Direct source/reference semantic review of six bounded affected clauses",
+      "exact_reference": true,
+      "exact_v15_translation": false
+    },
+    {
+      "id": "vi-review-lunch-possibility",
+      "source": "Có thể đã ăn trưa, nhưng chưa được xác nhận.",
+      "translation": "점심 식사를 했을 수도 있지만, 아직 확인되지 않았습니다.",
+      "required_facts": [
+        "점심 식사",
+        "완료 가능성",
+        "아직 미확인"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Direct source/reference semantic review of six bounded affected clauses",
+      "exact_reference": true,
+      "exact_v15_translation": false
+    },
+    {
+      "id": "id-review-city-park",
+      "source": "Tidak berjalan ke taman kota; pergi ke sana dengan kursi roda dan bantuan.",
+      "translation": "도시 공원까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다.",
+      "required_facts": [
+        "도시 공원",
+        "도보 부정",
+        "휠체어",
+        "도움"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Direct coding-assistant source/reference meaning review after live run; reference string equality is not an accuracy test",
+      "exact_reference": false,
+      "exact_v15_translation": false,
+      "comment": "도시 공원(taman kota), 도보 부정(tidak berjalan), 휠체어(kursi roda), 도움(bantuan)을 모두 보존함. 걸어서 이동하지 않았다는 말은 reference의 걸어가지 않았다와 동등함."
+    },
+    {
+      "id": "id-review-home-garden",
+      "source": "Tidak berjalan ke taman rumah; pergi ke sana dengan kursi roda dan bantuan.",
+      "translation": "집 정원까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다.",
+      "required_facts": [
+        "집 정원",
+        "도보 부정",
+        "휠체어",
+        "도움"
+      ],
+      "grade": "clean",
+      "reviewer": "coding assistant development review; not a native-speaking human",
+      "method": "Direct coding-assistant source/reference meaning review after live run; reference string equality is not an accuracy test",
+      "exact_reference": false,
+      "exact_v15_translation": false,
+      "comment": "집 정원(taman rumah), 도보 부정, 휠체어, 도움을 모두 보존함. reference와 문구는 다르지만 장소 수식어와 두 이동 명제가 모두 남아 있음."
+    }
+  ]
+}
