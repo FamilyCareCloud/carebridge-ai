@@ -19,6 +19,9 @@ ASSISTANCE = re.compile(
 )
 ZONE = re.compile(r"(?<![A-Za-z])(?:UTC|GMT|KST)(?:[+-]\d{1,2}(?::[0-5]\d)?)?(?![A-Za-z])", re.I)
 AFTER_WALKING = re.compile(r"\bafter\s+walking\b|sau\s+khi\s+đi\s+bộ|\bsetelah\s+berjalan\b", re.I)
+HABITUAL_WALKING = re.compile(
+    r"\bwhenever\s+walking\b|mỗi\s+khi\s+đi\s+bộ|\bsetiap\s+kali\s+berjalan\b", re.I
+)
 REPORTED_SPEECH = re.compile(r"\b(?:said|reported|stated|mengatakan|berkata)\b|nói\s+rằng", re.I)
 SIMPLE_NEGATION = re.compile(r"\b(?:not|didn't|don't|doesn't|tidak|không)\b", re.I)
 LIFETIME_NEGATION = re.compile(
@@ -131,6 +134,8 @@ def explicit_facts_preserved(source: str, translation: str) -> bool:
 
 def temporal_context_preserved(source: str, translation: str) -> bool:
     # A narrow contradiction check; unrecognized paraphrases still require model/human review.
+    if HABITUAL_WALKING.search(source) and not WALKING_CONDITION_KO.search(translation):
+        return False
     return not (
         AFTER_WALKING.search(source)
         and not SOURCE_CONDITION.search(source)

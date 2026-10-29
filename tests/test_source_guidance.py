@@ -185,6 +185,12 @@ def test_http_and_local_use_identical_source_hints_and_system(config, monkeypatc
             True,
         ),
         (
+            "Tampak lelah setiap kali berjalan.",
+            "걸은 후 피곤해 보였습니다.",
+            "SEMANTIC_OMITTED_FACTS",
+            False,
+        ),
+        (
             'Said, "I did not drink milk."',
             "우유를 마신 적이 없다고 말했습니다.",
             "SEMANTIC_NEGATION",

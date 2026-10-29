@@ -8,6 +8,7 @@ from pydantic import Field, ValidationError
 from starlette.concurrency import run_in_threadpool
 
 from app.carebridge.facts import (
+    HABITUAL_WALKING,
     explicit_facts_preserved,
     negation_scope_preserved,
     reported_intention_preserved,
@@ -111,7 +112,10 @@ def audit_prompt(draft: Draft) -> str:
     # Keep the proven general audit for mixed notes; use the clarified modality
     # definition only when every pair is explicitly reported speech.
     if all(
-        DIRECT_REPORTED_STATEMENT.fullmatch(s.evidence.quote.strip())
+        (
+            DIRECT_REPORTED_STATEMENT.fullmatch(s.evidence.quote.strip())
+            or HABITUAL_WALKING.search(s.evidence.quote)
+        )
         and not REPORTED_CONTRAST.search(s.evidence.quote)
         for s in draft.translation.segments
     ):
@@ -127,6 +131,8 @@ def semantic_prompt_material() -> str:
         + DIRECT_REPORTED_STATEMENT.pattern
         + "\nExcept contrast: "
         + REPORTED_CONTRAST.pattern
+        + "\nOr explicit habitual walking: "
+        + HABITUAL_WALKING.pattern
     )
 
 

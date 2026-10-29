@@ -8,6 +8,7 @@ from app.carebridge.facts import (
     DELAY_SOURCE,
     DURATION_UNITS,
     EXPERIENTIAL_NEGATION,
+    HABITUAL_WALKING,
     LIFETIME_NEGATION,
     REPORTED_SPEECH,
     SIMPLE_NEGATION,
@@ -41,9 +42,6 @@ REPORTED_ID_TERMS = [
     (r"\bhari\s+ini\b", "오늘"),
 ]
 REPORTED_OUTSIDE_VI = (r"ra\s+ngoài", "밖으로 나가다")
-HABITUAL_WALKING = re.compile(
-    r"\bwhenever\s+walking\b|mỗi\s+khi\s+đi\s+bộ|\bsetiap\s+kali\s+berjalan\b", re.I
-)
 HABITUAL_HINT = "걸을 때마다"
 NEGATED_WALKING = re.compile(
     r"\b(?:did|does|do)\s+not\s+walk\b|không\s+đi\s+bộ|\btidak\s+berjalan\b", re.I
