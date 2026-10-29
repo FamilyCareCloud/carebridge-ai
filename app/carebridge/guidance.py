@@ -22,6 +22,7 @@ TERM_HINTS = [
     (r"\bpergi\b", "갔습니다"),
     (r"\bvườn\b", "정원"),
     (r"\bseem(?:s|ed)?\s+thirsty\b|có\s+vẻ\s+khát(?:\s+nước)?|\btampak\s+haus\b", "목말라 보였음"),
+    (r"\bjuices?\b|\bjus\b|\bnước\s+ép\b", "주스"),
 ]
 AFTER_HINT = "걸은 후"
 DELAY_HINT = "{value}{unit} 후에 잠들었음"
@@ -42,6 +43,7 @@ REPORTED_ID_TERMS = [
     (r"\bhari\s+ini\b", "오늘"),
 ]
 REPORTED_OUTSIDE_VI = (r"ra\s+ngoài", "밖으로 나가다")
+REPORTED_EN_TERMS = [(r"\bdid\s+not\s+drink\b", "마시지 않았다")]
 HABITUAL_HINT = "걸을 때마다"
 NEGATED_WALKING = re.compile(
     r"\b(?:did|does|do)\s+not\s+walk\b|không\s+đi\s+bộ|\btidak\s+berjalan\b", re.I
@@ -59,7 +61,7 @@ def guidance_definition() -> str:
     """Include the matched-hint templates/rules in the pipeline prompt fingerprint."""
     return json.dumps(
         {
-            "version": "source-hints.v4",
+            "version": "source-hints.v5",
             "system_rendering": "id reported simple negation: Korean instructions; lifetime: JSON guides; other hints: short per-segment lines; no hints: original system",
             "terms": TERM_HINTS,
             "after_walking": [AFTER_WALKING.pattern, SOURCE_CONDITION.pattern, AFTER_HINT],
@@ -74,6 +76,7 @@ def guidance_definition() -> str:
             "reported_lifetime": [EXPLICIT_LIFETIME.pattern, LIFETIME_HINT],
             "reported_id_terms": REPORTED_ID_TERMS,
             "reported_outside_vi": REPORTED_OUTSIDE_VI,
+            "reported_en_terms": REPORTED_EN_TERMS,
             "habitual_walking": [HABITUAL_WALKING.pattern, HABITUAL_HINT],
             "negated_walking": [NEGATED_WALKING.pattern, NEGATED_WALKING_HINT],
             "wheelchair_assistance": [MOVEMENT_HELP.pattern, MOVEMENT_HELP_HINT],
@@ -126,6 +129,8 @@ def source_hints(source: str, language: str = "") -> list[dict[str, str]]:
             if language == "id" and any(h["meaning"] == NEGATION_HINT for h in hints)
             else [REPORTED_OUTSIDE_VI]
             if language == "vi"
+            else REPORTED_EN_TERMS
+            if language == "en"
             else []
         )
         for pattern, meaning in terms:

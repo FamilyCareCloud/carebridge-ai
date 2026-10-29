@@ -92,6 +92,10 @@ FACT_MARKERS = [
     ),
     (re.compile(r"\b(?:soup|súp|sup)\b", re.I), re.compile(r"수프|스프|국(?:을|은|이|물|\s|$)")),
     (
+        re.compile(r"\bjuices?\b|\bjus\b|\bnước\s+ép\b", re.I),
+        re.compile(r"주스|쥬스|과즙"),
+    ),
+    (
         re.compile(r"\b(?:go|went|going)\s+outside\b|\bkeluar\s+rumah\b|ra\s+ngoài", re.I),
         re.compile(r"밖|외출|외부"),
     ),

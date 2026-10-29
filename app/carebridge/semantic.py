@@ -8,6 +8,7 @@ from pydantic import Field, ValidationError
 from starlette.concurrency import run_in_threadpool
 
 from app.carebridge.facts import (
+    FACT_MARKERS,
     HABITUAL_WALKING,
     explicit_facts_preserved,
     negation_scope_preserved,
@@ -133,6 +134,14 @@ def semantic_prompt_material() -> str:
         + REPORTED_CONTRAST.pattern
         + "\nOr explicit habitual walking: "
         + HABITUAL_WALKING.pattern
+        + "\nBounded object/action/attribution tripwires: "
+        + json.dumps(
+            [
+                (src.pattern, src.flags, target.pattern, target.flags)
+                for src, target in FACT_MARKERS
+            ],
+            ensure_ascii=False,
+        )
     )
 
 
