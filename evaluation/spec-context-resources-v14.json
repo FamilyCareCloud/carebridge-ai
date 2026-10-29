@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-10-29T12:38:18.931825+00:00",
+  "scope": "Completed offline GPU evaluation and local frontend/HTTP/GPU integration; original old serving checkout restored; no shared deployment",
+  "evidence_sha256": {
+    "spec-gpu-v14.json": "353dbd389b5bf59f5be2ffb9f84018037fb716e3765167675f911a262efca02b",
+    "spec-reference-review-v14.json": "46636eaa5109202fc93d7b556cf05ff97748077bf3d945e0170f02a2206e0d1b",
+    "backend-contract-spec-v14.json": "b0d1f23e27aba23383fb66f4d6aee6e91b68cc98a8c1e431906553d4e2a1dee6",
+    "workspace-ai-v14.json": "6bb21224e774f6f0ba552ce0823a86ec7ba1c091c2cef990402cf4aa4e02356d",
+    "workspace-ai-v15.json": "d32d875b5b779478903c62391b39d91beaa2633e0fa74ddeb318555aafa61a63",
+    "translation-corpus-v8.json": "b1bfbff2320427b75d490eb1a69881cf52a5339ebc528a656fe78368b0fcae9d"
+  },
+  "service_after_restore": {
+    "status": "ok",
+    "device": "cuda",
+    "stt_enabled": true,
+    "carebridge_schema": "carebridge.v1",
+    "translation_backend": "local",
+    "translation_loaded": true,
+    "semantic_check_enabled": true
+  },
+  "ollama_models_after_restore": [],
+  "gpu_after_restore": "NVIDIA GeForce RTX 5070 Ti, 11231 MiB, 16303 MiB",
+  "resource_sampling_limit": "Post-run snapshot only, not continuous proof of exclusive GPU use",
+  "source_revisions": {
+    "carebridge-ai": "0159db110b062a3211aa0fc421a606fbb3daf20b",
+    "carebridge-backend": "649edfe999e6c40fbdaba61ce37d6f107e7f8671",
+    "carebridge-frontend": "a70408fc9e2e5dbda6771605af0b4cbd4081747c"
+  },
+  "packaging_script_source": "import hashlib\nimport json\nimport subprocess\nimport urllib.request\nfrom datetime import datetime, timezone\nfrom pathlib import Path\n\nbackend=Path(__file__).resolve().parents[1]\nroot=backend.parent/'carebridge-ai'\nfor name in ('workspace-ai-v14.json','workspace-ai-v15.json'):\n    raw=(backend/'data'/name).read_bytes()\n    value=json.loads(raw)\n    assert value.get('finishedAt')\n    assert value['allPassed']==(name=='workspace-ai-v15.json')\n    with (root/'evaluation'/name).open('xb') as f:f.write(raw)\ndef get(url):\n    with urllib.request.urlopen(url,timeout=5) as response:return json.load(response)\nfiles=['spec-gpu-v14.json','spec-reference-review-v14.json','backend-contract-spec-v14.json','workspace-ai-v14.json','workspace-ai-v15.json','translation-corpus-v8.json']\nresult=dict(recorded_at=datetime.now(timezone.utc).isoformat(),scope='Completed offline GPU evaluation and local frontend/HTTP/GPU integration; original old serving checkout restored; no shared deployment',\n    evidence_sha256={p:hashlib.sha256((root/'evaluation'/p).read_bytes()).hexdigest() for p in files},\n    service_after_restore=get('http://127.0.0.1:8002/health'),ollama_models_after_restore=get('http://127.0.0.1:11434/api/ps')['models'],\n    gpu_after_restore=subprocess.check_output(['nvidia-smi','--query-gpu=name,memory.used,memory.total','--format=csv,noheader'],text=True).strip(),\n    resource_sampling_limit='Post-run snapshot only, not continuous proof of exclusive GPU use',\n    source_revisions={p:subprocess.check_output(['git','rev-parse','HEAD'],cwd=backend.parent/p,text=True).strip() for p in ('carebridge-ai','carebridge-backend','carebridge-frontend')},\n    packaging_script_source=Path(__file__).read_text(encoding='utf-8'))\nwith (root/'evaluation/spec-context-resources-v14.json').open('x',encoding='utf-8') as f:json.dump(result,f,ensure_ascii=False,indent=2);f.write('\\n')\nprint('Full GPU + failed and corrected live integration evidence preserved, with hashes and original service restoration.')\n"
+}
