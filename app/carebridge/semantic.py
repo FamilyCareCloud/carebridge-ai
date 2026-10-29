@@ -135,6 +135,7 @@ def semantic_prompt_material() -> str:
         + "\nOr explicit habitual walking: "
         + HABITUAL_WALKING.pattern
         + "\nBounded object/action/attribution tripwires: "
+        + "supported omissions hold before model inference; unknown claims still require model review; "
         + json.dumps(
             [
                 (src.pattern, src.flags, target.pattern, target.flags)
@@ -150,6 +151,16 @@ async def review_semantics(draft: Draft, provider: LocalTranslationProvider) -> 
     check_input(draft.source.text)
     qa = assess(draft)
     if any(issue.severity == "hold" for issue in qa.issues):
+        return SemanticReview(status="hold", model_checked=False, segments=[], qa=qa)
+    if any(
+        not explicit_facts_preserved(segment.evidence.quote, segment.text)
+        for segment in draft.translation.segments
+    ):
+        # A known missing object/action/attribution already requires a hold.
+        # Do not depend on a second model producing valid JSON to report it.
+        code, message = CHECKS["no_omitted_facts"]
+        qa.checks.append(QACheck(code=code, passed=False))
+        qa.issues.append(QAIssue(code=code, severity="hold", message=message))
         return SemanticReview(status="hold", model_checked=False, segments=[], qa=qa)
     raw = await run_in_threadpool(
         provider._complete,
@@ -175,8 +186,6 @@ async def review_semantics(draft: Draft, provider: LocalTranslationProvider) -> 
         raise InvalidModelOutput("의미 검사 결과에 원문 구간 누락·중복·변경이 있습니다.")
     segments = []
     for item, translated in zip(candidate.segments, draft.translation.segments, strict=True):
-        if not explicit_facts_preserved(translated.evidence.quote, translated.text):
-            item.no_omitted_facts = False
         if not temporal_context_preserved(translated.evidence.quote, translated.text):
             item.no_omitted_facts = item.no_added_facts = False
         if not negation_scope_preserved(translated.evidence.quote, translated.text):

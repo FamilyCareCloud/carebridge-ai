@@ -76,3 +76,39 @@ def test_object_tripwires_are_included_in_the_semantic_fingerprint(config, monke
     before = pipeline_info(config).semantic_prompt_sha256
     monkeypatch.setattr(semantic, "FACT_MARKERS", [])
     assert pipeline_info(config).semantic_prompt_sha256 != before
+
+
+@pytest.mark.parametrize(
+    "source,target",
+    [
+        ('Said, "I did not drink juice."', "수프를 마시지 않았다고 말했습니다."),
+        ('Nói rằng: "Tôi không uống nước ép."', "수프를 마시지 않았다고 말했습니다."),
+        ('Mengatakan, "Saya tidak minum jus."', "물을 마시지 않았다고 말했습니다."),
+        ("Walked with help.", "도움을 받았습니다."),
+    ],
+)
+def test_known_missing_fact_holds_without_calling_a_broken_model(
+    config, headers, monkeypatch, source, target
+):
+    draft = make_draft(config, headers, source, target)
+    client, calls = local_client(config, AssertionError("Model must not be called"), monkeypatch)
+    with client:
+        response = client.post("/carebridge/qa/semantic", headers=headers, json=draft)
+    assert response.status_code == 200
+    result = response.json()
+    assert result["status"] == "hold" and result["model_checked"] is False
+    assert result["segments"] == [] and calls == []
+    assert any(
+        c == {"code": "SEMANTIC_OMITTED_FACTS", "passed": False} for c in result["qa"]["checks"]
+    )
+    assert not result["qa"]["external_share_allowed"]
+
+
+def test_unknown_semantics_still_require_a_valid_model_response(config, headers, monkeypatch):
+    draft = make_draft(
+        config, headers, 'Nói rằng: "Tôi không uống nước ép."', "주스를 마시지 않았다고 말했습니다."
+    )
+    client, calls = local_client(config, "invalid JSON", monkeypatch)
+    with client:
+        response = client.post("/carebridge/qa/semantic", headers=headers, json=draft)
+    assert response.status_code == 502 and len(calls) == 1

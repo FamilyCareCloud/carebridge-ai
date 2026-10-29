@@ -102,7 +102,7 @@ def test_duration_is_not_a_delay(config, headers, source, target, passed):
         ("Mengatakan tidak ada rasa sakit hari ini.", "오늘 통증이 없었습니다.", False),
     ],
 )
-def test_model_pass_does_not_override_explicit_lost_fact(
+def test_explicit_lost_facts_hold_before_model_and_complete_facts_still_use_model(
     config, headers, monkeypatch, source, target, passed
 ):
     draft = make_draft(config, headers, source, target)
@@ -110,18 +110,18 @@ def test_model_pass_does_not_override_explicit_lost_fact(
     client, calls = local_client(config, json.dumps({"segments": [GOOD]}), monkeypatch)
     with client:
         result = client.post("/carebridge/qa/semantic", headers=headers, json=draft).json()
-    assert result["model_checked"] is True
-    assert len(calls) == 1
+    assert result["model_checked"] is passed
+    assert len(calls) == int(passed)
     assert (
         next(c["passed"] for c in result["qa"]["checks"] if c["code"] == "SEMANTIC_OMITTED_FACTS")
         is passed
     )
-    assert (
-        next(
+    if passed:
+        assert next(
             c["passed"]
             for c in result["segments"][0]["checks"]
             if c["code"] == "SEMANTIC_OMITTED_FACTS"
         )
-        is passed
-    )
+    else:
+        assert result["segments"] == []
     assert result["status"] == ("review_required" if passed else "hold")
