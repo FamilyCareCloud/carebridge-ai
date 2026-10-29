@@ -1,0 +1,170 @@
+{
+  "schema": "carebridge.evaluation-interruption.v1",
+  "recorded_at": "2026-10-29T09:05:16.988216+00:00",
+  "git_revision": "cb16ec0ae5f533e5b19b794c370c1a60ee53890e",
+  "evaluation_complete": false,
+  "exit_code": 1,
+  "failure": "PermissionError [WinError 5] at temporary.replace(path), scripts/evaluate_translation.py:133; Windows report reader overlapped atomic replacement. GPU inference had returned a result before the save failed.",
+  "saved_report_sha256": "3a92c468a60a7b71e5bb25c83dbcbf4bb2cf9a2728b8944fa7035ef3964a3b99",
+  "pending_report_sha256": "abf41a1416c4b03fdef26464b46238c33ca4ba8b2c4354cc79200c58bb8b8e17",
+  "reference_review_sha256": "b80800b35422e8e1b26749ffda60d1d70ed2fc491b0aebaad509dac681fc64c8",
+  "saved_counts": {
+    "translations": 87,
+    "qa": 87,
+    "workflow": 0
+  },
+  "pending_counts": {
+    "translations": 87,
+    "qa": 88,
+    "workflow": 0
+  },
+  "pending_only_qa_ids": [
+    "en-transfer-quoted-soup-faithful"
+  ],
+  "not_run": {
+    "qa": 32,
+    "workflow": 26
+  },
+  "interpretation": "All 87 generation responses are available for language review. Main report has 87 QA responses; pending snapshot has one more. Do not merge these partial results into a completed run. A new full run will use a new filename.",
+  "resource_observations": [
+    {
+      "observed_at": "2026-10-29T08:49:11.1848375Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10261 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "1 %",
+          "temperature.gpu": "34"
+        }
+      ],
+      "ollama_models": [],
+      "progress": null
+    },
+    {
+      "observed_at": "2026-10-29T08:50:28.2500470Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10825 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "42 %",
+          "temperature.gpu": "44"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 10,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:52:26.2750885Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "10841 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "40 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 32,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:54:01.4049229Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11086 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "42 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 49,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:57:02.1487409Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11590 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "38 %",
+          "temperature.gpu": "45"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 85,
+        "workflow": 0,
+        "qa": 0
+      }
+    },
+    {
+      "observed_at": "2026-10-29T08:58:36.1708359Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11567 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "40 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 87,
+        "workflow": 0,
+        "qa": 44
+      }
+    },
+    {
+      "observed_at": "2026-10-29T09:00:30.7678107Z",
+      "gpu": [
+        {
+          "name": "NVIDIA GeForce RTX 5070 Ti",
+          "memory.used [MiB]": "11532 MiB",
+          "memory.total [MiB]": "16303 MiB",
+          "utilization.gpu [%]": "39 %",
+          "temperature.gpu": "43"
+        }
+      ],
+      "ollama_models": [],
+      "progress": {
+        "finished": false,
+        "translations": 87,
+        "workflow": 0,
+        "qa": 87
+      }
+    }
+  ],
+  "all_samples_ollama_empty": true,
+  "restored_service_health": {
+    "status": "ok",
+    "device": "cuda",
+    "stt_enabled": true,
+    "carebridge_schema": "carebridge.v1",
+    "translation_backend": "local",
+    "translation_loaded": true,
+    "semantic_check_enabled": true
+  },
+  "recorder_source": "import hashlib\nimport json\nimport urllib.request\nfrom datetime import datetime, timezone\nfrom pathlib import Path\n\nroot=Path(__file__).resolve().parents[2]/'carebridge-ai'\ndef read(name):\n    raw=(root/'evaluation'/name).read_bytes()\n    return json.loads(raw),hashlib.sha256(raw).hexdigest()\nsaved,saved_sha=read('spec-gpu-v11.json')\npending,pending_sha=read('spec-context-pending-v11.json')\nreview,review_sha=read('spec-reference-review-v11.json')\nassert not saved.get('finished_at') and not pending.get('finished_at')\nassert saved['translations']==pending['translations']\nassert saved['qa_cases']==pending['qa_cases'][:-1]\nfor path,digest in saved['code_sha256'].items():\n    assert hashlib.sha256((root/path).read_bytes()).hexdigest()==digest,path\nwith urllib.request.urlopen('http://127.0.0.1:8002/health',timeout=5) as response:\n    health=json.load(response)\nassert health['status']=='ok' and health['translation_loaded'] and health['stt_enabled']\nsamples=[json.loads(line) for line in Path(__file__).with_name('gpu-resource-v11-observations.jsonl').read_bytes().splitlines()]\nresult=dict(schema='carebridge.evaluation-interruption.v1',recorded_at=datetime.now(timezone.utc).isoformat(),\n    git_revision=saved['git_revision'],evaluation_complete=False,exit_code=1,\n    failure='PermissionError [WinError 5] at temporary.replace(path), scripts/evaluate_translation.py:133; Windows report reader overlapped atomic replacement. GPU inference had returned a result before the save failed.',\n    saved_report_sha256=saved_sha,pending_report_sha256=pending_sha,reference_review_sha256=review_sha,\n    saved_counts=dict(translations=len(saved['translations']),qa=len(saved['qa_cases']),workflow=len(saved['workflow_cases'])),\n    pending_counts=dict(translations=len(pending['translations']),qa=len(pending['qa_cases']),workflow=len(pending['workflow_cases'])),\n    pending_only_qa_ids=[r['id'] for r in pending['qa_cases'][len(saved['qa_cases']):]],\n    not_run=dict(qa=120-len(pending['qa_cases']),workflow=26),\n    interpretation='All 87 generation responses are available for language review. Main report has 87 QA responses; pending snapshot has one more. Do not merge these partial results into a completed run. A new full run will use a new filename.',\n    resource_observations=samples,all_samples_ollama_empty=all(not s['ollama_models'] for s in samples),\n    restored_service_health=health,recorder_source=Path(__file__).read_text(encoding='utf-8'))\nwith (root/'evaluation/spec-context-interruption-v11.json').open('x',encoding='utf-8',newline='\\n') as f:\n    json.dump(result,f,ensure_ascii=False,indent=2)\n    f.write('\\n')\nprint(json.dumps({k:result[k] for k in ('saved_counts','pending_counts','not_run','restored_service_health')},ensure_ascii=False))\n"
+}

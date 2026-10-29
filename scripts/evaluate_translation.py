@@ -130,7 +130,17 @@ def save(path: Path, report: dict):
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(".json.tmp")
     temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    temporary.replace(path)
+    # Windows readers (including a progress monitor or antivirus) may briefly
+    # deny replacement. Keep the previous complete report and retry the rename,
+    # never truncate the destination or rerun an inference request.
+    for attempt in range(20):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError as exc:
+            if getattr(exc, "winerror", None) not in {5, 32, 33} or attempt == 19:
+                raise
+            time.sleep(0.1)
 
 
 def summarize(report: dict) -> dict:

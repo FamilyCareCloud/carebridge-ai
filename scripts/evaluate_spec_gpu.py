@@ -89,6 +89,11 @@ def main() -> int:
         ),
         "code_sha256": code_files,
         "runner_sha256": sha(Path(__file__).read_bytes()),
+        "runner_dependencies_sha256": {
+            "scripts/evaluate_translation.py": sha(
+                (ROOT / "scripts/evaluate_translation.py").read_bytes()
+            )
+        },
         "corpus_sha256": sha(corpus_raw),
         "fixture_counts": {
             "translations": len(fixture["translation_cases"]),
