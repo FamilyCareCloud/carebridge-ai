@@ -95,6 +95,20 @@ ALREADY_SOURCE = (
     r"mungkin sudah (?P<meal>sarapan|makan siang|makan malam), tetapi belum dikonfirmasi[.]?"
 )
 ALREADY_KO = r"(?P<meal>아침|점심|저녁) 식사했을 수도 있지만, 확인되지 않았습니다[.]?"
+# Correct only the object in a single, quoted drinking claim. Compound claims,
+# quantities and unsupported grammar abstain; all other wording and QA survive.
+QUOTED_JUICE = {
+    "en": r"(?:I\s+)?(?:may have drunk|might have drunk|drank|did not drink) juice[.!]?",
+    "vi": r"(?:tôi\s+)?(?:(?:có thể\s+)?đã|không)?\s*uống nước ép[.!]?",
+    "id": r"(?:saya\s+)?(?:(?:mungkin\s+)?sudah|tidak)?\s*minum jus[.!]?",
+}
+JUICE_KO = (
+    r'["“](?P<object>수프|스프|우유|물|주스|쥬스)(?:을|를) '
+    r'(?P<claim>마셨을 수도 있습니다|마셨습니다|마시지 않았습니다)[.]?["”]라고 말했습니다[.]?'
+)
+TRANSPORT_CONTRAST = r"tidak berjalan ke (?P<place>taman|kamar|ruang makan); pergi ke sana dengan kursi roda dan bantuan[.]?"
+TRANSPORT_KO = r"(?P<place>공원|정원|방|식사실|식당)에 가는 도중 걸어 가지 않았으며 휠체어와 도움을 받아 갔습니다[.]?"
+TRANSPORT_PLACES = {"taman": ["공원", "정원"], "kamar": ["방"], "ruang makan": ["식사실", "식당"]}
 
 
 def full(pattern: str, text: str):
@@ -147,7 +161,14 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
             text = f"{match['meal']} 식사 {match['value']}{match['unit']} 후에 잠들었습니다."
     if quoted_body(source, language) and (match := full(REPORTED_LAYOUT, text)):
         text = '"' + match["quote"].strip() + '"라고 말했습니다.'
+    body = quoted_body(source, language)
+    if body and full(QUOTED_JUICE[language], body) and (match := full(JUICE_KO, text)):
+        text = '"주스를 ' + match["claim"] + '."라고 말했습니다.'
     if language == "id":
+        contrast = full(TRANSPORT_CONTRAST, source)
+        if contrast and (match := full(TRANSPORT_KO, text)):
+            if match["place"] in TRANSPORT_PLACES[contrast["place"].lower()]:
+                text = f"{match['place']}까지 걸어서 이동하지 않았으며, 도움을 받아 휠체어를 이용해 갔습니다."
         if full(HELP_SOURCE, source) and (match := full(HELP_KO, text)):
             text = "도움을 받아 휠체어를 이용해 " + match["rest"]
         already = full(ALREADY_SOURCE, source)
@@ -169,7 +190,7 @@ def render_segment(source: str, language: str, segment: ModelSegment) -> ModelSe
 def rendering_definition() -> str:
     return json.dumps(
         {
-            "version": "source-bound-rendering.v1",
+            "version": "source-bound-rendering.v2",
             "max_output_characters": MAX_RENDERED_CHARACTERS,
             "lexical_signals": [
                 NEGATION.pattern,
@@ -186,6 +207,8 @@ def rendering_definition() -> str:
             "layout": REPORTED_LAYOUT,
             "help": [HELP_SOURCE, HELP_KO],
             "already": [ALREADY_SOURCE, ALREADY_KO],
+            "quoted_juice": [QUOTED_JUICE, JUICE_KO],
+            "transport_contrast": [TRANSPORT_CONTRAST, TRANSPORT_KO, TRANSPORT_PLACES],
             "scope": "en/vi/id model outputs only; whole-clause metadata; lexical uncertainty always wins; all existing QA runs afterwards",
         },
         ensure_ascii=False,
